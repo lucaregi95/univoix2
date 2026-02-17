@@ -12,7 +12,7 @@
 <!-- NAVBAR -->
 <nav class="navbar navbar-expand-sm navbar-light bg-light border border-danger border-3">
     <div class="container d-flex justify-content-evenly align-items-center">
-        <img alt="UniVoix Logo" class="navbar-brand fw-bold" src="../image/univoix2.png" style="max-width:50px;">
+        <img alt="UniVoix Logo" class="navbar-brand fw-bold" src="../img/univoix.png" style="max-width:50px;">
         <a class="nav-link" href="#">Spécialistes</a>
         <a class="nav-link" href="#">Forum</a>
         <a class="nav-link" href="#">Aides</a>
