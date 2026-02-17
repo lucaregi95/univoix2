@@ -12,6 +12,7 @@ require_once "..\bdd\connexion.php";
 
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../style/specialistes.css">
 </head>
 
 <body style="font-family: 'Candara'">
@@ -20,18 +21,16 @@ require_once "..\bdd\connexion.php";
 <nav class="navbar navbar-expand-sm navbar-light bg-light border border-danger border-3">
     <div class="container d-flex justify-content-evenly align-items-center">
 
-        <a href="acceuil.php"><img alt="" class="navbar-brand fw-bold" src="../img/univoix.png" style="max-width:50px;"></a>
+        <a href="acceuil.php"> <img alt="" class="navbar-brand fw-bold" src="../img/univoix2.png" style="max-width:50px;"></a>
         <a class="nav-link" href="specialistes.php">Spécialistes</a>
-        <a class="nav-link" href="#">Forum</a>
-        <a class="nav-link" href="#">Aides</a>
-        <a class="nav-link" href="#">Handicaps</a>
-        <a class="navbar-brand fw-bold" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 20 20" >
-                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-            </svg>     John Doe</a>
+        <a class="nav-link" href="forum.php">Forum</a>
+        <a class="nav-link" href="aides.php">Aides</a>
+        <a class="nav-link" href="">Numéros</a>
+        <a class="navbar-brand fw-bold" href="">Uni'voix</a>
 
     </div>
 </nav>
+
 <!-- HERO -->
 <section class="bg-white py-5 text-center">
     <div class="container">
@@ -42,12 +41,35 @@ require_once "..\bdd\connexion.php";
 </section>
 
 <!-- test bouton filtre-->
-<div class="container shadow-lg pb-2">
-<a href="#" class="btn btn-univoix">Filtres ></a>
+
+
+
+<div class="dropdown">
+    <div class="dropdown-btn"onclick="toggleDropdown()">
+        <button type="button" class="btn btn-danger">Filtres ></button>
+
+    </div>
+
+    <div class="dropdown-content" id="dropdown">
+        <label><input type="checkbox" value="psychologues">Psychologues</label>
+        <label><input type="checkbox" value="conseillers-d-orientation">Conseillers d'orientation</label>
+        <label><input type="checkbox" value="medecins">Médecins</label>
+    </div>
+</div>
+
+<script>
+    function toggleDropdown() {
+        document.getElementById("dropdown").style.display =
+            document.getElementById("dropdown").style.display === "block"
+                ? "none"
+                : "block";
+    }
+</script>
+
 
 
 <!-- Medecins -->
-<section class="bg-univoix py-5 bg-light ">
+<section class="bg-univoix py-5">
     <div class="container">
         <div class="row g-4 text-center">
 
@@ -57,7 +79,7 @@ require_once "..\bdd\connexion.php";
                 <p>
                     Nom - Prenom - Spécialité
                 </p>
-                <a href="#" class="btn btn-univoix">Prendre contact</a>
+                <a href="" class="btn btn-univoix">Prendre contact</a>
             </div>
 
             <!-- Medecin 2 -->
@@ -66,7 +88,7 @@ require_once "..\bdd\connexion.php";
                 <p>
                     Nom - Prenom - Spécialité
                 </p>
-                <a href="#" class="btn btn-univoix">Prendre contact</a>
+                <a href="" class="btn btn-univoix">Prendre contact</a>
             </div>
 
             <!-- Medecin 3 -->
@@ -75,7 +97,7 @@ require_once "..\bdd\connexion.php";
                 <p>
                     Nom - Prenom - Spécialité
                 </p>
-                <a href="#" class="btn btn-univoix">Prendre contact</a>
+                <a href="" class="btn btn-univoix">Prendre contact</a>
             </div>
 
             <!-- Medecin 4 -->
@@ -85,7 +107,7 @@ require_once "..\bdd\connexion.php";
                 <p>
                     Nom - Prenom - Spécialité
                 </p>
-                <a href="#" class="btn btn-univoix">Prendre contact</a>
+                <a href="" class="btn btn-univoix">Prendre contact</a>
             </div>
 
             <!-- Medecin 5 -->
@@ -95,7 +117,7 @@ require_once "..\bdd\connexion.php";
                 <p>
                     Nom - Prenom - Spécialité
                 </p>
-                <a href="#" class="btn btn-univoix">Prendre contact</a>
+                <a href="" class="btn btn-univoix">Prendre contact</a>
             </div>
 
             <!-- Medecin 6 -->
@@ -105,15 +127,15 @@ require_once "..\bdd\connexion.php";
                 <p>
                     Nom - Prenom - Spécialité
                 </p>
-                <a href="#" class="btn btn-univoix">Prendre contact</a>
+                <a href="" class="btn btn-univoix">Prendre contact</a>
             </div>
         </div>
     </div>
 </section>
-</div>
-<div class="pt-4"></div>
+
+
 <!-- FOOTER -->
-<footer class="py-3 text-center bg-danger text-white ">
+<footer class="py-3 text-center">
     © 2026 — Luca Regi, Nassim Kharfouche, Prosper Fajnzyn — Tous droits réservés
 </footer>
 
