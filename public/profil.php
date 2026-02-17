@@ -12,18 +12,22 @@
 <!-- NAVBAR -->
 <nav class="navbar navbar-expand-sm navbar-light bg-light border border-danger border-3">
     <div class="container d-flex justify-content-evenly align-items-center">
+<<<<<<< HEAD
         <img alt="UniVoix Logo" class="navbar-brand fw-bold" src="../img/univoix.png" style="max-width:50px;">
         <a class="nav-link" href="#">Spécialistes</a>
+=======
+
+        <a href="acceuil.php"><img alt="" class="navbar-brand fw-bold" src="../img/univoix.png" style="max-width:50px;"></a>
+        <a class="nav-link" href="specialistes.php">Spécialistes</a>
+>>>>>>> eaa9ec339dbab65bfa3ec0a1b8571f3d16473221
         <a class="nav-link" href="#">Forum</a>
         <a class="nav-link" href="#">Aides</a>
-        <a class="nav-link" href="presentation.php">Handicapes</a>
-        <a class="navbar-brand fw-bold" href="#">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 20 20">
+        <a class="nav-link" href="presentation.php">Handicaps</a>
+        <a class="navbar-brand fw-bold" href="profil.php"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 20 20" >
                 <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
                 <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-            </svg>
-            John Doe
-        </a>
+            </svg>     John Doe</a>
+
     </div>
 </nav>
 

@@ -24,8 +24,8 @@ require_once "..\bdd\connexion.php";
         <a class="nav-link" href="specialistes.php">Spécialistes</a>
         <a class="nav-link" href="#">Forum</a>
         <a class="nav-link" href="#">Aides</a>
-        <a class="nav-link" href="#">Handicaps</a>
-        <a class="navbar-brand fw-bold" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 20 20" >
+        <a class="nav-link" href="presentation.php">Handicaps</a>
+        <a class="navbar-brand fw-bold" href="profil.php"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 20 20" >
                 <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
                 <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
             </svg>     John Doe</a>
@@ -37,7 +37,7 @@ require_once "..\bdd\connexion.php";
     <div class="container">
         <h1 class="fw-bold mb-3">Les Spécialistes</h1>
         <p class="text-muted">
-            Sur cette page, nous proposons des professionels de santé prets a vous aider.        </p>
+            Sur cette page, nous proposons une discussion avec des professionels de santé, des psychologues et des conseillers d'orientation prets a vous aider.        </p>
     </div>
 </section>
 
