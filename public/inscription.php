@@ -34,7 +34,7 @@ if(isset($_POST["submit_btn"])){
 
         $handicaps = json_decode($_POST['handicaps'], true);
         if(!empty($handicaps)){
-            $sql2 = "INSERT INTO InscritHandicaps (ref_inscrit, ref_handicaps) VALUES (:ref_inscrit, :ref_handicaps)";
+            $sql2 = "INSERT INTO inscrithandicap (ref_inscrit, ref_handicap) VALUES (:ref_inscrit, :ref_handicap)";
             $query2 = $connexion->prepare($sql2);
             foreach($handicaps as $id_handicap){
                 $query2->execute(array(
@@ -49,7 +49,7 @@ if(isset($_POST["submit_btn"])){
     }
 }
 
-$handicaps_list = $connexion->query("SELECT id_handicap, nom FROM Handicaps ORDER BY nom")->fetchAll(PDO::FETCH_ASSOC);
+$handicaps_list = $connexion->query("SELECT id_handicap, nom FROM handicap ORDER BY nom")->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>

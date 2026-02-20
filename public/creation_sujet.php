@@ -5,6 +5,155 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UniVoix - Création d'un sujet</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        .form-check-input.custom-switch {
+            width: 3rem;
+            height: 1.5rem;
+            background-color: #d3d3d3 !important;
+            border-color: #d3d3d3 !important;
+        }
+        .form-check-input.custom-switch:checked {
+            background-color: #dc3545 !important;
+            border-color: #dc3545 !important;
+        }
+
+        /* ── Tag multi-select ── */
+        .tag-input-box {
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            padding: 5px 8px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            align-items: center;
+            cursor: text;
+            background: #fff;
+            min-height: 38px;
+            transition: border-color .2s, box-shadow .2s;
+        }
+        .tag-input-box:focus-within {
+            border-color: #dc3545;
+            box-shadow: 0 0 0 3px rgba(220,53,69,.15);
+        }
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: #dc3545;
+            color: #fff;
+            border-radius: 5px;
+            padding: 2px 8px;
+            font-size: 0.78rem;
+            font-weight: 500;
+            animation: tagIn .15s ease;
+            white-space: nowrap;
+        }
+        @keyframes tagIn {
+            from { opacity:0; transform:scale(.85); }
+            to   { opacity:1; transform:scale(1); }
+        }
+        .tag-remove {
+            cursor: pointer;
+            font-size: 1rem;
+            line-height: 1;
+            border: none;
+            background: none;
+            color: #fff;
+            padding: 0;
+            opacity: .8;
+        }
+        .tag-remove:hover { opacity: 1; }
+
+        .tag-input-box input {
+            border: none;
+            outline: none;
+            font-size: 0.875rem;
+            flex: 1;
+            min-width: 60px;
+            background: transparent;
+            color: #333;
+        }
+
+        .tag-dropdown {
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            margin-top: 4px;
+            overflow: hidden;
+            max-height: 160px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #ccc transparent;
+        }
+        .tag-dropdown::-webkit-scrollbar { width: 5px; }
+        .tag-dropdown::-webkit-scrollbar-thumb { background: #ccc; border-radius: 99px; }
+
+        .tag-option {
+            padding: 8px 12px;
+            font-size: 0.875rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #444;
+            transition: background .12s;
+            user-select: none;
+        }
+        .tag-option:hover { background: #fff5f5; }
+        .tag-option.selected { background: #fdf0f0; color: #dc3545; font-weight: 500; }
+        .tag-option.hidden { display: none; }
+
+        .tag-check {
+            width: 17px;
+            height: 17px;
+            border-radius: 4px;
+            border: 1.5px solid #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all .15s;
+        }
+        .tag-option.selected .tag-check {
+            background: #dc3545;
+            border-color: #dc3545;
+        }
+        .tag-option.selected .tag-check::after {
+            content: '';
+            width: 4px;
+            height: 8px;
+            border: 2px solid #fff;
+            border-top: none;
+            border-left: none;
+            transform: rotate(45deg) translateY(-1px);
+            display: block;
+        }
+        .tag-empty {
+            padding: 10px 12px;
+            font-size: .85rem;
+            color: #aaa;
+            text-align: center;
+            display: none;
+        }
+
+        /* help button kept from original */
+        .btn-help {
+            border: 1px solid #dee2e6;
+            background: #fff;
+            border-radius: 6px;
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+            flex-shrink: 0;
+            cursor: pointer;
+            transition: all .2s;
+        }
+        .btn-help:hover { border-color: #dc3545; color: #dc3545; }
+    </style>
+
 </head>
 
 <body style="font-family:'Candara'" class="bg-light">
