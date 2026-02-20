@@ -21,9 +21,9 @@ require_once "..\bdd\connexion.php";
     <div class="container d-flex justify-content-evenly align-items-center">
 
         <a href="acceuil.php"><img alt="" class="navbar-brand fw-bold" src="../img/univoix.png" style="max-width:50px;"></a>
-        <a class="nav-link" href="specialistes.php">Spécialistes</a>
+        <a class="nav-link active fw-semibold text-danger" href="specialistes.php">Spécialistes</a>
         <a class="nav-link" href="#">Forum</a>
-        <a class="nav-link" href="#">Aides</a>
+        <a class="nav-link" href="aides.php">Aides</a>
         <a class="nav-link" href="presentation.php">Handicaps</a>
         <a class="navbar-brand fw-bold" href="profil.php"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 20 20" >
                 <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
@@ -54,7 +54,7 @@ require_once "..\bdd\connexion.php";
 
             <!-- Medecin 1 -->
             <div class="col-md-4">
-                <div class="shadow-lg pb-2">
+                <div class="shadow pb-2">
                 <h5 class="section-title">Medecin 1</h5>
                 <img alt="Photo - Médecin 1" src="../img/univoix.png" style="max-width: 50%;height: auto" class="border border-danger rounded">
                 <p>
@@ -66,7 +66,7 @@ require_once "..\bdd\connexion.php";
 
             <!-- Medecin 2 -->
             <div class="col-md-4">
-                <div class="shadow-lg pb-2">
+                <div class="shadow pb-2">
                 <h5 class="section-title">Medecin 2</h5>
                     <img alt="Photo - Médecin 2" src="../img/univoix.png" style="max-width: 50%;height: auto" class="border border-danger rounded">
                 <p>
@@ -78,7 +78,7 @@ require_once "..\bdd\connexion.php";
 
             <!-- Medecin 3 -->
             <div class="col-md-4">
-                <div class="shadow-lg pb-2">
+                <div class="shadow pb-2">
                 <h5 class="section-title">Medecin 3</h5>
                 <img alt="Photo - Médecin 3" src="../img/univoix.png" style="max-width: 50%;height: auto" class="border border-danger rounded">
                 <p>
@@ -90,7 +90,7 @@ require_once "..\bdd\connexion.php";
             <!-- Medecin 4 -->
 
             <div class="col-md-4">
-                <div class="shadow-lg pb-2">
+                <div class="shadow pb-2">
                     <h5 class="section-title">Medecin 4</h5>
                     <img alt="Photo - Médecin 4" src="../img/univoix.png" style="max-width: 50%;height: auto" class="border border-danger rounded">
                     <p>
@@ -102,7 +102,7 @@ require_once "..\bdd\connexion.php";
             <!-- Medecin 5 -->
 
             <div class="col-md-4">
-                <div class="shadow-lg pb-2">
+                <div class="shadow pb-2">
                     <h5 class="section-title">Medecin 5</h5>
                     <img alt="Photo - Médecin 5" src="../img/univoix.png" style="max-width: 50%;height: auto" class="border border-danger rounded">
                     <p>
@@ -114,8 +114,17 @@ require_once "..\bdd\connexion.php";
             <!-- Medecin 6 -->
 
             <div class="col-md-4">
-                <div class="shadow-lg pb-2">
+                <div class="shadow pb-2">
                     <h5 class="section-title">Medecin 6</h5>
+                    <img alt="Photo - Médecin 2" src="../img/univoix.png" style="max-width: 50%;height: auto" class="border border-danger rounded">
+                    <p>
+                        Nom - Prenom - Spécialité
+                    </p>
+                    <a href="#" class="btn btn-danger">Prendre contact</a>
+                </div></div>
+            <div class="col-md-4">
+                <div class="shadow pb-2">
+                    <h5 class="section-title">Medecin 7</h5>
                     <img alt="Photo - Médecin 2" src="../img/univoix.png" style="max-width: 50%;height: auto" class="border border-danger rounded">
                     <p>
                         Nom - Prenom - Spécialité
