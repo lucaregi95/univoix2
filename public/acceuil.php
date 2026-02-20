@@ -1,5 +1,5 @@
 <?php
-require_once "..\bdd\connexion.php";
+require_once "../bdd/connexion.php";
 
 
 ?>
