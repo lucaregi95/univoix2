@@ -109,6 +109,22 @@
     </div>
 </div>
 
+
+<!-- BOUTON PRECEDENT -->
+<div class="d-flex justify-content mt-4">
+    <a href="presentation2.php" class="btn btn-danger btn-lg">
+        Précédent
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-right ms-2" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
+        </svg>
+    </a>
+</div>
+</div>
+
+
+
+
+
 <!-- FOOTER -->
 <footer class="bg-danger text-white py-4 mt-5">
     <div class="container">
