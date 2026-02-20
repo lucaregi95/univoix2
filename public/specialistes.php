@@ -54,7 +54,7 @@ require_once "..\bdd\connexion.php";
 
             <!-- Medecin 1 -->
             <div class="col-md-4">
-                <div class="shadow-lg pb-2">
+                <div class="shadow pb-2">
                 <h5 class="section-title">Medecin 1</h5>
                 <img alt="Photo - Médecin 1" src="../img/univoix.png" style="max-width: 50%;height: auto" class="border border-danger rounded">
                 <p>
@@ -66,7 +66,7 @@ require_once "..\bdd\connexion.php";
 
             <!-- Medecin 2 -->
             <div class="col-md-4">
-                <div class="shadow-lg pb-2">
+                <div class="shadow pb-2">
                 <h5 class="section-title">Medecin 2</h5>
                     <img alt="Photo - Médecin 2" src="../img/univoix.png" style="max-width: 50%;height: auto" class="border border-danger rounded">
                 <p>
@@ -78,7 +78,7 @@ require_once "..\bdd\connexion.php";
 
             <!-- Medecin 3 -->
             <div class="col-md-4">
-                <div class="shadow-lg pb-2">
+                <div class="shadow pb-2">
                 <h5 class="section-title">Medecin 3</h5>
                 <img alt="Photo - Médecin 3" src="../img/univoix.png" style="max-width: 50%;height: auto" class="border border-danger rounded">
                 <p>
@@ -90,7 +90,7 @@ require_once "..\bdd\connexion.php";
             <!-- Medecin 4 -->
 
             <div class="col-md-4">
-                <div class="shadow-lg pb-2">
+                <div class="shadow pb-2">
                     <h5 class="section-title">Medecin 4</h5>
                     <img alt="Photo - Médecin 4" src="../img/univoix.png" style="max-width: 50%;height: auto" class="border border-danger rounded">
                     <p>
@@ -102,7 +102,7 @@ require_once "..\bdd\connexion.php";
             <!-- Medecin 5 -->
 
             <div class="col-md-4">
-                <div class="shadow-lg pb-2">
+                <div class="shadow pb-2">
                     <h5 class="section-title">Medecin 5</h5>
                     <img alt="Photo - Médecin 5" src="../img/univoix.png" style="max-width: 50%;height: auto" class="border border-danger rounded">
                     <p>
@@ -114,8 +114,17 @@ require_once "..\bdd\connexion.php";
             <!-- Medecin 6 -->
 
             <div class="col-md-4">
-                <div class="shadow-lg pb-2">
+                <div class="shadow pb-2">
                     <h5 class="section-title">Medecin 6</h5>
+                    <img alt="Photo - Médecin 2" src="../img/univoix.png" style="max-width: 50%;height: auto" class="border border-danger rounded">
+                    <p>
+                        Nom - Prenom - Spécialité
+                    </p>
+                    <a href="#" class="btn btn-danger">Prendre contact</a>
+                </div></div>
+            <div class="col-md-4">
+                <div class="shadow pb-2">
+                    <h5 class="section-title">Medecin 7</h5>
                     <img alt="Photo - Médecin 2" src="../img/univoix.png" style="max-width: 50%;height: auto" class="border border-danger rounded">
                     <p>
                         Nom - Prenom - Spécialité
