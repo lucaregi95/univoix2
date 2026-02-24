@@ -15,7 +15,7 @@
 
         <a href="acceuil.php"><img alt="" class="navbar-brand fw-bold" src="../img/univoix.png" style="max-width:50px;"></a>
         <a class="nav-link" href="specialistes.php">Spécialistes</a>
-        <a class="nav-link" href="#">Forum</a>
+        <a class="nav-link" href="forum.php">Forum</a>
         <a class="nav-link" href="aides.php">Aides</a>
         <a class="nav-link active fw-semibold text-danger" href="presentation.php">Handicaps</a>
         <a class="navbar-brand fw-bold" href="profil.php"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 20 20" >

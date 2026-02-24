@@ -16,18 +16,18 @@ if(isset($_POST["submit_btn"])){
     if ($_POST['mot_de_passe']!==$_POST['conf_mdp']) {
         $erreur_mdp = "Les mots de passe ne correspondent pas";
     }else{
-        $sql = "INSERT INTO inscrit (nom, prenom, age, pseudo, mail, ville, mot_de_passe, role, importance_signalement) VALUES (:nom, :prenom, :age, :pseudo, :email, :ville, :mot_de_passe, :role, :importance_signalement)";
+        $sql = "INSERT INTO inscrit (nom, prenom, age, pseudo, email, ville, mot_de_passe, role, importance_signalement) VALUES (:nom, :prenom, :age, :pseudo, :email, :ville, :mot_de_passe, :role, :importance_signalement)";
         $query = $connexion->prepare($sql);
         $query->execute(array(
-            "nom" => $nom,
-            "prenom" => $prenom,
-            "age" => $age,
-            "pseudo" => $pseudo,
-            "email" => $email,
-            "mot_de_passe" => $mot_de_passe,
-            "role" => $role,
-            "importance_signalement" => $importance_signalement,
-            "ville" => $ville
+                "nom" => $nom,
+                "prenom" => $prenom,
+                "age" => $age,
+                "pseudo" => $pseudo,
+                "email" => $email,
+                "mot_de_passe" => $mot_de_passe,
+                "role" => $role,
+                "importance_signalement" => $importance_signalement,
+                "ville" => $ville
         ));
 
         $id_inscrit = $connexion->lastInsertId();
@@ -38,13 +38,13 @@ if(isset($_POST["submit_btn"])){
             $query2 = $connexion->prepare($sql2);
             foreach($handicaps as $id_handicap){
                 $query2->execute(array(
-                    "ref_inscrit" => $id_inscrit,
-                    "ref_handicaps" => $id_handicap
+                        "ref_inscrit" => $id_inscrit,
+                        "ref_handicap" => $id_handicap
                 ));
             }
         }
 
-        header('Location: public/acceuil.php');
+        header('Location: acceuil.php');
         exit();
     }
 }
@@ -108,9 +108,9 @@ $handicaps_list = $connexion->query("SELECT id_handicap, nom FROM handicap ORDER
         <div class="card-body">
             <h2 class="text-center mb-4">Inscription</h2>
 
-            <?php if(isset($erreur_mdp)): ?>
+            <?php if(isset($erreur_mdp)) { ?>
                 <div class="alert alert-danger"><?= $erreur_mdp ?></div>
-            <?php endif; ?>
+            <?php } ?>
 
             <form action="inscription.php" method="post">
                 <input type="hidden" name="handicaps" id="handicapsInput">
@@ -193,58 +193,72 @@ $handicaps_list = $connexion->query("SELECT id_handicap, nom FROM handicap ORDER
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    // Troubles chargés depuis la BDD via PHP
     const troubles = <?= json_encode($handicaps_list) ?>;
-
-    const tagBox         = document.getElementById('tagBox');
+    const selected = new Set();
     const tagSearch      = document.getElementById('tagSearch');
+    const tagBox         = document.getElementById('tagBox');
     const tagDropdown    = document.getElementById('tagDropdown');
     const tagEmpty       = document.getElementById('tagEmpty');
     const handicapsInput = document.getElementById('handicapsInput');
-
-    let selected = new Set();
 
     troubles.forEach(t => {
         const div = document.createElement('div');
         div.className = 'tag-option';
         div.dataset.value = t.id_handicap;
         div.dataset.label = t.nom;
-        div.innerHTML = `<span>${t.nom}</span><span class="tag-check"></span>`;
-        div.addEventListener('click', () => toggleTag(t.id_handicap, t.nom, div));
-        tagDropdown.appendChild(div);
+        div.innerHTML = `<span>${t.nom}</span><div class="tag-check"></div>`;
+        div.addEventListener('click', () => toggle(t.id_handicap, t.nom, div));
+        tagDropdown.insertBefore(div, tagEmpty);
     });
 
-    function toggleTag(id, label, optionEl) {
+    function toggle(id, label, el) {
         if (selected.has(id)) {
             selected.delete(id);
-            optionEl.classList.remove('selected');
-            const pill = tagBox.querySelector(`.tag[data-value="${id}"]`);
-            if (pill) pill.remove();
+            el.classList.remove('selected');
+            tagBox.querySelector(`.tag[data-value="${id}"]`)?.remove();
         } else {
             selected.add(id);
-            optionEl.classList.add('selected');
-            const pill = document.createElement('span');
-            pill.className = 'tag';
-            pill.dataset.value = id;
-            pill.innerHTML = `${label} <button class="tag-remove" type="button">×</button>`;
-            pill.querySelector('.tag-remove').addEventListener('click', e => {
-                e.stopPropagation();
-                toggleTag(id, label, optionEl);
-            });
-            tagBox.insertBefore(pill, tagSearch);
+            el.classList.add('selected');
+            addTag(id, label);
         }
         handicapsInput.value = JSON.stringify([...selected]);
+        tagSearch.focus();
+    }
+
+    function addTag(id, label) {
+        const tag = document.createElement('span');
+        tag.className = 'tag';
+        tag.dataset.value = id;
+        tag.innerHTML = `${label}<button class="tag-remove" title="Retirer">×</button>`;
+        tag.querySelector('.tag-remove').addEventListener('click', e => {
+            e.stopPropagation();
+            selected.delete(id);
+            tag.remove();
+            tagDropdown.querySelector(`.tag-option[data-value="${id}"]`)?.classList.remove('selected');
+            handicapsInput.value = JSON.stringify([...selected]);
+        });
+        tagBox.insertBefore(tag, tagSearch);
     }
 
     tagSearch.addEventListener('input', () => {
-        const q = tagSearch.value.toLowerCase();
-        let anyVisible = false;
-        tagDropdown.querySelectorAll('.tag-option').forEach(opt => {
-            const match = opt.dataset.label.toLowerCase().includes(q);
-            opt.classList.toggle('hidden', !match);
-            if (match) anyVisible = true;
+        const q = tagSearch.value.toLowerCase().trim();
+        let visible = 0;
+        tagDropdown.querySelectorAll('.tag-option').forEach(item => {
+            const match = item.dataset.label.toLowerCase().includes(q);
+            item.classList.toggle('hidden', !match);
+            if (match) visible++;
         });
-        tagEmpty.style.display = anyVisible ? 'none' : 'block';
+        tagEmpty.style.display = visible === 0 ? 'block' : 'none';
+    });
+
+    tagSearch.addEventListener('keydown', e => {
+        if (e.key === 'Backspace' && tagSearch.value === '' && selected.size > 0) {
+            const last = [...selected].pop();
+            selected.delete(last);
+            tagBox.querySelector(`.tag[data-value="${last}"]`)?.remove();
+            tagDropdown.querySelector(`.tag-option[data-value="${last}"]`)?.classList.remove('selected');
+            handicapsInput.value = JSON.stringify([...selected]);
+        }
     });
 
     tagSearch.addEventListener('focus', () => { tagDropdown.style.display = 'block'; });

@@ -1,3 +1,13 @@
+<?php
+session_start();
+require_once("../bdd/connexion.php");
+
+
+
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -161,7 +171,7 @@
     <div class="container d-flex justify-content-evenly align-items-center">
         <a href="acceuil.php"><img alt="" class="navbar-brand fw-bold" src="../img/univoix.png" style="max-width:50px;"></a>
         <a class="nav-link" href="specialistes.php">Spécialistes</a>
-        <a class="nav-link" href="#">Forum</a>
+        <a class="nav-link" href="forum.php">Forum</a>
         <a class="nav-link" href="aides.php">Aides</a>
         <a class="nav-link" href="presentation.php">Handicaps</a>
         <a class="navbar-brand fw-bold text-danger" href="profil.php">

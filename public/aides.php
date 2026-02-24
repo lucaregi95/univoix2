@@ -92,7 +92,7 @@
     <div class="container d-flex justify-content-evenly align-items-center">
         <a href="acceuil.php"><img alt="UniVoix" class="navbar-brand fw-bold" src="../img/univoix.png" style="max-width:50px;"></a>
         <a class="nav-link" href="specialistes.php">Spécialistes</a>
-        <a class="nav-link" href="#">Forum</a>
+        <a class="nav-link" href="forum.php">Forum</a>
         <a class="nav-link active fw-semibold text-danger" href="aides.php">Aides</a>
         <a class="nav-link" href="presentation.php">Handicaps</a>
         <a class="navbar-brand fw-bold" href="profil.php">
@@ -119,7 +119,7 @@
         <p>
             Le CROUS accompagne les étudiants et les étudiantes dans leur vie quotidienne pendant leurs études supérieures. Leur mission est d'améliorer les conditions de vie et d'études : bourses, logement, restauration, accès aux services de la vie campus. Pour étudiants. Leur service s'adresse à tous les étudiants et les étudiantes de l'académie.
         </p>
-        <a href="#" class="btn-aide">Accéder au site du CROUS</a>
+        <a href="https://www.lescrous.fr/" class="btn-aide">Accéder au site du CROUS</a>
     </div>
 
     <!-- Aide au logement -->
@@ -128,7 +128,7 @@
         <p>
             Les aides personnalisées au logement (APL) sont des allocations versées par la CAF ou la MSA pour réduire le montant de votre loyer. Elles sont accessibles aux étudiants locataires sous conditions de ressources, que vous soyez en résidence universitaire ou en logement privé.
         </p>
-        <a href="#" class="btn-aide">Accéder au site de la CAF</a>
+        <a href="https://wwwd.caf.fr/wps/portal/caffr/aidesetdemarches/mesdemarches/faireunesimulation/lelogement#/preparation" class="btn-aide">Accéder au site de la CAF</a>
     </div>
 
     <!-- Aide Handicap -->
@@ -137,7 +137,7 @@
         <p>
             La MDPH (Maison Départementale des Personnes Handicapées) propose un accompagnement personnalisé et des aménagements pour les étudiants en situation de handicap : tiers-temps, aides humaines, matérielles ou financières. Renseignez-vous auprès de votre établissement pour activer vos droits.
         </p>
-        <a href="#" class="btn-aide">Accéder au site de la MDPH</a>
+        <a href="https://www.monparcourshandicap.gouv.fr/" class="btn-aide">Accéder au site de la MDPH</a>
     </div>
 
     <!-- Bourse sur critères sociaux -->
