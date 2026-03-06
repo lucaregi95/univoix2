@@ -12,10 +12,27 @@ if(isset($_POST["submit_btn"])){
     $role = "user";
     $importance_signalement = 1;
     $ville = $_POST['ville'];
-
-    if ($_POST['mot_de_passe']!==$_POST['conf_mdp']) {
+    $compteur=0;
+    $sql3 = "SELECT email,pseudo FROM inscrit";
+    $query3 = $connexion->prepare($sql3);
+    $query3->execute();
+    $resutl3 = $query3->fetchAll();
+    foreach ($resutl3 as $row3) {
+        if ($row3['email'] == $email) {
+            $compteur = 1;
+        }
+        if ($row3['pseudo'] == $pseudo) {
+            $compteur = 2;
+        }
+    }
+    if ($_POST['mot_de_passe']!=$_POST['conf_mdp']) {
         $erreur_mdp = "Les mots de passe ne correspondent pas";
-    }else{
+    }else if($compteur==1){
+        $erreur_mdp = "L'adresse e-mail est deja utilisée";
+    }else if($compteur==2){
+        $erreur_mdp = "Le pseudo est deja utilisé";
+    }
+    else{
         $sql = "INSERT INTO inscrit (nom, prenom, age, pseudo, email, ville, mot_de_passe, role, importance_signalement) VALUES (:nom, :prenom, :age, :pseudo, :email, :ville, :mot_de_passe, :role, :importance_signalement)";
         $query = $connexion->prepare($sql);
         $query->execute(array(
@@ -43,8 +60,7 @@ if(isset($_POST["submit_btn"])){
                 ));
             }
         }
-
-        header('Location: acceuil.php');
+        header('Location: connexion.php');
         exit();
     }
 }
@@ -98,7 +114,7 @@ $handicaps_list = $connexion->query("SELECT id_handicap, nom FROM handicap ORDER
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 20 20">
                 <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
                 <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-            </svg> John Doe
+            </svg> Connexion
         </a>
     </div>
 </nav>
@@ -184,13 +200,12 @@ $handicaps_list = $connexion->query("SELECT id_handicap, nom FROM handicap ORDER
             </form>
         </div>
 
-        <!-- Footer -->
-        <div class="card-footer bg-danger text-white text-center">
-            © 2026 – Luca Regl, Nassim Kharouche, Prosper Folayn – Tous droits réservés
-        </div>
+
     </div>
 </div>
-
+<footer class="py-3 text-center bg-danger text-white">
+    © 2026 — Luca Regi, Nassim Kharfouche, Prosper Fajnzyn — Tous droits réservés
+</footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     const troubles = <?= json_encode($handicaps_list) ?>;

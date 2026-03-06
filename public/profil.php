@@ -2,8 +2,16 @@
 session_start();
 require_once("../bdd/connexion.php");
 
+if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])){
+    header("location:connexion.php?page=p");
+    exit();
 
-
+}
+$id=$_SESSION['id'];
+$sql3 = "SELECT nom,prenom,age,email,pseudo FROM inscrit WHERE id_inscrit=:id";
+$query3 = $connexion->prepare($sql3);
+$query3->execute(array("id"=>$id));
+$resultat=$query3->fetch();
 
 
 ?>
@@ -178,7 +186,7 @@ require_once("../bdd/connexion.php");
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 20 20">
                 <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
                 <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-            </svg> John Doe
+            </svg> <?= $_SESSION["prenom"]?> <?=$_SESSION["nom"]?>
         </a>
     </div>
 </nav>
@@ -196,23 +204,23 @@ require_once("../bdd/connexion.php");
                 <div class="col-md-3">
                     <div class="mb-3">
                         <label class="form-label fw-semibold">Nom :</label>
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" value="<?=$resultat['nom']?>">
                     </div>
                     <div class="mb-3">
                         <label class="form-label fw-semibold">Prénom :</label>
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" value="<?=$resultat['prenom']?>">
                     </div>
                     <div class="mb-3">
                         <label class="form-label fw-semibold">E-mail :</label>
-                        <input type="email" class="form-control">
+                        <input type="email" class="form-control" value="<?=$resultat['email']?>">
                     </div>
                     <div class="mb-3">
                         <label class="form-label fw-semibold">Age :</label>
-                        <input type="number" class="form-control">
+                        <input type="number" class="form-control" value="<?=$resultat['age']?>">
                     </div>
                     <div class="mb-3">
                         <label class="form-label fw-semibold">Pseudo :</label>
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" value="<?=$resultat['pseudo']?>">
                     </div>
                 </div>
 
@@ -294,6 +302,7 @@ require_once("../bdd/connexion.php");
 
     <!-- BOUTON SAUVEGARDER -->
     <div class="text-center my-4">
+        <input type="hidden">
         <button class="btn btn-danger btn-lg-border border-dark px-5 py-2">Sauvegarder les changements</button>
     </div>
 </div>

@@ -1,7 +1,11 @@
 <?php
 require_once "../bdd/connexion.php";
 session_start();
+if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])){
+    header("location:connexion.php?page=f");
+    exit();
 
+}
 $sujets = $connexion->query("
     SELECT sujet.id_sujet, sujet.titre, sujet.date_sujet, sujet.categorie_sujet, inscrit.pseudo
     FROM sujet
