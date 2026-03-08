@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -5,6 +8,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Les handicaps invisibles</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        ul, li {
+            list-style-type: none;
+        }
+    </style>
 </head>
 
 <body style="font-family:'Candara'" class="bg-light">
@@ -16,13 +24,39 @@
         <a href="acceuil.php"><img alt="" class="navbar-brand fw-bold" src="../img/univoix.png" style="max-width:50px;"></a>
         <a class="nav-link" href="specialistes.php">Spécialistes</a>
         <a class="nav-link" href="forum.php">Forum</a>
-        <a class="nav-link" href="aides.php">Aides</a>
-        <a class="nav-link active fw-semibold text-danger" href="presentation.php">Handicaps</a>
-        <a class="navbar-brand fw-bold" href="profil.php"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 20 20" >
-                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-            </svg>     John Doe</a>
 
+        <a class="nav-link" href="aides.php">Aides</a>
+        <a class="nav-link" href="presentation.php">Handicaps</a>
+        <?php if(isset($_SESSION['role'])){
+            if ($_SESSION['role'] == 'admin'){
+                ?>
+                <a class="nav-link" href="admin/connexion_admin.php">Admin</a>
+            <?php }} ?>
+
+        <?php if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])){?>
+            <a class="navbar-brand fw-bold" href="profil.php"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 20 20" >
+
+                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+                </svg>     Connexion</a>
+
+
+        <?php }
+        else{ ?>
+            <li class="nav-item dropdown fs-5" >
+                <a class="nav-link dropdown-toggle" style="font-weight:bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 20 20" >
+
+                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+                    </svg>     <?=$_SESSION["prenom"]?> <?=$_SESSION["nom"]?></a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="profil.php">Profil</a></li>
+                    <li><a class="dropdown-item" href="deconnexion.php">Se deconnecter</a></li>
+                </ul>
+            </li>
+
+
+        <?php } ?>
     </div>
 </nav>
 

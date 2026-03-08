@@ -24,6 +24,9 @@ $resultat=$query3->fetch();
     <title>UniVoix - Profil</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        ul, li {
+            list-style-type: none;
+        }
         .form-check-input.custom-switch {
             width: 3rem;
             height: 1.5rem;
@@ -182,12 +185,17 @@ $resultat=$query3->fetch();
         <a class="nav-link" href="forum.php">Forum</a>
         <a class="nav-link" href="aides.php">Aides</a>
         <a class="nav-link" href="presentation.php">Handicaps</a>
-        <a class="navbar-brand fw-bold text-danger" href="profil.php">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 20 20">
-                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-            </svg> <?= $_SESSION["prenom"]?> <?=$_SESSION["nom"]?>
-        </a>
+        <li class="nav-item dropdown fs-5" >
+            <a class="nav-link dropdown-toggle text-danger" style="font-weight:bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 20 20" >
+
+                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+                </svg>     <?=$_SESSION["prenom"]?> <?=$_SESSION["nom"]?></a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="profil.php">Profil</a></li>
+                <li><a class="dropdown-item" href="deconnexion.php">Se deconnecter</a></li>
+            </ul>
+        </li>
     </div>
 </nav>
 
@@ -212,7 +220,7 @@ $resultat=$query3->fetch();
                     </div>
                     <div class="mb-3">
                         <label class="form-label fw-semibold">E-mail :</label>
-                        <input type="email" class="form-control" value="<?=$resultat['email']?>">
+                        <input type="email" class="form-control" value="<?=$resultat['email']?>" disabled>
                     </div>
                     <div class="mb-3">
                         <label class="form-label fw-semibold">Age :</label>
@@ -230,7 +238,7 @@ $resultat=$query3->fetch();
                         <div class="d-flex align-items-center justify-content-between mb-2">
                             <label class="form-label fw-semibold mb-0">Police pour Dyslexique :</label>
                             <div class="form-check form-switch">
-                                <input class="form-check-input custom-switch" type="checkbox" role="switch" checked>
+                                <input class="form-check-input custom-switch" type="checkbox" role="switch">
                             </div>
                         </div>
                         <h3>Handicaps :</h3>
@@ -280,19 +288,19 @@ $resultat=$query3->fetch();
                 <div class="col-md-4 d-flex align-items-center justify-content-start gap-3">
                     <label class="form-label mb-0 fw-semibold">Deutéranopie :</label>
                     <div class="form-check form-switch">
-                        <input class="form-check-input custom-switch" type="checkbox" role="switch" checked>
+                        <input class="form-check-input custom-switch" type="checkbox" role="switch" >
                     </div>
                 </div>
                 <div class="col-md-4 d-flex align-items-center justify-content-start gap-3">
                     <label class="form-label mb-0 fw-semibold">Tritanopie :</label>
                     <div class="form-check form-switch">
-                        <input class="form-check-input custom-switch" type="checkbox" role="switch" checked>
+                        <input class="form-check-input custom-switch" type="checkbox" role="switch" >
                     </div>
                 </div>
                 <div class="col-md-4 d-flex align-items-center justify-content-start gap-3">
                     <label class="form-label mb-0 fw-semibold">Protanopie :</label>
                     <div class="form-check form-switch">
-                        <input class="form-check-input custom-switch" type="checkbox" role="switch" checked>
+                        <input class="form-check-input custom-switch" type="checkbox" role="switch">
                     </div>
                 </div>
             </div>
