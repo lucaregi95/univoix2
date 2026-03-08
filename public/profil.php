@@ -6,61 +6,99 @@ if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])) {
     header("location:connexion.php?page=p");
     exit();
 }
-$message = '';
-$avatar_path = '';
-$name = "";
 
-if (isset($_FILES['file']) && $_FILES['file']['error'] != 4) {
+$message = "";
+$avatar_path = "";
+
+$id = $_SESSION['id'];
+
+$sql = "SELECT nom, prenom, age, email, pseudo 
+        FROM inscrit 
+        WHERE id_inscrit = :id";
+
+$query = $connexion->prepare($sql);
+$query->execute(["id"=>$id]);
+$resultat = $query->fetch();
+
+$sql_handicaps = "SELECT h.nom
+                  FROM handicap h
+                  INNER JOIN inscrithandicap ih 
+                  ON h.id_handicap = ih.ref_handicap
+                  WHERE ih.ref_inscrit = :id";
+
+$query_handicaps = $connexion->prepare($sql_handicaps);
+$query_handicaps->execute(["id"=>$id]);
+$handicap_utilisateur = $query_handicaps->fetchAll(PDO::FETCH_COLUMN);
+
+
+/* =============================
+   TRAITEMENT UPLOAD AVATAR
+   ============================= */
+
+if(isset($_FILES['file']) && $_FILES['file']['error'] != 4){
+
     $tmpName = $_FILES['file']['tmp_name'];
     $name = $_FILES['file']['name'];
     $size = $_FILES['file']['size'];
     $error = $_FILES['file']['error'];
-}
-$id = $_SESSION['id'];
-$sql = "SELECT nom, prenom, age, email, pseudo FROM inscrit WHERE id_inscrit = :id";
-$query = $connexion->prepare($sql);
-$query->execute(["id" => $id]);
-$resultat = $query->fetch();
-
-$sql_handicaps = " SELECT h.nom  FROM handicap h INNER JOIN inscrithandicap ih ON h.id_handicap = ih.ref_handicap WHERE ih.ref_inscrit = :id";
-$query_handicaps = $connexion->prepare($sql_handicaps);
-$query_handicaps->execute(["id" => $id]);
-$handicap_utilisateur = $query_handicaps->fetchAll(PDO::FETCH_COLUMN);
 
     $tabExtension = explode('.', $name);
     $extension = strtolower(end($tabExtension));
 
-
-    $extensions = ['jpg', 'png', 'jpeg', 'gif'];
-
+    $extensions = ['jpg','jpeg','png','gif'];
     $maxSize = 2000000;
 
+    if(in_array($extension,$extensions) && $size <= $maxSize && $error == 0){
 
-    if (in_array($extension, $extensions) && $size <= $maxSize && $error == 0) {
-
-        $uniqueName = uniqid('avatar_', true);
-        $file = $uniqueName . "." . $extension;
-
-
-        if (move_uploaded_file($tmpName, './avatar/' . $file)) {
-            $avatar_path = './avatar/' . $file;
-            $message = '<div class="alert alert-success"> Avatar téléchargé avec succès !</div>';
-        } else {
-            $message = '<div class="alert alert-danger"> Erreur lors du téléchargement</div>';
+        /* supprimer ancien avatar */
+        foreach($extensions as $ext){
+            $oldFile = "../img/avatar/".$id.".".$ext;
+            if(file_exists($oldFile)){
+                unlink($oldFile);
+            }
         }
-    } else {
-        if ($extension == "") {
-            $message="";
+
+        /* nom fichier = id utilisateur */
+        $file = $id.".".$extension;
+        $uploadPath = "../img/avatar/".$file;
+
+        if(move_uploaded_file($tmpName,$uploadPath)){
+
+            $avatar_path = $uploadPath;
+
+            $message = '<div class="alert alert-success">
+                        Avatar téléchargé avec succès !
+                        </div>';
+
+        }else{
+
+            $message = '<div class="alert alert-danger">
+                        Erreur lors du téléchargement
+                        </div>';
         }
-        else if (!in_array($extension, $extensions)) {
-            $message = '<div class="alert alert-danger"> Extension non autorisée (jpg, png, jpeg, gif uniquement)</div>';
-        } elseif ($size > $maxSize){
-            $message = '<div class="alert alert-danger"> Fichier trop volumineux (max 2 Mo)</div>';
-        } else {
-            $message = '<div class="alert alert-danger"> Une erreur est survenue lors du téléchargement</div>';
+
+    }else{
+
+        if(!in_array($extension,$extensions)){
+
+            $message = '<div class="alert alert-danger">
+                        Extension non autorisée (jpg, png, jpeg, gif uniquement)
+                        </div>';
+
+        }elseif($size > $maxSize){
+
+            $message = '<div class="alert alert-danger">
+                        Fichier trop volumineux (max 2 Mo)
+                        </div>';
+
+        }else{
+
+            $message = '<div class="alert alert-danger">
+                        Une erreur est survenue lors du téléchargement
+                        </div>';
         }
+    }
 }
-
 
 
 
@@ -255,13 +293,20 @@ $handicap_utilisateur = $query_handicaps->fetchAll(PDO::FETCH_COLUMN);
         <a class="nav-link" href="forum.php">Forum</a>
         <a class="nav-link" href="aides.php">Aides</a>
         <a class="nav-link" href="presentation.php">Handicaps</a>
+        <?php
+        $avatar=null;
+        require_once("avatar.php");?>
         <li class="nav-item dropdown fs-5" >
-            <a class="nav-link dropdown-toggle text-danger" style="font-weight:bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img class="rounded-circle" alt="pdp" src="../img/avatar/<?=$_SESSION["id"]?>.jpg" width="40px" height="40px"/>     <?=$_SESSION["prenom"]?> <?=$_SESSION["nom"]?></a>
+            <a class="nav-link dropdown-toggle" style="font-weight:bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img class="rounded-circle" alt="pdp" src="<?=$avatar?>" width="40px" height="40px"/>     <?=$_SESSION["prenom"]?> <?=$_SESSION["nom"]?></a>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="profil.php">Profil</a></li>
                 <li><a class="dropdown-item" href="deconnexion.php">Se deconnecter</a></li>
             </ul>
         </li>
+
+
+
+
     </div>
 </nav>
 
@@ -340,15 +385,19 @@ $handicap_utilisateur = $query_handicaps->fetchAll(PDO::FETCH_COLUMN);
                         <label class="form-label fw-semibold d-block mb-3">Avatar :</label>
                         <div class="mb-3">
                             <div class="avatar-preview" id="avatarPreview">
-                                <?php if ($avatar_path && file_exists($avatar_path)) { ?>
-                                    <img src="<?= $avatar_path ?>" alt="Avatar">
+                                <?php if ($avatar != "../img/avatar/default.png") { ?>
+
+                                    <img src="<?= $avatar ?>" alt="Avatar">
+
                                 <?php } else { ?>
+
                                     <div class="text-center">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" class="bi bi-person text-muted mb-2" viewBox="0 0 16 16">
-                                            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+                                            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4"/>
                                         </svg>
                                         <div class="text-muted">Avatar</div>
                                     </div>
+
                                 <?php } ?>
                             </div>
                         </div>
