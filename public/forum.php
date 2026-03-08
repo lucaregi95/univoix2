@@ -1,6 +1,10 @@
 <?php
 require_once "../bdd/connexion.php";
 session_start();
+if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])) {
+    header("location:connexion.php?page=f");
+    exit();
+}
 
 if (isset($_GET['categorie'])) {
     $categorie = $_GET['categorie'];
@@ -14,11 +18,10 @@ if (isset($_GET['recherche'])) {
 }
 
 $sql = " SELECT sujet.id_sujet, sujet.titre, sujet.date_sujet, sujet.categorie_sujet, inscrit.pseudo,
-           (SELECT COUNT(*) FROM reponse WHERE reponse.ref_sujet = sujet.id_sujet) as nb_reponses
-    FROM sujet
-    INNER JOIN inscrit ON sujet.ref_inscrit = inscrit.id_inscrit
-    WHERE 1=1
-";
+        (SELECT COUNT(*) FROM reponse WHERE reponse.ref_sujet = sujet.id_sujet) as nb_reponses
+         FROM sujet
+         INNER JOIN inscrit ON sujet.ref_inscrit = inscrit.id_inscrit
+         WHERE 1=1 ";
 
 $tableau = [];
 
@@ -39,6 +42,7 @@ $req->execute($tableau);
 $sujets = $req->fetchAll(PDO::FETCH_ASSOC);
 
 $categories = $connexion->query("SELECT DISTINCT categorie_sujet FROM sujet ORDER BY categorie_sujet")->fetchAll(PDO::FETCH_COLUMN);
+
 
 ?>
 

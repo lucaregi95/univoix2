@@ -2,16 +2,25 @@
 session_start();
 require_once("../bdd/connexion.php");
 
-
+if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])) {
+    header("location:connexion.php?page=p");
+    exit();
+}
 $message = '';
 $avatar_path = '';
+$name = "";
 
 if (isset($_FILES['file']) && $_FILES['file']['error'] != 4) {
     $tmpName = $_FILES['file']['tmp_name'];
     $name = $_FILES['file']['name'];
     $size = $_FILES['file']['size'];
     $error = $_FILES['file']['error'];
-
+}
+$id=$_SESSION['id'];
+$sql3 = "SELECT nom,prenom,age,email,pseudo FROM inscrit WHERE id_inscrit=:id";
+$query3 = $connexion->prepare($sql3);
+$query3->execute(array("id"=>$id));
+$resultat=$query3->fetch();
 
     $tabExtension = explode('.', $name);
     $extension = strtolower(end($tabExtension));
@@ -42,7 +51,6 @@ if (isset($_FILES['file']) && $_FILES['file']['error'] != 4) {
         } else {
             $message = '<div class="alert alert-danger"> Une erreur est survenue lors du téléchargement</div>';
         }
-    }
 }
 
 ?>
@@ -235,7 +243,7 @@ if (isset($_FILES['file']) && $_FILES['file']['error'] != 4) {
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 20 20">
                 <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
                 <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-            </svg> John Doe
+            </svg> <?= $_SESSION["prenom"]?> <?=$_SESSION["nom"]?>
         </a>
     </div>
 </nav>
@@ -248,11 +256,8 @@ if (isset($_FILES['file']) && $_FILES['file']['error'] != 4) {
     <form method="POST" enctype="multipart/form-data">
         <div class="card border border-danger border-3 shadow-sm">
             <div class="card-body p-5">
-
                 <h2 class="fw-bold mb-4">Vos informations personnelles</h2>
-
                 <div class="row g-5">
-
                     <!-- COLONNE GAUCHE -->
                     <div class="col-md-3">
                         <div class="mb-3">
@@ -340,9 +345,7 @@ if (isset($_FILES['file']) && $_FILES['file']['error'] != 4) {
                         </button>
                         <small class="d-block text-muted mt-2">Max 2 Mo (JPG, PNG, GIF)</small>
                     </div>
-
                 </div>
-
                 <!-- SWITCHES EN BAS -->
                 <div class="row mt-4">
                     <div class="col-md-4 d-flex align-items-center justify-content-start gap-3">
@@ -367,7 +370,6 @@ if (isset($_FILES['file']) && $_FILES['file']['error'] != 4) {
 
             </div>
         </div>
-
         <!-- BOUTON SAUVEGARDER -->
         <div class="text-center my-4">
             <button type="submit" class="btn btn-danger btn-lg px-5 py-2">
