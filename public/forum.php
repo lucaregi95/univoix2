@@ -17,11 +17,7 @@ if (isset($_GET['recherche'])) {
     $recherche = '';
 }
 
-$sql = " SELECT sujet.id_sujet, sujet.titre, sujet.date_sujet, sujet.categorie_sujet, inscrit.pseudo,
-        (SELECT COUNT(*) FROM reponse WHERE reponse.ref_sujet = sujet.id_sujet) as nb_reponses
-         FROM sujet
-         INNER JOIN inscrit ON sujet.ref_inscrit = inscrit.id_inscrit
-         WHERE 1=1 ";
+$sql = " SELECT sujet.id_sujet, sujet.titre, sujet.date_sujet, sujet.categorie_sujet, inscrit.pseudo,(SELECT COUNT(*) FROM reponse WHERE reponse.ref_sujet = sujet.id_sujet) as nb_reponses FROM sujet INNER JOIN inscrit ON sujet.ref_inscrit = inscrit.id_inscrit WHERE 1=1 ";
 
 $tableau = [];
 

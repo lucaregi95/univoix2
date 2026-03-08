@@ -72,7 +72,7 @@ session_start();
                         <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
                     </svg>     <?=$_SESSION["prenom"]?> <?=$_SESSION["nom"]?></a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Profil</a></li>
+                    <li><a class="dropdown-item" href="profil.php">Profil</a></li>
                     <li><a class="dropdown-item" href="deconnexion.php">Se deconnecter</a></li>
                 </ul>
             </li>
@@ -240,13 +240,10 @@ session_start();
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    /* When the user clicks on the button,
-    toggle between hiding and showing the dropdown content */
     function myFunction() {
         document.getElementById("myDropdown").classList.toggle("show");
     }
 
-    // Close the dropdown if the user clicks outside of it
     window.onclick = function(e) {
         if (!e.target.matches('.dropbtn')) {
             var myDropdown = document.getElementById("myDropdown");

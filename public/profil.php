@@ -16,11 +16,16 @@ if (isset($_FILES['file']) && $_FILES['file']['error'] != 4) {
     $size = $_FILES['file']['size'];
     $error = $_FILES['file']['error'];
 }
-$id=$_SESSION['id'];
-$sql3 = "SELECT nom,prenom,age,email,pseudo FROM inscrit WHERE id_inscrit=:id";
-$query3 = $connexion->prepare($sql3);
-$query3->execute(array("id"=>$id));
-$resultat=$query3->fetch();
+$id = $_SESSION['id'];
+$sql = "SELECT nom, prenom, age, email, pseudo FROM inscrit WHERE id_inscrit = :id";
+$query = $connexion->prepare($sql);
+$query->execute(["id" => $id]);
+$resultat = $query->fetch();
+
+$sql_handicaps = " SELECT h.nom  FROM handicap h INNER JOIN inscrithandicap ih ON h.id_handicap = ih.ref_handicap WHERE ih.ref_inscrit = :id";
+$query_handicaps = $connexion->prepare($sql_handicaps);
+$query_handicaps->execute(["id" => $id]);
+$handicap_utilisateur = $query_handicaps->fetchAll(PDO::FETCH_COLUMN);
 
     $tabExtension = explode('.', $name);
     $extension = strtolower(end($tabExtension));
@@ -52,6 +57,11 @@ $resultat=$query3->fetch();
             $message = '<div class="alert alert-danger"> Une erreur est survenue lors du téléchargement</div>';
         }
 }
+
+
+
+
+
 
 ?>
 
@@ -407,6 +417,7 @@ $resultat=$query3->fetch();
         "Troubles anxieux",
         "Dépression",
         "Haut Potentiel Intellectuel (HPI)",
+        "Autre",
     ];
 
     const selected = new Set();
@@ -490,6 +501,25 @@ $resultat=$query3->fetch();
             };
             reader.readAsDataURL(file);
         }
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const handicapsFromDB = <?= json_encode($handicap_utilisateur) ?>;
+
+        // Charger les handicaps existants au démarrage
+        handicapsFromDB.forEach(handicap => {
+            const cleanHandicap = handicap.trim();
+            const option = tagDropdown.querySelector(`.tag-option[data-value="${CSS.escape(cleanHandicap)}"]`);
+            if (option) {
+                selected.add(cleanHandicap);
+                option.classList.add('selected');
+                addTag(cleanHandicap);
+            }
+        });
+
+        updateHiddenInput();
     });
 </script>
 

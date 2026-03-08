@@ -12,8 +12,7 @@ if(isset($_POST['submit_btn'])){
     if(empty($categorie)){
         $erreur = "Veuillez sélectionner au moins une catégorie";
     } else {
-        $sql = "INSERT INTO sujet (titre, contenu, date_sujet, categorie_sujet, ref_inscrit) 
-                VALUES (:titre, :contenu, :date_sujet, :categorie_sujet, :ref_inscrit)";
+        $sql = "INSERT INTO sujet (titre, contenu, date_sujet, categorie_sujet, ref_inscrit) VALUES (:titre, :contenu, :date_sujet, :categorie_sujet, :ref_inscrit)";
         $query = $connexion->prepare($sql);
         $query->execute(array(
                 "titre" => $titre,
