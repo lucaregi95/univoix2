@@ -61,7 +61,7 @@ session_start();
         <?php }} ?>
 
         <?php if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])){?>
-        <a class="navbar-brand fw-bold" href="profil.php"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 20 20" >
+        <a class="navbar-brand fw-bold" href="connexion.php"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 20 20" >
 
                 <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
                 <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
@@ -71,11 +71,7 @@ session_start();
         <?php }
         else{ ?>
             <li class="nav-item dropdown fs-5" >
-                <a class="nav-link dropdown-toggle" style="font-weight:bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 20 20" >
-
-                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-                        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-                    </svg>     <?=$_SESSION["prenom"]?> <?=$_SESSION["nom"]?></a>
+                <a class="nav-link dropdown-toggle" style="font-weight:bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img class="rounded-circle" alt="pdp" src="../img/avatar/<?=$_SESSION["id"]?>.jpg" width="40px" height="40px"/>     <?=$_SESSION["prenom"]?> <?=$_SESSION["nom"]?></a>
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="profil.php">Profil</a></li>
                     <li><a class="dropdown-item" href="deconnexion.php">Se deconnecter</a></li>
@@ -114,7 +110,7 @@ session_start();
                     Le forum est un endroit de partage et de soutien,
                     où les étudiants peuvent parler librement.
                 </p>
-                <a href="#" class="btn btn-outline-light btn-univoix">Accéder au forum</a>
+                <a href="forum.php" class="btn btn-outline-light btn-univoix">Accéder au forum</a>
             </div>
 
             <!-- SPECIALISTES -->
@@ -134,7 +130,7 @@ session_start();
                     Retrouvez les informations importantes à propos des
                     démarches d’aides et de subventions pour étudiants.
                 </p>
-                <a href="#" class="btn btn-outline-light btn-univoix">Consulter les aides</a>
+                <a href="aides.php" class="btn btn-outline-light btn-univoix">Consulter les aides</a>
             </div>
 
         </div>

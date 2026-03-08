@@ -101,7 +101,7 @@ $handicaps_list = $connexion->query("SELECT id_handicap, nom FROM handicap ORDER
         .btn-help:hover { border-color: #dc3545; color: #dc3545; }
     </style>
 </head>
-<body class="bg-light">
+<body class="bg-light" style="font-family:'Candara'">
 
 <nav class="navbar navbar-expand-sm navbar-light bg-light border border-danger border-3">
     <div class="container d-flex justify-content-evenly align-items-center">
