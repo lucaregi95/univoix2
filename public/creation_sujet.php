@@ -59,6 +59,9 @@ if(isset($_POST['submit_btn'])){
         .tag-empty { padding: 10px 12px; font-size: .85rem; color: #aaa; text-align: center; display: none; }
         .btn-help { border: 1px solid #dee2e6; background: #fff; border-radius: 6px; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; color: #888; flex-shrink: 0; cursor: pointer; transition: all .2s; }
         .btn-help:hover { border-color: #dc3545; color: #dc3545; }
+        ul, li {
+            list-style-type: none;
+        }
     </style>
 </head>
 

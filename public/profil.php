@@ -49,9 +49,12 @@ $handicap_utilisateur = $query_handicaps->fetchAll(PDO::FETCH_COLUMN);
             $message = '<div class="alert alert-danger"> Erreur lors du téléchargement</div>';
         }
     } else {
-        if (!in_array($extension, $extensions)) {
+        if ($extension == "") {
+            $message="";
+        }
+        else if (!in_array($extension, $extensions)) {
             $message = '<div class="alert alert-danger"> Extension non autorisée (jpg, png, jpeg, gif uniquement)</div>';
-        } elseif ($size > $maxSize) {
+        } elseif ($size > $maxSize){
             $message = '<div class="alert alert-danger"> Fichier trop volumineux (max 2 Mo)</div>';
         } else {
             $message = '<div class="alert alert-danger"> Une erreur est survenue lors du téléchargement</div>';
@@ -73,6 +76,9 @@ $handicap_utilisateur = $query_handicaps->fetchAll(PDO::FETCH_COLUMN);
     <title>UniVoix - Profil</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        ul, li {
+            list-style-type: none;
+        }
         .form-check-input.custom-switch {
             width: 3rem;
             height: 1.5rem;
@@ -249,12 +255,17 @@ $handicap_utilisateur = $query_handicaps->fetchAll(PDO::FETCH_COLUMN);
         <a class="nav-link" href="forum.php">Forum</a>
         <a class="nav-link" href="aides.php">Aides</a>
         <a class="nav-link" href="presentation.php">Handicaps</a>
-        <a class="navbar-brand fw-bold text-danger" href="profil.php">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 20 20">
-                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-            </svg> <?= $_SESSION["prenom"]?> <?=$_SESSION["nom"]?>
-        </a>
+        <li class="nav-item dropdown fs-5" >
+            <a class="nav-link dropdown-toggle text-danger" style="font-weight:bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 20 20" >
+
+                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+                </svg>     <?=$_SESSION["prenom"]?> <?=$_SESSION["nom"]?></a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="profil.php">Profil</a></li>
+                <li><a class="dropdown-item" href="deconnexion.php">Se deconnecter</a></li>
+            </ul>
+        </li>
     </div>
 </nav>
 
@@ -272,23 +283,23 @@ $handicap_utilisateur = $query_handicaps->fetchAll(PDO::FETCH_COLUMN);
                     <div class="col-md-3">
                         <div class="mb-3">
                             <label class="form-label fw-semibold">Nom :</label>
-                            <input type="text" name="nom" class="form-control">
+                            <input type="text" name="nom" class="form-control" value="<?=$resultat["nom"]?>">
                         </div>
                         <div class="mb-3">
                             <label class="form-label fw-semibold">Prénom :</label>
-                            <input type="text" name="prenom" class="form-control">
+                            <input type="text" name="prenom" class="form-control" value="<?=$resultat["prenom"]?>">
                         </div>
                         <div class="mb-3">
                             <label class="form-label fw-semibold">E-mail :</label>
-                            <input type="email" name="email" class="form-control">
+                            <input type="email" name="email" class="form-control" value="<?=$resultat["email"]?>" disabled>
                         </div>
                         <div class="mb-3">
                             <label class="form-label fw-semibold">Age :</label>
-                            <input type="number" name="age" class="form-control">
+                            <input type="number" name="age" class="form-control" value="<?=$resultat["age"]?>">
                         </div>
                         <div class="mb-3">
                             <label class="form-label fw-semibold">Pseudo :</label>
-                            <input type="text" name="pseudo" class="form-control">
+                            <input type="text" name="pseudo" class="form-control" value="<?=$resultat["pseudo"]?>">
                         </div>
                     </div>
 

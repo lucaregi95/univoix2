@@ -54,6 +54,11 @@ session_start();
 
         <a class="nav-link" href="aides.php">Aides</a>
         <a class="nav-link" href="presentation.php">Handicaps</a>
+        <?php if(isset($_SESSION['role'])){
+            if ($_SESSION['role'] == 'admin'){
+        ?>
+            <a class="nav-link" href="admin/connexion_admin.php">Admin</a>
+        <?php }} ?>
 
         <?php if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])){?>
         <a class="navbar-brand fw-bold" href="profil.php"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 20 20" >

@@ -8,7 +8,7 @@ $email=$_POST["email"];
 $mdp=$_POST["mdp"];
 $page=$_POST["page"];
 
-$sql2="SELECT id_inscrit,nom,prenom,mot_de_passe,email FROM inscrit WHERE email=:email AND mot_de_passe=:mdp";
+$sql2="SELECT id_inscrit,nom,prenom,mot_de_passe,email,role FROM inscrit WHERE email=:email AND mot_de_passe=:mdp";
 $query = $connexion->prepare($sql2);
 
 $query->execute(array(
@@ -28,6 +28,7 @@ else{
     $_SESSION['prenom'] = $result["prenom"];
     $_SESSION['email'] = $result["email"];
     $_SESSION['pseudo'] = $result["pseudo"];
+    $_SESSION['role'] = $result["role"];
     if(isset($_POST['page'])){
         if ($_POST['page']=='f'){
             header("location:forum.php");
