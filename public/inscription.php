@@ -47,9 +47,9 @@ if(isset($_POST["submit_btn"])){
                 "ville" => $ville
         ));
 
-        $id_inscrit = $connexion->lastInsertId();
+        $id_inscrit = $connexion->lastInsertId(); // lastInsertId = récuperer l'id pour la mettre dans la bdd
 
-        $handicaps = json_decode($_POST['handicaps'], true);
+        $handicaps = json_decode($_POST['handicaps'], true); //  json_decode = Récuperer une chaine encode et la convertir en valeur / le true c'est quand la valeur retourné comme le tableau asso
         if(!empty($handicaps)){
             $sql2 = "INSERT INTO inscrithandicap (ref_inscrit, ref_handicap) VALUES (:ref_inscrit, :ref_handicap)";
             $query2 = $connexion->prepare($sql2);
