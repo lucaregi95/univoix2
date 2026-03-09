@@ -1,5 +1,6 @@
 <?php
 require_once "..\bdd\connexion.php";
+session_start();
 
 
 ?>
@@ -12,6 +13,7 @@ require_once "..\bdd\connexion.php";
 
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         .carousel-item {
             min-height: 350px;
@@ -33,6 +35,10 @@ require_once "..\bdd\connexion.php";
             justify-content: center;
             height: 100%;
         }
+        ul, li {
+            list-style-type: none;
+        }
+
     </style>
 </head>
 
@@ -45,14 +51,37 @@ require_once "..\bdd\connexion.php";
         <a href="acceuil.php"><img alt="" class="navbar-brand fw-bold" src="../img/univoix.png" style="max-width:50px;"></a>
         <a class="nav-link" href="specialistes.php">Spécialistes</a>
         <a class="nav-link" href="forum.php">Forum</a>
+
         <a class="nav-link" href="aides.php">Aides</a>
         <a class="nav-link" href="presentation.php">Handicaps</a>
-        <a class="navbar-brand fw-bold" href="profil.php"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 20 20" >
+        <?php if(isset($_SESSION['role'])){
+            if ($_SESSION['role'] == 'admin'){
+        ?>
+            <a class="nav-link" href="admin/connexion_admin.php">Admin</a>
+        <?php }} ?>
+
+        <?php if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])){?>
+        <a class="navbar-brand fw-bold" href="connexion.php"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 20 20" >
 
                 <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
                 <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-            </svg>     John Doe</a>
+            </svg>     Connexion</a>
 
+
+        <?php }
+        else{
+            $avatar=null;
+            require_once "avatar.php";?>
+            <li class="nav-item dropdown fs-5" >
+                <a class="nav-link dropdown-toggle" style="font-weight:bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img class="rounded-circle" alt="pdp" src="<?=$avatar?>" width="40px" height="40px"/>     <?=$_SESSION["prenom"]?> <?=$_SESSION["nom"]?></a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="profil.php">Profil</a></li>
+                    <li><a class="dropdown-item" href="deconnexion.php">Se deconnecter</a></li>
+                </ul>
+            </li>
+
+
+        <?php } ?>
     </div>
 </nav>
 <!-- HERO -->
@@ -83,7 +112,7 @@ require_once "..\bdd\connexion.php";
                     Le forum est un endroit de partage et de soutien,
                     où les étudiants peuvent parler librement.
                 </p>
-                <a href="#" class="btn btn-outline-light btn-univoix">Accéder au forum</a>
+                <a href="forum.php" class="btn btn-outline-light btn-univoix">Accéder au forum</a>
             </div>
 
             <!-- SPECIALISTES -->
@@ -213,7 +242,20 @@ require_once "..\bdd\connexion.php";
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+    }
 
+    window.onclick = function(e) {
+        if (!e.target.matches('.dropbtn')) {
+            var myDropdown = document.getElementById("myDropdown");
+            if (myDropdown.classList.contains('show')) {
+                myDropdown.classList.remove('show');
+            }
+        }
+    }
+</script>
 
 <!-- FOOTER -->
 <footer class="py-3 text-center bg-danger text-white">
