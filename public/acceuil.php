@@ -103,7 +103,7 @@ require_once "..\bdd\connexion.php";
                     Retrouvez les informations importantes à propos des
                     démarches d’aides et de subventions pour étudiants.
                 </p>
-                <a href="#" class="btn btn-outline-light btn-univoix">Consulter les aides</a>
+                <a href="aides.php" class="btn btn-outline-light btn-univoix">Consulter les aides</a>
             </div>
 
         </div>
