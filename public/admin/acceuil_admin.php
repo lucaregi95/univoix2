@@ -55,9 +55,11 @@ if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])) {
 
 
         <?php }
-        else{ ?>
+        else{
+            $avatar="../";
+            require_once "../avatar.php";?>
             <li class="nav-item dropdown fs-5" >
-                <a class="nav-link dropdown-toggle" style="font-weight:bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img class="rounded-circle" alt="pdp" src="../../img/avatar/<?=$_SESSION["id"]?>.jpg" width="40px" height="40px"/>     <?=$_SESSION["prenom"]?> <?=$_SESSION["nom"]?> (admin) </a>
+                <a class="nav-link dropdown-toggle" style="font-weight:bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img class="rounded-circle" alt="pdp" src="<?=$avatar?>" width="40px" height="40px"/>     <?=$_SESSION["prenom"]?> <?=$_SESSION["nom"]?> (admin)</a>
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="../deconnexion.php">Se deconnecter</a></li>
                 </ul>

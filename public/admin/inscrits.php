@@ -49,19 +49,12 @@ $result = $query->fetchAll();
     <div class="container d-flex justify-content-evenly align-items-center">
 
         <a href="acceuil_admin.php"><img alt="" class="navbar-brand fw-bold" src="../../img/univoix.png" style="max-width:50px;"></a>
-        <a class="nav-link" href="specialistes.php">Spécialistes</a>
-        <a class="nav-link" href="forum.php">Forum</a>
+        <a class="nav-link fw-bold text-danger" href="inscrits.php">Inscrits</a>
+        <a class="nav-link" href="signalements.php">Signalements</a>
 
-        <a class="nav-link" href="aides.php">Aides</a>
-        <a class="nav-link" href="presentation.php">Handicaps</a>
-        <?php if(isset($_SESSION['role'])){
-            if ($_SESSION['role'] == 'admin'){
-                ?>
-                <a class="nav-link" href="admin/connexion_admin.php">Admin</a>
-            <?php }} ?>
 
         <?php if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])){?>
-            <a class="navbar-brand fw-bold" href="profil.php"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 20 20" >
+            <a class="navbar-brand fw-bold" href="connexion_admin.php"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 20 20" >
 
                     <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
                     <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
@@ -69,11 +62,12 @@ $result = $query->fetchAll();
 
 
         <?php }
-        else{ ?>
+        else{
+            $avatar="../";
+            require_once "../avatar.php";?>
             <li class="nav-item dropdown fs-5" >
-                <a class="nav-link dropdown-toggle" style="font-weight:bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img class="rounded-circle" alt="pdp" src="../../img/avatar/<?=$_SESSION["id"]?>.jpg" width="40px" height="40px"/>     <?=$_SESSION["prenom"]?> <?=$_SESSION["nom"]?> (admin) </a>
+                <a class="nav-link dropdown-toggle" style="font-weight:bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img class="rounded-circle" alt="pdp" src="<?=$avatar?>" width="40px" height="40px"/>     <?=$_SESSION["prenom"]?> <?=$_SESSION["nom"]?> (admin)</a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="profil.php">Profil</a></li>
                     <li><a class="dropdown-item" href="../deconnexion.php">Se deconnecter</a></li>
                 </ul>
             </li>
@@ -140,5 +134,20 @@ $result = $query->fetchAll();
 <footer class="py-3 text-center bg-danger text-white site-footer">
     © 2026 — Luca Regi, Nassim Kharfouche, Prosper Fajnzyn — Tous droits réservés
 </footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+    }
+
+    window.onclick = function(e) {
+        if (!e.target.matches('.dropbtn')) {
+            var myDropdown = document.getElementById("myDropdown");
+            if (myDropdown.classList.contains('show')) {
+                myDropdown.classList.remove('show');
+            }
+        }
+    }
+</script>
 </body>
 </html>

@@ -38,7 +38,7 @@ if(isset($_POST['submit_btn'])){
 
 // Récupérer les réponses
 $stmt2 = $connexion->prepare("
-    SELECT reponse.*, inscrit.pseudo
+    SELECT reponse.*, inscrit.pseudo, inscrit.extension
     FROM reponse
     INNER JOIN inscrit ON reponse.ref_inscrit = inscrit.id_inscrit
     WHERE reponse.ref_sujet = :id
@@ -69,7 +69,7 @@ $reponses = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 
         <a href="acceuil.php"><img alt="" class="navbar-brand fw-bold" src="../img/univoix.png" style="max-width:50px;"></a>
         <a class="nav-link" href="specialistes.php">Spécialistes</a>
-        <a class="nav-link" href="forum.php">Forum</a>
+        <a class="nav-link fw-bold text-danger" href="forum.php">Forum</a>
 
         <a class="nav-link" href="aides.php">Aides</a>
         <a class="nav-link" href="presentation.php">Handicaps</a>
@@ -174,7 +174,7 @@ $reponses = $stmt2->fetchAll(PDO::FETCH_ASSOC);
                     <div class="d-flex align-items-start gap-3 mb-3">
                         <!-- Avatar répondeur -->
                         <div class="bg-secondary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center" style="min-width: 45px; height: 45px;">
-                            <img class="rounded-circle" alt="pdp" src="../img/avatar/<?= htmlspecialchars($reponse['ref_inscrit']) ?>.jpg" width="40px" height="40px"/>
+                            <img class="rounded-circle" alt="pdp" src="../img/avatar/<?= htmlspecialchars($reponse['ref_inscrit']) ?>.png" width="40px" height="40px"/>
                         </div>
                         <div class="flex-grow-1">
                             <div class="d-flex justify-content-between align-items-start">

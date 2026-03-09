@@ -26,7 +26,7 @@ session_start();
         <a class="nav-link" href="forum.php">Forum</a>
 
         <a class="nav-link" href="aides.php">Aides</a>
-        <a class="nav-link" href="presentation.php">Handicaps</a>
+        <a class="nav-link fw-bold text-danger" href="presentation.php">Handicaps</a>
         <?php if(isset($_SESSION['role'])){
             if ($_SESSION['role'] == 'admin'){
                 ?>
