@@ -1,6 +1,14 @@
 <?php
 require_once "..\bdd\connexion.php";
 
+$sql3 = "SELECT id_inscrit,nom,prenom,specialite FROM inscrit WHERE role='specialiste'";
+$query3 = $connexion->prepare($sql3);
+$query3->execute();
+$result = $query3->fetchAll();
+
+session_start();
+
+
 
 ?>
 <!DOCTYPE html>
@@ -12,6 +20,11 @@ require_once "..\bdd\connexion.php";
 
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        ul, li {
+            list-style-type: none;
+        }
+    </style>
 </head>
 
 <body style="font-family: 'Candara'">
@@ -21,15 +34,39 @@ require_once "..\bdd\connexion.php";
     <div class="container d-flex justify-content-evenly align-items-center">
 
         <a href="acceuil.php"><img alt="" class="navbar-brand fw-bold" src="../img/univoix.png" style="max-width:50px;"></a>
-        <a class="nav-link" href="specialistes.php">Spécialistes</a>
-        <a class="nav-link" href="#">Forum</a>
-        <a class="nav-link" href="#">Aides</a>
-        <a class="nav-link" href="#">Handicaps</a>
-        <a class="navbar-brand fw-bold" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 20 20" >
-                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-            </svg>     John Doe</a>
+        <a class="nav-link text-danger fw-bold" href="specialistes.php">Spécialistes</a>
+        <a class="nav-link" href="forum.php">Forum</a>
 
+        <a class="nav-link" href="aides.php">Aides</a>
+        <a class="nav-link" href="presentation.php">Handicaps</a>
+        <?php if(isset($_SESSION['role'])){
+            if ($_SESSION['role'] == 'admin'){
+                ?>
+                <a class="nav-link" href="admin/connexion_admin.php">Admin</a>
+            <?php }} ?>
+
+        <?php if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])){?>
+            <a class="navbar-brand fw-bold" href="profil.php"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 20 20" >
+
+                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+                </svg>     Connexion</a>
+
+
+        <?php }
+        else{
+            $avatar=null;
+            require_once "avatar.php";?>
+            <li class="nav-item dropdown fs-5" >
+                <a class="nav-link dropdown-toggle" style="font-weight:bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img class="rounded-circle" alt="pdp" src="<?=$avatar?>" width="40px" height="40px"/>     <?=$_SESSION["prenom"]?> <?=$_SESSION["nom"]?></a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="profil.php">Profil</a></li>
+                    <li><a class="dropdown-item" href="deconnexion.php">Se deconnecter</a></li>
+                </ul>
+            </li>
+
+
+        <?php } ?>
     </div>
 </nav>
 <!-- HERO -->
@@ -37,7 +74,7 @@ require_once "..\bdd\connexion.php";
     <div class="container">
         <h1 class="fw-bold mb-3">Les Spécialistes</h1>
         <p class="text-muted">
-            Sur cette page, nous proposons des professionels de santé prets a vous aider.        </p>
+            Sur cette page, nous proposons une discussion avec des professionels de santé, des psychologues et des conseillers d'orientation prets a vous aider.        </p>
     </div>
 </section>
 
@@ -51,22 +88,24 @@ require_once "..\bdd\connexion.php";
 <section class="bg-univoix py-5 bg-light ">
     <div class="container">
         <div class="row g-4 text-center">
+            <?php $compteur=1;
+            foreach ($result as $resultat) {?>
 
-            <!-- Medecin 1 -->
+
             <div class="col-md-4">
-                <div class="shadow-lg pb-2">
-                <h5 class="section-title">Medecin 1</h5>
-                <img alt="Photo - Médecin 1" src="../img/univoix.png" style="max-width: 50%;height: auto" class="border border-danger rounded">
+                <div class="shadow pb-2">
+                <h5 class="section-title">Specialiste <?=$compteur?></h5>
+                <img alt="Photo - Specialiste ID <?=$resultat["id_inscrit"]?>" src="../img/avatar/<?=$resultat["id_inscrit"]?>.jpg" style="width: 150px;height: 150px;" class="border border-danger rounded">
                 <p>
-                    Nom - Prenom - Spécialité
+                    <?=$resultat["nom"]?> <?=$resultat["prenom"]?> - <?=$resultat["specialite"]?>
                 </p>
                 <a href="#" class="btn btn-danger">Prendre contact</a>
             </div>
             </div>
-
-            <!-- Medecin 2 -->
+            <?php $compteur++;}?>
+            <!-- Medecin 2
             <div class="col-md-4">
-                <div class="shadow-lg pb-2">
+                <div class="shadow pb-2">
                 <h5 class="section-title">Medecin 2</h5>
                     <img alt="Photo - Médecin 2" src="../img/univoix.png" style="max-width: 50%;height: auto" class="border border-danger rounded">
                 <p>
@@ -76,9 +115,9 @@ require_once "..\bdd\connexion.php";
             </div>
             </div>
 
-            <!-- Medecin 3 -->
+
             <div class="col-md-4">
-                <div class="shadow-lg pb-2">
+                <div class="shadow pb-2">
                 <h5 class="section-title">Medecin 3</h5>
                 <img alt="Photo - Médecin 3" src="../img/univoix.png" style="max-width: 50%;height: auto" class="border border-danger rounded">
                 <p>
@@ -87,10 +126,10 @@ require_once "..\bdd\connexion.php";
                 <a href="#" class="btn btn-danger">Prendre contact</a>
             </div></div>
 
-            <!-- Medecin 4 -->
+
 
             <div class="col-md-4">
-                <div class="shadow-lg pb-2">
+                <div class="shadow pb-2">
                     <h5 class="section-title">Medecin 4</h5>
                     <img alt="Photo - Médecin 4" src="../img/univoix.png" style="max-width: 50%;height: auto" class="border border-danger rounded">
                     <p>
@@ -99,10 +138,10 @@ require_once "..\bdd\connexion.php";
                     <a href="#" class="btn btn-danger">Prendre contact</a>
                 </div></div>
 
-            <!-- Medecin 5 -->
+
 
             <div class="col-md-4">
-                <div class="shadow-lg pb-2">
+                <div class="shadow pb-2">
                     <h5 class="section-title">Medecin 5</h5>
                     <img alt="Photo - Médecin 5" src="../img/univoix.png" style="max-width: 50%;height: auto" class="border border-danger rounded">
                     <p>
@@ -111,10 +150,10 @@ require_once "..\bdd\connexion.php";
                     <a href="#" class="btn btn-danger">Prendre contact</a>
                 </div></div>
 
-            <!-- Medecin 6 -->
+
 
             <div class="col-md-4">
-                <div class="shadow-lg pb-2">
+                <div class="shadow pb-2">
                     <h5 class="section-title">Medecin 6</h5>
                     <img alt="Photo - Médecin 2" src="../img/univoix.png" style="max-width: 50%;height: auto" class="border border-danger rounded">
                     <p>
@@ -122,6 +161,16 @@ require_once "..\bdd\connexion.php";
                     </p>
                     <a href="#" class="btn btn-danger">Prendre contact</a>
                 </div></div>
+            <div class="col-md-4">
+                <div class="shadow pb-2">
+                    <h5 class="section-title">Medecin 7</h5>
+                    <img alt="Photo - Médecin 2" src="../img/univoix.png" style="max-width: 50%;height: auto" class="border border-danger rounded">
+                    <p>
+                        Nom - Prenom - Spécialité
+                    </p>
+                    <a href="#" class="btn btn-danger">Prendre contact</a>
+                </div></div>
+            -->
         </div>
     </div>
 </section>
@@ -131,6 +180,6 @@ require_once "..\bdd\connexion.php";
 <footer class="py-3 text-center bg-danger text-white ">
     © 2026 — Luca Regi, Nassim Kharfouche, Prosper Fajnzyn — Tous droits réservés
 </footer>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
