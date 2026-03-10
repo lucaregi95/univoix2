@@ -48,13 +48,14 @@ $articles = getArticles();
 <head>
     <meta charset="UTF-8">
     <title>Articles RSS</title>
+    <a href="../../style/style_admin/articles.css" rel="stylesheet">
 </head>
 <body>
 
 <h1>Articles récents</h1>
 
 <?php foreach ($articles as $article) { ?>
-    <div style="margin-bottom:30px;">
+    <div>
         <h2><a href="<?php echo $article["link"]; ?>" target="_blank"><?php echo $article["title"]; ?></a></h2>
         <p><?php echo $article["description"]; ?></p>
         <small><?php echo $article["date"]; ?></small>

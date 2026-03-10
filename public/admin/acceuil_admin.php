@@ -18,21 +18,7 @@ if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])) {
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <style>
-        ul, li {
-            list-style-type: none;
-        }
-        body {
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        .site-content {
-            flex: 1;
-        }
-    </style>
+    <a href="../../style/style_admin/acceuil_admin.css" rel="stylesheet">
 </head>
 
 <body style="font-family: 'Candara'">
