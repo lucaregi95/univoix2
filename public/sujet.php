@@ -7,15 +7,10 @@ if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])){
     exit();
 
 }
-
 $id_sujet = $_GET['id'];
 $ref_inscrit = $_SESSION['id'];
 
-$stmt = $connexion->prepare("
-    SELECT sujet.*, inscrit.pseudo, inscrit.role
-    FROM sujet
-    INNER JOIN inscrit ON sujet.ref_inscrit = inscrit.id_inscrit
-    WHERE sujet.id_sujet = :id
+$stmt = $connexion->prepare(" SELECT sujet.*, inscrit.pseudo, inscrit.role FROM sujet INNER JOIN inscrit ON sujet.ref_inscrit = inscrit.id_inscrit WHERE sujet.id_sujet = :id
 ");
 $stmt->execute(["id" => $id_sujet]);
 $sujet = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -23,8 +18,7 @@ $sujet = $stmt->fetch(PDO::FETCH_ASSOC);
 if(isset($_POST['submit_btn'])){
     $contenu = $_POST['contenu'];
     $date = date('Y-m-d');
-    $sql = "INSERT INTO reponse (contenu, date_reponse, ref_inscrit, ref_sujet) 
-            VALUES (:contenu, :date_reponse, :ref_inscrit, :ref_sujet)";
+    $sql = "INSERT INTO reponse (contenu, date_reponse, ref_inscrit, ref_sujet)  VALUES (:contenu, :date_reponse, :ref_inscrit, :ref_sujet)";
     $query = $connexion->prepare($sql);
     $query->execute([
         "contenu" => $contenu,
@@ -35,14 +29,7 @@ if(isset($_POST['submit_btn'])){
     header("Location: sujet.php?id=$id_sujet");
     exit();
 }
-
-// Récupérer les réponses
-$stmt2 = $connexion->prepare("
-    SELECT reponse.*, inscrit.pseudo
-    FROM reponse
-    INNER JOIN inscrit ON reponse.ref_inscrit = inscrit.id_inscrit
-    WHERE reponse.ref_sujet = :id
-    ORDER BY reponse.date_reponse ASC
+$stmt2 = $connexion->prepare(" SELECT reponse.*, inscrit.pseudo FROM reponse INNER JOIN inscrit ON reponse.ref_inscrit = inscrit.id_inscrit  WHERE reponse.ref_sujet = :id ORDER BY reponse.date_reponse ASC
 ");
 $stmt2->execute(["id" => $id_sujet]);
 $reponses = $stmt2->fetchAll(PDO::FETCH_ASSOC);
