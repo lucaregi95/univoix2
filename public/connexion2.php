@@ -51,6 +51,7 @@ else{
 <head>
     <meta charset="UTF-8">
     <title>Connexion en Cours</title>
+    <a href="../style/style_public/connexion2.css" rel="stylesheet">
 </head>
 <body>
 </body>
