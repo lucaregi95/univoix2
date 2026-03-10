@@ -30,8 +30,9 @@ if(!file_exists($avatar)){
     $avatar = $avatar."../img/avatar/default.png";
 
 }
-
-
-
-
-
+?>
+<html>
+    <head>
+        <a href="../style/style_public/avatar.css" rel="stylesheet">
+    </head>
+</html>
