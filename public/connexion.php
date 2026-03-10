@@ -30,7 +30,7 @@ $inscription="Pas de compte ? Inscrivez-vous";
     <meta charset="UTF-8">
     <title>Inscription</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <a href="../style/style_public/connexion.css" rel="stylesheet">
+    <link href="../style/style_public/connexion.css" rel="stylesheet">
 </head>
 
 <body class="bg-light" style="font-family:'Candara'">

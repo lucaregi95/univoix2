@@ -20,7 +20,7 @@ session_start();
 
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <a href="../style/style_public/specialistes.css" rel="stylesheet">
+    <link href="../style/style_public/specialistes.css" rel="stylesheet">
 </head>
 
 <body style="font-family: 'Candara'">

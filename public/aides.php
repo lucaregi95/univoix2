@@ -7,7 +7,88 @@ session_start();?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UniVoix - Aides</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <a href="../style/style_public/aides.css" rel="stylesheet">
+    <link href="../style/style_public/aides.css" rel="stylesheet">
+<!--        <style>-->
+<!--            body {-->
+<!--                font-family: 'Candara', sans-serif;-->
+<!--                background-color: #f8f9fa;-->
+<!--            }-->
+<!---->
+<!--            /* ── NAVBAR (identique aux autres pages) ── */-->
+<!--            .navbar {-->
+<!--                border-bottom: 3px solid #dc3545 !important;-->
+<!--            }-->
+<!---->
+<!--            /* ── HERO (style page Handicaps) ── */-->
+<!--            .page-hero {-->
+<!--                text-align: center;-->
+<!--                padding: 3.5rem 1rem 2.5rem;-->
+<!--                background: #fff;-->
+<!--                border-bottom: 2px solid #dc3545;-->
+<!--                margin-bottom: 2.5rem;-->
+<!--            }-->
+<!---->
+<!--            .page-hero p {-->
+<!--                color: #888;-->
+<!--                max-width: 680px;-->
+<!--                margin: 0.6rem auto 0;-->
+<!--                font-size: 0.95rem;-->
+<!--                font-style: italic;-->
+<!--            }-->
+<!---->
+<!--            /* ── AIDE CARDS ── */-->
+<!--            .aide-card {-->
+<!--                background: #dc3545;-->
+<!--                color: #fff;-->
+<!--                border-radius: 12px;-->
+<!--                padding: 2.2rem 2.5rem;-->
+<!--                margin-bottom: 1.5rem;-->
+<!--                box-shadow: 0 4px 18px rgba(220,53,69,.25);-->
+<!--                transition: transform .2s, box-shadow .2s;-->
+<!--            }-->
+<!--            .aide-card:hover {-->
+<!--                transform: translateY(-3px);-->
+<!--                box-shadow: 0 8px 28px rgba(220,53,69,.35);-->
+<!--            }-->
+<!--            .aide-card h2 {-->
+<!--                font-size: 1.4rem;-->
+<!--                font-weight: 700;-->
+<!--                margin-bottom: 0.8rem;-->
+<!--                letter-spacing: .01em;-->
+<!--            }-->
+<!--            .aide-card p {-->
+<!--                font-size: 0.93rem;-->
+<!--                line-height: 1.65;-->
+<!--                opacity: .92;-->
+<!--                margin-bottom: 1.4rem;-->
+<!--            }-->
+<!--            .aide-card .btn-aide {-->
+<!--                background: #fff;-->
+<!--                color: #dc3545;-->
+<!--                border: none;-->
+<!--                border-radius: 6px;-->
+<!--                padding: 0.45rem 1.4rem;-->
+<!--                font-family: 'Candara', sans-serif;-->
+<!--                font-weight: 600;-->
+<!--                font-size: 0.9rem;-->
+<!--                transition: background .18s, color .18s;-->
+<!--                text-decoration: none;-->
+<!--                display: inline-block;-->
+<!--            }-->
+<!--            .aide-card .btn-aide:hover {-->
+<!--                background: #1a1a1a;-->
+<!--                color: #fff;-->
+<!--            }-->
+<!--            ul, li {-->
+<!--                list-style-type: none;-->
+<!--            }-->
+<!---->
+<!--            /* ── FOOTER (identique) ── */-->
+<!--            footer {-->
+<!--                background: #dc3545;-->
+<!--                color: #fff;-->
+<!--            }-->
+<!--        </style>-->
 </head>
 
 <body>

@@ -11,7 +11,7 @@ exit;
 ?>
 <html>
 <head>
-    <a href="../style/style_public/deconnexion.css" rel="stylesheet">
+    <link href="../style/style_public/deconnexion.css" rel="stylesheet">
 
 </head>
 </html>

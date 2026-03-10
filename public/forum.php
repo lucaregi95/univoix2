@@ -48,7 +48,7 @@ $categories = $connexion->query("SELECT DISTINCT categorie_sujet FROM sujet ORDE
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>UniVoix - Forum</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <a href="../style/style_public/forum.css" rel="stylesheet">
+    <link href="../style/style_public/forum.css" rel="stylesheet">
 
 </head>
 <body class="bg-light" style="font-family:'Candara'">
