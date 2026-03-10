@@ -33,6 +33,6 @@ if(!file_exists($avatar)){
 ?>
 <html>
     <head>
-        <a href="../style/style_public/avatar.css" rel="stylesheet">
+        <link href="../style/style_public/avatar.css" rel="stylesheet">
     </head>
 </html>
