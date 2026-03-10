@@ -10,7 +10,7 @@ if(isset($_POST["submit_btn"])){
     $email = $_POST['email'];
     $mot_de_passe = $_POST['mot_de_passe'];
     $role = "user";
-    $importance_signalement = 1;
+    $importance_signalement = 0;
     $ville = $_POST['ville'];
     $compteur=0;
     $sql3 = "SELECT email,pseudo FROM inscrit";

@@ -1,11 +1,18 @@
 <?php
 require_once "..\..\bdd\connexion.php";
+
 session_start();
 $id=$_POST['id'];
-$sql = "SELECT nom,prenom,pseudo,email,importance_signalement,id_inscrit FROM inscrit WHERE id_inscrit = :id";
+$sql = "SELECT nom,prenom,pseudo,email,importance_signalement,role,id_inscrit FROM inscrit WHERE id_inscrit = :id";
 $query = $connexion->prepare($sql);
 $query->execute(array('id' => $id));
 $result = $query->fetch();
+
+$sql2 = "SELECT DISTINCT role FROM inscrit";
+$query2 = $connexion->prepare($sql2);
+$query2->execute();
+$resultat = $query2->fetchAll();
+var_dump($resultat);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -92,11 +99,17 @@ $result = $query->fetch();
                             </p>
                             <div class="collapse" id="collapseExample">
                                 <div class="card card-body">
-                                    <select class="form-select form-select-lg mb-3" aria-label="Large select example">
-                                        <option selected>Open this select menu</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
+                                    <select name="categorie" id="categorie" required>
+                                        <option value="">-- Sélectionnez --</option>
+                                        <?php
+                        if (!empty($resultat)) {
+                            $compteur=0;
+                            foreach ($resultat as $cat) {
+                                $compteur++;
+                                $nom = htmlspecialchars($cat['role']);?>
+                                <option value="<?=$compteur?>"><?=$nom?></option>";
+                            <?php }
+                        }       ?>
                                     </select>
                                 </div>
                             </div>
