@@ -14,32 +14,8 @@ session_start();
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <style>
-        .carousel-item {
-            min-height: 350px;
-        }
-        .carousel-image {
-            height: 350px;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-        .carousel-control-prev-icon,
-        .carousel-control-next-icon {
-            background-color: rgba(0, 0, 0, 0.5);
-            border-radius: 50%;
-            padding: 20px;
-        }
-        .news-content {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            height: 100%;
-        }
-        ul, li {
-            list-style-type: none;
-        }
+    <link href="../style/style_public/acceuil.css" rel="stylesheet">
 
-    </style>
 </head>
 
 <body style="font-family: 'Candara'">

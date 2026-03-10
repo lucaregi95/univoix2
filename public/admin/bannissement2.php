@@ -9,5 +9,10 @@ $sql = "UPDATE inscrit SET mot_de_passe = :mdp WHERE id_inscrit = :id";
 $query = $connexion->prepare($sql);
 $query->execute(array('id' => $id, 'mdp' => $mdp));
 header("Location:inscrits.php");
+?>
+<html>
+    <head>
+        <link href="../../style/style_admin/bannissement2.css" rel="stylesheet">
 
-
+    </head>
+</html>
