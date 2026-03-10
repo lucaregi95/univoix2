@@ -6,15 +6,19 @@ if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])) {
     header("location:connexion.php?page=p");
     exit();
 }
-$sqlUpdate = "UPDATE inscrit SET nom = :nom, prenom = :prenom, age = :age, pseudo = :pseudo WHERE id_inscrit = :id";
-$queryUpdate = $connexion->prepare($sqlUpdate);
-$queryUpdate->execute(array(
-    'nom'    => $_POST['nom'],
-    'prenom' => $_POST['prenom'],
-    'age'    => $_POST['age'],
-    'pseudo' => $_POST['pseudo'],
-    'id'     => $_POST['id_inscrit']
-));
+if(isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['age']) && isset($_POST['pseudo']) && isset($_POST['id_inscrit'])) {
+
+    $sqlUpdate = "UPDATE inscrit SET nom = :nom, prenom = :prenom, age = :age, pseudo = :pseudo WHERE id_inscrit = :id";
+    $queryUpdate = $connexion->prepare($sqlUpdate);
+    $queryUpdate->execute(array(
+        'nom'    => $_POST['nom'],
+        'prenom' => $_POST['prenom'],
+        'age'    => $_POST['age'],
+        'pseudo' => $_POST['pseudo'],
+        'id'     => $_POST['id_inscrit']
+    ));
+}
+
 
 $sqlUpdateHandicape = " ";
 
