@@ -6,34 +6,36 @@ if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])) {
     header("location:connexion.php?page=p");
     exit();
 }
+$sqlUpdate = "UPDATE inscrit SET nom = :nom, prenom = :prenom, age = :age, pseudo = :pseudo WHERE id_inscrit = :id";
+$queryUpdate = $connexion->prepare($sqlUpdate);
+$queryUpdate->execute(array(
+    'nom'    => $_POST['nom'],
+    'prenom' => $_POST['prenom'],
+    'age'    => $_POST['age'],
+    'pseudo' => $_POST['pseudo'],
+    'id'     => $_POST['id_inscrit']
+));
+
+$sqlUpdateHandicape = " ";
+
+
 
 $message = "";
 $avatar_path = "";
 
 $id = $_SESSION['id'];
 
-$sql = "SELECT nom, prenom, age, email, pseudo 
-        FROM inscrit 
-        WHERE id_inscrit = :id";
+$sql = "SELECT id_inscrit, nom, prenom, age, email, pseudo  FROM inscrit  WHERE id_inscrit = :id";
 
 $query = $connexion->prepare($sql);
 $query->execute(["id"=>$id]);
 $resultat = $query->fetch();
 
-$sql_handicaps = "SELECT h.nom
-                  FROM handicap h
-                  INNER JOIN inscrithandicap ih 
-                  ON h.id_handicap = ih.ref_handicap
-                  WHERE ih.ref_inscrit = :id";
-
+$sql_handicaps = "SELECT h.nom FROM handicap h INNER JOIN inscrithandicap ih  ON h.id_handicap = ih.ref_handicap WHERE ih.ref_inscrit = :id";
 $query_handicaps = $connexion->prepare($sql_handicaps);
 $query_handicaps->execute(["id"=>$id]);
 $handicap_utilisateur = $query_handicaps->fetchAll(PDO::FETCH_COLUMN);
 
-
-/* =============================
-   TRAITEMENT UPLOAD AVATAR
-   ============================= */
 
 if(isset($_FILES['file']) && $_FILES['file']['error'] != 4){
 
@@ -58,7 +60,6 @@ if(isset($_FILES['file']) && $_FILES['file']['error'] != 4){
             }
         }
 
-        /* nom fichier = id utilisateur */
         $file = $id.".".$extension;
         $uploadPath = "../img/avatar/".$file;
 
@@ -315,7 +316,7 @@ if(isset($_FILES['file']) && $_FILES['file']['error'] != 4){
 
     <?php if ($message) echo $message; ?>
 
-    <form method="POST" enctype="multipart/form-data">
+    <form action="profil.php" method="POST" enctype="multipart/form-data">
         <div class="card border border-danger border-3 shadow-sm">
             <div class="card-body p-5">
                 <h2 class="fw-bold mb-4">Vos informations personnelles</h2>
@@ -341,6 +342,9 @@ if(isset($_FILES['file']) && $_FILES['file']['error'] != 4){
                         <div class="mb-3">
                             <label class="form-label fw-semibold">Pseudo :</label>
                             <input type="text" name="pseudo" class="form-control" value="<?=$resultat["pseudo"]?>">
+                        </div>
+                        <div class="mb-3">
+                            <input type="hidden" name="id_inscrit" id="inscrit" value="<?=$_SESSION['id']?>">
                         </div>
                     </div>
 
@@ -442,8 +446,7 @@ if(isset($_FILES['file']) && $_FILES['file']['error'] != 4){
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-check-circle me-2" viewBox="0 0 16 16">
                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
                     <path d="m10.97 4.97-.02.022-3.473 4.425-2.093-2.094a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05"/>
-                </svg>
-                Sauvegarder les changements
+                </svg>Sauvegarder les changements
             </button>
         </div>
     </form>
