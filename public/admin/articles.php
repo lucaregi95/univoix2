@@ -47,7 +47,7 @@ $articles = getArticles();
 <head>
     <meta charset="UTF-8">
     <title>Articles RSS</title>
-    <a href="../../style/style_admin/articles.css" rel="stylesheet">
+    <link href="../../style/style_admin/articles.css" rel="stylesheet">
 </head>
 <body>
 

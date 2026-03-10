@@ -40,7 +40,7 @@ else{
     <head>
         <meta charset="UTF-8">
         <title>Connexion en Cours</title>
-        <a href="../../style/style_admin/connexion_admin2.css" rel="stylesheet">
+        <link href="../../style/style_admin/connexion_admin2.css" rel="stylesheet">
 
     </head>
     <body>

@@ -2,7 +2,7 @@
 ?>
 <html>
     <head>
-        <a href="../../style/style_admin/modification.css" rel="stylesheet">
+        <link href="../../style/style_admin/modification.css" rel="stylesheet">
 
     </head>
 </html>

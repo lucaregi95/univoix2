@@ -12,7 +12,7 @@ header("Location:inscrits.php");
 ?>
 <html>
     <head>
-        <a href="../../style/style_admin/bannissement2.css" rel="stylesheet">
+        <link href="../../style/style_admin/bannissement2.css" rel="stylesheet">
 
     </head>
 </html>
