@@ -83,19 +83,50 @@ session_start();
     <div class="p-2">
 <a href="#" class="btn btn-outline-dark text-white">Filtres ></a>
     </div>
-
 <!-- Medecins -->
 <section class="bg-univoix py-5 bg-light ">
     <div class="container">
         <div class="row g-4 text-center">
             <?php $compteur=1;
+
             foreach ($result as $resultat) {?>
 
 
             <div class="col-md-4">
                 <div class="shadow pb-2">
                 <h5 class="section-title">Specialiste <?=$compteur?></h5>
-                <img alt="Photo - Specialiste ID <?=$resultat["id_inscrit"]?>" src="../img/avatar/<?=$resultat["id_inscrit"]?>.jpg" style="width: 150px;height: 150px;" class="border border-danger rounded">
+                    <?php
+                    $avatar2=null;
+                    $id=$resultat["id_inscrit"];
+                    $avatar = "../img/avatar/".$id.".png";
+
+
+                    if(!file_exists($avatar)) {
+                    $avatar=$avatar2;
+                    $avatar = $avatar."../img/avatar/".$id.".jpeg";
+
+                    }
+
+                    if(!file_exists($avatar)){
+                    $avatar=$avatar2;
+                    $avatar = $avatar."../img/avatar/".$id.".jpg";
+
+                    }
+
+                    if(!file_exists($avatar)){
+                    $avatar=$avatar2;
+                    $avatar = $avatar."../img/avatar/".$id.".gif";
+
+                    }
+
+                    if(!file_exists($avatar)){
+                    $avatar=$avatar2;
+                    $avatar = $avatar."../img/avatar/default.png";
+
+                    }
+
+                    ?>
+                    <img alt="Photo - Specialiste ID <?=$resultat["id_inscrit"]?>" src="<?=$avatar?>" style="width: 150px;height: 150px;" class="border border-danger rounded">
                 <p>
                     <?=$resultat["nom"]?> <?=$resultat["prenom"]?> - <?=$resultat["specialite"]?>
                 </p>
@@ -103,74 +134,7 @@ session_start();
             </div>
             </div>
             <?php $compteur++;}?>
-            <!-- Medecin 2
-            <div class="col-md-4">
-                <div class="shadow pb-2">
-                <h5 class="section-title">Medecin 2</h5>
-                    <img alt="Photo - Médecin 2" src="../img/univoix.png" style="max-width: 50%;height: auto" class="border border-danger rounded">
-                <p>
-                    Nom - Prenom - Spécialité
-                </p>
-                <a href="#" class="btn btn-danger">Prendre contact</a>
-            </div>
-            </div>
 
-
-            <div class="col-md-4">
-                <div class="shadow pb-2">
-                <h5 class="section-title">Medecin 3</h5>
-                <img alt="Photo - Médecin 3" src="../img/univoix.png" style="max-width: 50%;height: auto" class="border border-danger rounded">
-                <p>
-                    Nom - Prenom - Spécialité
-                </p>
-                <a href="#" class="btn btn-danger">Prendre contact</a>
-            </div></div>
-
-
-
-            <div class="col-md-4">
-                <div class="shadow pb-2">
-                    <h5 class="section-title">Medecin 4</h5>
-                    <img alt="Photo - Médecin 4" src="../img/univoix.png" style="max-width: 50%;height: auto" class="border border-danger rounded">
-                    <p>
-                        Nom - Prenom - Spécialité
-                    </p>
-                    <a href="#" class="btn btn-danger">Prendre contact</a>
-                </div></div>
-
-
-
-            <div class="col-md-4">
-                <div class="shadow pb-2">
-                    <h5 class="section-title">Medecin 5</h5>
-                    <img alt="Photo - Médecin 5" src="../img/univoix.png" style="max-width: 50%;height: auto" class="border border-danger rounded">
-                    <p>
-                        Nom - Prenom - Spécialité
-                    </p>
-                    <a href="#" class="btn btn-danger">Prendre contact</a>
-                </div></div>
-
-
-
-            <div class="col-md-4">
-                <div class="shadow pb-2">
-                    <h5 class="section-title">Medecin 6</h5>
-                    <img alt="Photo - Médecin 2" src="../img/univoix.png" style="max-width: 50%;height: auto" class="border border-danger rounded">
-                    <p>
-                        Nom - Prenom - Spécialité
-                    </p>
-                    <a href="#" class="btn btn-danger">Prendre contact</a>
-                </div></div>
-            <div class="col-md-4">
-                <div class="shadow pb-2">
-                    <h5 class="section-title">Medecin 7</h5>
-                    <img alt="Photo - Médecin 2" src="../img/univoix.png" style="max-width: 50%;height: auto" class="border border-danger rounded">
-                    <p>
-                        Nom - Prenom - Spécialité
-                    </p>
-                    <a href="#" class="btn btn-danger">Prendre contact</a>
-                </div></div>
-            -->
         </div>
     </div>
 </section>

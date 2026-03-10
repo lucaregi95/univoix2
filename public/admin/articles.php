@@ -12,7 +12,6 @@ function loadRss($url) {
     return simplexml_load_string($data);
 }
 
-// Cette fonction peut retourner tous les articles de plusieurs flux
 function getArticles() {
     $feeds = [
         "https://www.lemonde.fr/rss/une.xml"

@@ -38,7 +38,7 @@ if(isset($_POST['submit_btn'])){
 
 // Récupérer les réponses
 $stmt2 = $connexion->prepare("
-    SELECT reponse.*, inscrit.pseudo, inscrit.extension
+    SELECT reponse.*, inscrit.pseudo
     FROM reponse
     INNER JOIN inscrit ON reponse.ref_inscrit = inscrit.id_inscrit
     WHERE reponse.ref_sujet = :id
@@ -126,9 +126,38 @@ $reponses = $stmt2->fetchAll(PDO::FETCH_ASSOC);
             <div class="d-flex align-items-start gap-3 mb-4">
                 <!-- Avatar auteur -->
                 <div class="bg-danger bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center" style="min-width: 60px; height: 60px;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person text-danger" viewBox="0 0 16 16">
-                        <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
-                    </svg>
+                    <?php
+                    $avatar2=null;
+                    $id=htmlspecialchars($sujet['ref_inscrit']);
+                    $avatar = "../img/avatar/".$id.".png";
+
+
+                    if(!file_exists($avatar)) {
+                        $avatar=$avatar2;
+                        $avatar = $avatar."../img/avatar/".$id.".jpeg";
+
+                    }
+
+                    if(!file_exists($avatar)){
+                        $avatar=$avatar2;
+                        $avatar = $avatar."../img/avatar/".$id.".jpg";
+
+                    }
+
+                    if(!file_exists($avatar)){
+                        $avatar=$avatar2;
+                        $avatar = $avatar."../img/avatar/".$id.".gif";
+
+                    }
+
+                    if(!file_exists($avatar)){
+                        $avatar=$avatar2;
+                        $avatar = $avatar."../img/avatar/default.png";
+
+                    }
+
+                    ?>
+                    <img class="rounded-circle" alt="pdp" src="<?=$avatar?>" width="40px" height="40px"/>
                 </div>
                 <div>
                     <div class="fw-bold text-dark fs-5"><?= htmlspecialchars($sujet['pseudo']) ?> (<?= htmlspecialchars($sujet['role']) ?>)</div>
@@ -174,7 +203,38 @@ $reponses = $stmt2->fetchAll(PDO::FETCH_ASSOC);
                     <div class="d-flex align-items-start gap-3 mb-3">
                         <!-- Avatar répondeur -->
                         <div class="bg-secondary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center" style="min-width: 45px; height: 45px;">
-                            <img class="rounded-circle" alt="pdp" src="../img/avatar/<?= htmlspecialchars($reponse['ref_inscrit']) ?>.png" width="40px" height="40px"/>
+                            <?php
+                            $avatar2=null;
+                            $id=htmlspecialchars($reponse['ref_inscrit']);
+                            $avatar = "../img/avatar/".$id.".png";
+
+
+                            if(!file_exists($avatar)) {
+                                $avatar=$avatar2;
+                                $avatar = $avatar."../img/avatar/".$id.".jpeg";
+
+                            }
+
+                            if(!file_exists($avatar)){
+                                $avatar=$avatar2;
+                                $avatar = $avatar."../img/avatar/".$id.".jpg";
+
+                            }
+
+                            if(!file_exists($avatar)){
+                                $avatar=$avatar2;
+                                $avatar = $avatar."../img/avatar/".$id.".gif";
+
+                            }
+
+                            if(!file_exists($avatar)){
+                                $avatar=$avatar2;
+                                $avatar = $avatar."../img/avatar/default.png";
+
+                            }
+
+                            ?>
+                            <img class="rounded-circle" alt="pdp" src="<?=$avatar?>" width="40px" height="40px"/>
                         </div>
                         <div class="flex-grow-1">
                             <div class="d-flex justify-content-between align-items-start">

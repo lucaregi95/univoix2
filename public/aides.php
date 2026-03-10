@@ -134,9 +134,9 @@ session_start();?>
 </nav>
 
 <!-- HERO -->
-<div class="page-hero">
-    <h1>LES AIDES</h1>
-    <p>Sur cette page, vous trouverez la liste des aides (financières, aides Handicap, Logement…) disponibles pour les étudiants.</p>
+<div class="page-hero text-center">
+    <h1 class="display-4 fw-bold mb-3">Les Aides</h1>
+    <p class="lead text-muted col-lg-8 mx-auto">Sur cette page, vous trouverez la liste des aides (financières, aides Handicap, Logement…) disponibles pour les étudiants.</p>
 </div>
 
 <!-- CONTENU -->
