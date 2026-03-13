@@ -2,7 +2,58 @@
 require_once "..\bdd\connexion.php";
 session_start();
 
+function loadRss($url) {
 
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0");
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // ignore le certificat SSL
+    $data = curl_exec($ch);
+    curl_close($ch);
+
+    return simplexml_load_string($data);
+}
+
+function getArticles() {
+    $feeds = [
+        "https://www.lemonde.fr/handicap/rss_full.xml",
+        "https://www.lemonde.fr/universites/rss_full.xml",
+        "https://www.lemonde.fr/orientation-scolaire/rss_full.xml",
+    ];
+
+    $articles = [];
+
+    foreach ($feeds as $feed) {
+        // Extraire le tag depuis l'URL
+        preg_match('/lemonde\.fr\/([^\/]+)\/rss/', $feed, $matches);
+        $tag = isset($matches[1]) ? $matches[1] : '';
+
+        $rss = loadRss($feed);
+        if ($rss) {
+            foreach ($rss->channel->item as $item) {
+                $articles[] = [
+                    "title"       => (string)$item->title,
+                    "link"        => (string)$item->link,
+                    "description" => (string)$item->description,
+                    "date"        => (string)$item->pubDate,
+                    "category"    => $tag
+                ];
+            }
+        }
+    }
+
+    // Tri par date décroissante (plus récent en premier)
+    usort($articles, function($a, $b) {
+        return strtotime($b['date']) - strtotime($a['date']);
+    });
+
+    return $articles;
+}
+
+
+$articles = getArticles();
+?>
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -124,82 +175,42 @@ session_start();
 
     <div id="actualitesCarousel" class="carousel slide mx-3" data-bs-ride="carousel">
         <!-- Indicateurs -->
-        <div class="carousel-indicators">
-            <button type="button" data-bs-target="#actualitesCarousel" data-bs-slide-to="0" class="active"></button>
-            <button type="button" data-bs-target="#actualitesCarousel" data-bs-slide-to="1"></button>
-            <button type="button" data-bs-target="#actualitesCarousel" data-bs-slide-to="2"></button>
-        </div>
+
 
         <!-- Slides -->
         <div class="carousel-inner">
-            <!-- Slide 1 -->
-            <div class="carousel-item active">
-                <div class="row align-items-center g-4">
-                    <div class="col-md-5">
-                        <img src="https://placehold.co/600x350/4a90e2/ffffff?text=Rencontre+21/06"
-                             class="d-block w-100 carousel-image"
-                             alt="Rencontre Uni'Voix">
-                    </div>
-                    <div class="col-md-7">
-                        <div class="news-content">
-                            <p>
-                                Rendez-vous le <strong>21/06 à partir de 18h</strong> pour assister à la rencontre Uni'Voix
-                                organisée dans la salle des fêtes du Bourget !
-                            </p>
-                            <p class="mb-0">
-                                Accès via la ligne 8…
-                                <a href="#" class="text-primary">Lire l'article complet</a>
-                            </p>
+            <?php if (empty($articles)) { ?>
+                <div class="carousel-item active">
+                    <p class="text-muted text-center">Aucun article disponible pour le moment.</p>
+                </div>
+            <?php } ?>
+            <?php foreach ($articles as $index => $article) {
+                $titrePlaceholder1 = str_replace(' ', '+', htmlspecialchars($article['category']));
+                $titrePlaceholder = str_replace('-', '+', $titrePlaceholder1);
+                $titrePlaceholder = ucfirst($titrePlaceholder);
+                ?>
+                <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
+                    <div class="row align-items-center g-4">
+                        <div class="col-md-5">
+                            <img src="https://placehold.co/600x350/cc0000/ffffff?text=<?= $titrePlaceholder ?>"
+                                 class="d-block w-100 carousel-image"
+                                 alt="<?= htmlspecialchars($article['title']) ?>">
+                            
+                        </div>
+                        <div class="col-md-7">
+                            <div class="news-content mx-3">
+                                <h5 class="fw-bold"><?= htmlspecialchars($article['title']) ?></h5>
+                                <p><?= htmlspecialchars($article['description']) ?></p>
+                                <small class="text-muted"><?= htmlspecialchars($article['date']) ?></small>
+                                <br><br>
+                                <a href="<?= htmlspecialchars($article['link']) ?>" target="_blank" class="text-primary">
+                                    Lire l'article complet
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- Slide 2 -->
-            <div class="carousel-item">
-                <div class="row align-items-center g-4">
-                    <div class="col-md-5">
-                        <img src="../img/univoix.png"
-                             class="d-block w-100 carousel-image"
-                             alt="Atelier débat">
-                    </div>
-                    <div class="col-md-7">
-                        <div class="news-content">
-                            <p>
-                                <strong>Nouvel atelier débat</strong> organisé chaque jeudi à 19h30 !
-                                Venez partager vos idées et échanger sur des sujets d'actualité.
-                            </p>
-                            <p class="mb-0">
-                                Inscription gratuite, places limitées…
-                                <a href="#" class="text-primary">Lire l'article complet</a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Slide 3 -->
-            <div class="carousel-item">
-                <div class="row align-items-center g-4">
-                    <div class="col-md-5">
-                        <img src="https://placehold.co/600x350/27ae60/ffffff?text=Projet+Etudiant"
-                             class="d-block w-100 carousel-image"
-                             alt="Projet étudiant">
-                    </div>
-                    <div class="col-md-7">
-                        <div class="news-content">
-                            <p>
-                                <strong>Appel à projets 2026 :</strong> Soumettez vos initiatives étudiantes
-                                avant le 15 mars pour bénéficier d'un accompagnement personnalisé.
-                            </p>
-                            <p class="mb-0">
-                                Budget disponible, coaching inclus…
-                                <a href="#" class="text-primary">Lire l'article complet</a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <?php } ?>
         </div>
 
         <!-- Contrôles -->

@@ -30,6 +30,7 @@ if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])) {
         <a href="acceuil_admin.php"><img alt="" class="navbar-brand fw-bold" src="../../img/univoix.png" style="max-width:50px;"></a>
         <a class="nav-link" href="inscrits.php">Inscrits</a>
         <a class="nav-link" href="signalements.php">Signalements</a>
+        <a class="nav-link" href="articles.php">Articles</a>
 
 
         <?php if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])){?>
