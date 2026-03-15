@@ -1,3 +1,11 @@
+:root {
+    --color-primary:          #dc3545;
+    --color-primary-dark:     #b02a37;
+    --color-primary-light:    #f8d7da;
+    --color-primary-shadow-15: rgba(220,53,69,.15);
+    --color-primary-shadow-25: rgba(220,53,69,.25);
+    --color-primary-shadow-35: rgba(220,53,69,.35);
+}
 body {
     font-family: 'Candara', sans-serif;
     background-color: #f8f9fa;
@@ -5,7 +13,7 @@ body {
 
 /* ── NAVBAR (identique aux autres pages) ── */
 .navbar {
-    border-bottom: 3px solid #dc3545 !important;
+    border-bottom: 3px solid var(--color-primary) !important;
 }
 
 /* ── HERO (style page Handicaps) ── */
@@ -13,7 +21,7 @@ body {
     text-align: center;
     padding: 3.5rem 1rem 2.5rem;
     background: #fff;
-    border-bottom: 2px solid #dc3545;
+    border-bottom: 2px solid var(--color-primary);
     margin-bottom: 2.5rem;
 }
 
@@ -27,17 +35,17 @@ body {
 
 /* ── AIDE CARDS ── */
 .aide-card {
-    background: #dc3545;
+    background: var(--color-primary);
     color: #fff;
     border-radius: 12px;
     padding: 2.2rem 2.5rem;
     margin-bottom: 1.5rem;
-    box-shadow: 0 4px 18px rgba(220,53,69,.25);
+    box-shadow: 0 4px 18px var(--color-primary-shadow-25);
     transition: transform .2s, box-shadow .2s;
 }
 .aide-card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 28px rgba(220,53,69,.35);
+    box-shadow: 0 8px 28px var(--color-primary-shadow-35);
 }
 .aide-card h2 {
     font-size: 1.4rem;
@@ -53,7 +61,7 @@ body {
 }
 .aide-card .btn-aide {
     background: #fff;
-    color: #dc3545;
+    color: var(--color-primary);
     border: none;
     border-radius: 6px;
     padding: 0.45rem 1.4rem;
@@ -74,6 +82,6 @@ ul, li {
 
 /* ── FOOTER (identique) ── */
 footer {
-    background: #dc3545;
+    background: var(--color-primary);
     color: #fff;
 }

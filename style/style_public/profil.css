@@ -1,3 +1,11 @@
+:root {
+    --color-primary:          #dc3545;
+    --color-primary-dark:     #b02a37;
+    --color-primary-light:    #f8d7da;
+    --color-primary-shadow-15: rgba(220,53,69,.15);
+    --color-primary-shadow-25: rgba(220,53,69,.25);
+    --color-primary-shadow-35: rgba(220,53,69,.35);
+}
 ul, li {
     list-style-type: none;
 }
@@ -8,8 +16,8 @@ ul, li {
     border-color: #d3d3d3 !important;
 }
 .form-check-input.custom-switch:checked {
-    background-color: #dc3545 !important;
-    border-color: #dc3545 !important;
+    background-color: var(--color-primary) !important;
+    border-color: var(--color-primary) !important;
 }
 
 /* ── Tag multi-select ── */
@@ -27,14 +35,14 @@ ul, li {
     transition: border-color .2s, box-shadow .2s;
 }
 .tag-input-box:focus-within {
-    border-color: #dc3545;
-    box-shadow: 0 0 0 3px rgba(220,53,69,.15);
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px var(--color-primary-shadow-15);
 }
 .tag {
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    background: #dc3545;
+    background: var(--color-primary);
     color: #fff;
     border-radius: 5px;
     padding: 2px 8px;
@@ -94,7 +102,7 @@ ul, li {
     user-select: none;
 }
 .tag-option:hover { background: #fff5f5; }
-.tag-option.selected { background: #fdf0f0; color: #dc3545; font-weight: 500; }
+.tag-option.selected { background: #fdf0f0; color: var(--color-primary); font-weight: 500; }
 .tag-option.hidden { display: none; }
 
 .tag-check {
@@ -109,8 +117,8 @@ ul, li {
     transition: all .15s;
 }
 .tag-option.selected .tag-check {
-    background: #dc3545;
-    border-color: #dc3545;
+    background: var(--color-primary);
+    border-color: var(--color-primary);
 }
 .tag-option.selected .tag-check::after {
     content: '';
@@ -144,7 +152,7 @@ ul, li {
     cursor: pointer;
     transition: all .2s;
 }
-.btn-help:hover { border-color: #dc3545; color: #dc3545; }
+.btn-help:hover { border-color: var(--color-primary); color: var(--color-primary); }
 
 /* Avatar preview */
 .avatar-preview {
