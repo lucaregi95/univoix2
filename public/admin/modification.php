@@ -12,7 +12,6 @@ $sql2 = "SELECT DISTINCT role FROM inscrit";
 $query2 = $connexion->prepare($sql2);
 $query2->execute();
 $resultat = $query2->fetchAll();
-var_dump($resultat);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -24,6 +23,7 @@ var_dump($resultat);
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <div>
     <?php
 
     $__daltonisme = isset($_SESSION['daltonisme']) ? $_SESSION['daltonisme'] : 'aucun';
@@ -76,6 +76,7 @@ var_dump($resultat);
         ],
     ];
     $__p = isset($__palettes[$__daltonisme]) ? $__palettes[$__daltonisme] : $__palettes['aucun'];
+    ?></div><?php
     if ($__daltonisme !== 'aucun' || $__dyslexie): ?>
     <style id="accessibilite-overrides">
     <?php if ($__daltonisme !== 'aucun'): ?>
@@ -258,12 +259,13 @@ var_dump($resultat);
     <div class="container d-flex justify-content-evenly align-items-center">
 
         <a href="acceuil_admin.php"><img alt="" class="navbar-brand fw-bold" src="../../img/univoix.png" style="max-width:50px;"></a>
-        <a class="nav-link fw-bold text-danger" href="inscrits.php">Inscrits</a>
+        <a class="nav-link" href="inscrits.php">Inscrits</a>
         <a class="nav-link" href="signalements.php">Signalements</a>
+        <a class="nav-link" href="articles.php">Articles</a>
 
 
         <?php if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])){?>
-            <a class="navbar-brand fw-bold" href="connexion_admin.php"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 20 20" >
+            <a class="navbar-brand fw-bold" href="profil.php"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 20 20" >
 
                     <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
                     <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
@@ -285,50 +287,110 @@ var_dump($resultat);
         <?php } ?>
     </div>
 </nav>
-    <section class="bg-univoix py-5  bg-light">
-        <div class="container">
-            <a href="inscrits.php" class="btn btn-danger"><i><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"/>
-                    </svg></i> Retour</a>
-            <div class="row g-4 text-center shadow-lg pb-3">
-                <h2 style="font-weight: bold"> Modification de <?=$result["prenom"]?> <?=$result["nom"]?> :</h2><br><br>
-                <h4>Pseudo : <?=$result["pseudo"]?><br>Adresse E-mail : <?=$result["email"]?><br>Indice de Signalement : <?=$result["importance_signalement"]?></h4>
-                <br><br>
-                <div class="row g-4">
-                    <div class="col-md-4">
-                        <div class="mb-3">
-                            <p class="d-inline-flex gap-1">
-                                <button class="btn btn-danger text-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                                    Promouvoir
-                                </button>
-                            </p>
-                            <div class="collapse" id="collapseExample">
-                                <div class="card card-body">
-                                    <select name="categorie" id="categorie" required>
-                                        <option value="">-- Sélectionnez --</option>
-                                        <?php
-                        if (!empty($resultat)) {
-                            $compteur=0;
-                            foreach ($resultat as $cat) {
-                                $compteur++;
-                                $nom = htmlspecialchars($cat['role']);?>
-                                <option value="<?=$compteur?>"><?=$nom?></option>";
-                            <?php }
-                        }       ?>
-                                    </select>
-                                </div>
+<section class="bg-univoix py-5 bg-light">
+    <div class="container">
+        <a href="inscrits.php" class="btn btn-danger"><i><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"/>
+                </svg></i> Retour</a>
+        <div class="row g-4 text-center shadow-lg pb-3">
+            <h2 style="font-weight: bold">Modification de <?=$result["prenom"]?> <?=$result["nom"]?> :</h2>
+            <h4>Pseudo : <?=$result["pseudo"]?><br>Adresse E-mail : <?=$result["email"]?><br>Indice de Signalement : <?=$result["importance_signalement"]?></h4>
+
+            <div class="d-flex flex-column align-items-center gap-3">
+
+                <?php if(isset($_POST["role"])){
+                if($_POST["role"]=="specialiste"){?>
+                <div>
+                    <div>
+                        <form method="post" action="modification2.php">
+                        <div class="card card-body" style="min-width: 300px">
+
+                            <div class="pb-3">
+                                <label class="form-label" for="role">Role :</label>
+                                <input type="text" value="Specialiste" name="role" id="role" disabled>
+                                <label class="form-label" for="specialite">Specialité :</label>
+                                <input type="text" placeholder="Psychologue, Diabétologue..." id="specialite" name="specialite">
+                                <?php
+                                $avatar2="../";
+                                $id=$id_inscrit;
+                                $avatar = "../img/avatar/".$id.".png";
+
+
+                                if(!file_exists($avatar)) {
+                                    $avatar=$avatar2;
+                                    $avatar = $avatar."../img/avatar/".$id.".jpeg";
+
+                                }
+
+                                if(!file_exists($avatar)){
+                                    $avatar=$avatar2;
+                                    $avatar = $avatar."../img/avatar/".$id.".jpg";
+
+                                }
+
+                                if(!file_exists($avatar)){
+                                    $avatar=$avatar2;
+                                    $avatar = $avatar."../img/avatar/".$id.".gif";
+
+                                }
+
+                                if(!file_exists($avatar)){
+                                    $avatar=$avatar2;
+                                    $avatar = $avatar."../img/avatar/default.png";
+
+                                }
+
+                                ?>
+                                <label class="form-label" for="avatar">Avatar :</label><br>
+                                <img alt="Photo du spécialiste" class="border border-danger border-2" src="<?=$avatar?>" style="max-width: 300px;max-height: 300px">
+
+
                             </div>
+
                         </div>
                     </div>
+
+                </div>
+                        <div class="row">
+                            <div class="col">
+                                <button type="submit" class="btn btn-danger">Confirmer</button></div>
+                                <div class="col">
+                                <button formaction="modification.php" class="btn btn-danger">Annuler</button>
+                                </div></div>
+                    <input type="hidden" value="<?=$id_inscrit?>" name="id">
+                        <?php if (isset($_POST["role"])){ ?>
+                            <input type="hidden" value="<?=$_POST["role"]?>" name="role2">
+                        <?php } ?>
+                    </form>
+
+                <?php }}else{ ?>
+                <div>
+                    <button class="btn btn-danger" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        Promouvoir
+                    </button>
+                    <div class="collapse mt-2" id="collapseExample">
+                        <div class="card card-body" style="min-width: 300px">
+                            <form method="post" action="modification.php">
+                                <div class="pb-3">
+                                    <input type="text" placeholder="user, admin, specialiste..." name="role">
+                                    <input type="hidden" value="<?=$id_inscrit?>" name="id">
+
+                                </div>
+                                <button type= "submit" class="btn btn-danger">Valider</button>
+                            </form>
+                        </div>
+                    </div>
+
                 </div>
 
-                <form action="modification2.php" method="POST">
-                    <button type="submit" class="btn btn-danger">Confirmer la Modification</button>
-                    <input type="hidden" value="<?=$id_inscrit?>" name="id">
-                </form>
+                <?php } ?>
+
+
+
             </div>
         </div>
-    </section>
+    </div>
+</section>
 <footer class="py-3 text-center bg-danger text-white site-footer">
     © 2026 — Luca Regi, Nassim Kharfouche, Prosper Fajnzyn — Tous droits réservés
 </footer>

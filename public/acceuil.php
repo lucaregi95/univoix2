@@ -67,11 +67,11 @@ $articles = getArticles();
     <link href="../style/style_public/acceuil.css" rel="stylesheet">
     <?php
 
-    $daltonisme = isset($_SESSION['daltonisme']) ? $_SESSION['daltonisme'] : 'aucun';
-    $dyslexie   = isset($_SESSION['dyslexie'])   ? $_SESSION['dyslexie']   : false;
+    $__daltonisme = isset($_SESSION['daltonisme']) ? $_SESSION['daltonisme'] : 'aucun';
+    $__dyslexie   = isset($_SESSION['dyslexie'])   ? $_SESSION['dyslexie']   : false;
 
-    //palletes de reference couleurs pour les types de  daltonisme
-    $palettes = [
+
+    $__palettes = [
         'aucun' => [
             'danger'               => '#dc3545',
             'danger_rgb'           => '220,53,69',
@@ -120,22 +120,21 @@ $articles = getArticles();
             'switch_on'            => '#6600cc',
         ],
     ];
-
-    $p = isset($palettes[$daltonisme]) ? $palettes[$daltonisme] : $palettes['aucun'];
-    if ($daltonisme !== 'aucun' || $dyslexie): ?>
+    $__p = isset($__palettes[$__daltonisme]) ? $__palettes[$__daltonisme] : $__palettes['aucun'];
+    if ($__daltonisme !== 'aucun' || $__dyslexie): ?>
     <style id="accessibilite-overrides">
-    <?php if ($daltonisme !== 'aucun'): ?>
+    <?php if ($__daltonisme !== 'aucun'): ?>
 
 
     :root {
-        --bs-danger:                <?= $p['danger'] ?>;
-        --bs-danger-rgb:            <?= $p['danger_rgb'] ?>;
-        --bs-danger-text-emphasis:  <?= $p['danger_text_emphasis'] ?>;
-        --bs-danger-bg-subtle:      <?= $p['danger_bg_subtle'] ?>;
-        --bs-danger-border-subtle:  <?= $p['danger_border_subtle'] ?>;
-        --bs-link-color:            <?= $p['link'] ?>;
-        --bs-link-color-rgb:        <?= $p['link_rgb'] ?>;
-        --bs-link-hover-color:      <?= $p['danger'] ?>;
+        --bs-danger:                <?= $__p['danger'] ?>;
+        --bs-danger-rgb:            <?= $__p['danger_rgb'] ?>;
+        --bs-danger-text-emphasis:  <?= $__p['danger_text_emphasis'] ?>;
+        --bs-danger-bg-subtle:      <?= $__p['danger_bg_subtle'] ?>;
+        --bs-danger-border-subtle:  <?= $__p['danger_border_subtle'] ?>;
+        --bs-link-color:            <?= $__p['link'] ?>;
+        --bs-link-color-rgb:        <?= $__p['link_rgb'] ?>;
+        --bs-link-hover-color:      <?= $__p['danger'] ?>;
     }
 
 
@@ -144,64 +143,64 @@ $articles = getArticles();
     .btn-danger:hover,
     .btn-danger:active,
     .btn-danger:focus-visible {
-        background-color: <?= $p['danger_text_emphasis'] ?> !important;
-        border-color:     <?= $p['danger_text_emphasis'] ?> !important;
+        background-color: <?= $__p['danger_text_emphasis'] ?> !important;
+        border-color:     <?= $__p['danger_text_emphasis'] ?> !important;
     }
     .btn-danger:focus-visible {
-        box-shadow: 0 0 0 0.25rem rgba(<?= $p['danger_rgb'] ?>, 0.5) !important;
+        box-shadow: 0 0 0 0.25rem rgba(<?= $__p['danger_rgb'] ?>, 0.5) !important;
     }
 
 
     .btn-outline-danger:hover,
     .btn-outline-danger:active {
-        background-color: <?= $p['danger'] ?> !important;
-        border-color:     <?= $p['danger'] ?> !important;
+        background-color: <?= $__p['danger'] ?> !important;
+        border-color:     <?= $__p['danger'] ?> !important;
         color: #fff !important;
     }
     .btn-outline-danger:focus-visible {
-        box-shadow: 0 0 0 0.25rem rgba(<?= $p['danger_rgb'] ?>, 0.5) !important;
+        box-shadow: 0 0 0 0.25rem rgba(<?= $__p['danger_rgb'] ?>, 0.5) !important;
     }
 
     .form-control:focus,
     .form-select:focus {
-        border-color: <?= $p['danger'] ?> !important;
-        box-shadow: 0 0 0 0.25rem rgba(<?= $p['danger_rgb'] ?>, 0.25) !important;
+        border-color: <?= $__p['danger'] ?> !important;
+        box-shadow: 0 0 0 0.25rem rgba(<?= $__p['danger_rgb'] ?>, 0.25) !important;
     }
 
 
     .bg-danger.bg-opacity-10 {
-        background-color: rgba(<?= $p['danger_rgb'] ?>, 0.1) !important;
+        background-color: rgba(<?= $__p['danger_rgb'] ?>, 0.1) !important;
     }
 
 
 
 
     .form-check-input.custom-switch:checked {
-        background-color: <?= $p['switch_on'] ?> !important;
-        border-color:     <?= $p['switch_on'] ?> !important;
+        background-color: <?= $__p['switch_on'] ?> !important;
+        border-color:     <?= $__p['switch_on'] ?> !important;
     }
 
 
-    .tag                          { background: <?= $p['tag_bg'] ?> !important; }
-    .tag-option.selected          { color: <?= $p['danger'] ?> !important; }
-    .tag-option:hover              { background: rgba(<?= $p['danger_rgb'] ?>, 0.06) !important; }
+    .tag                          { background: <?= $__p['tag_bg'] ?> !important; }
+    .tag-option.selected          { color: <?= $__p['danger'] ?> !important; }
+    .tag-option:hover              { background: rgba(<?= $__p['danger_rgb'] ?>, 0.06) !important; }
     .tag-option.selected .tag-check {
-        background:   <?= $p['tag_bg'] ?> !important;
-        border-color: <?= $p['tag_bg'] ?> !important;
+        background:   <?= $__p['tag_bg'] ?> !important;
+        border-color: <?= $__p['tag_bg'] ?> !important;
     }
     .tag-input-box:focus-within {
-        border-color: <?= $p['danger'] ?> !important;
-        box-shadow: 0 0 0 3px rgba(<?= $p['danger_rgb'] ?>, 0.15) !important;
+        border-color: <?= $__p['danger'] ?> !important;
+        box-shadow: 0 0 0 3px rgba(<?= $__p['danger_rgb'] ?>, 0.15) !important;
     }
     .btn-help:hover {
-        border-color: <?= $p['danger'] ?> !important;
-        color:        <?= $p['danger'] ?> !important;
+        border-color: <?= $__p['danger'] ?> !important;
+        color:        <?= $__p['danger'] ?> !important;
     }
 
     <?php endif;  ?>
 
-    <?php if ($dyslexie): ?>
-    /*@font-face permet de definir et d'importer une police*/
+    <?php if ($__dyslexie): ?>
+
     @font-face {
         font-family: 'OpenDyslexic';
         src: url('https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/OpenDyslexic-Regular.otf') format('opentype');
@@ -227,43 +226,43 @@ $articles = getArticles();
     <?php
 
     if(session_status() === PHP_SESSION_NONE) session_start();
-    $daltonisme = isset($_SESSION['daltonisme']) ? $_SESSION['daltonisme'] : 'aucun';
-    $dyslexie   = isset($_SESSION['dyslexie'])   ? $_SESSION['dyslexie']   : false;
-    $palettes = [
+    $__daltonisme = isset($_SESSION['daltonisme']) ? $_SESSION['daltonisme'] : 'aucun';
+    $__dyslexie   = isset($_SESSION['dyslexie'])   ? $_SESSION['dyslexie']   : false;
+    $__palettes = [
         'aucun'        => ['p'=>'#dc3545','pd'=>'#b02a37','pl'=>'#f8d7da','rgb'=>'220,53,69', 'link'=>'#0d6efd','footer'=>'#dc3545'],
         'deuteranopie' => ['p'=>'#0055cc','pd'=>'#003d99','pl'=>'#cce0ff','rgb'=>'0,85,204',  'link'=>'#e07b00','footer'=>'#0055cc'],
         'tritanopie'   => ['p'=>'#cc3300','pd'=>'#992200','pl'=>'#ffe5dd','rgb'=>'204,51,0',  'link'=>'#007a33','footer'=>'#cc3300'],
         'protanopie'   => ['p'=>'#6600cc','pd'=>'#4d0099','pl'=>'#ead5ff','rgb'=>'102,0,204', 'link'=>'#007acc','footer'=>'#6600cc'],
     ];
-    $p = isset($palettes[$daltonisme]) ? $palettes[$daltonisme] : $palettes['aucun'];
-    if ($daltonisme !== 'aucun' || $dyslexie): ?>
+    $__p = isset($__palettes[$__daltonisme]) ? $__palettes[$__daltonisme] : $__palettes['aucun'];
+    if ($__daltonisme !== 'aucun' || $__dyslexie): ?>
     <style id="accessibilite-overrides">
-    <?php if ($daltonisme !== 'aucun'): ?>
+    <?php if ($__daltonisme !== 'aucun'): ?>
 
     :root {
-        --color-primary:           <?=$p['p']?>;
-        --color-primary-dark:      <?=$p['pd']?>;
-        --color-primary-light:     <?=$p['pl']?>;
-        --color-primary-shadow-15: rgba(<?=$p['rgb']?>,.15);
-        --color-primary-shadow-25: rgba(<?=$p['rgb']?>,.25);
-        --color-primary-shadow-35: rgba(<?=$p['rgb']?>,.35);
+        --color-primary:           <?=$__p['p']?>;
+        --color-primary-dark:      <?=$__p['pd']?>;
+        --color-primary-light:     <?=$__p['pl']?>;
+        --color-primary-shadow-15: rgba(<?=$__p['rgb']?>,.15);
+        --color-primary-shadow-25: rgba(<?=$__p['rgb']?>,.25);
+        --color-primary-shadow-35: rgba(<?=$__p['rgb']?>,.35);
     }
 
-    .navbar                             { border-color: <?=$p['p']?> !important; }
-    .bg-danger, footer.bg-danger        { background-color: <?=$p['p']?> !important; }
-    .border-danger                      { border-color: <?=$p['p']?> !important; }
-    .text-danger                        { color: <?=$p['p']?> !important; }
-    .text-primary                       { color: <?=$p['link']?> !important; }
-    .btn-danger                         { background-color: <?=$p['p']?> !important; border-color: <?=$p['pd']?> !important; color: #fff !important; }
-    .btn-danger:hover, .btn-danger:active { background-color: <?=$p['pd']?> !important; border-color: <?=$p['pd']?> !important; }
-    .btn-outline-danger                 { border-color: <?=$p['p']?> !important; color: <?=$p['p']?> !important; }
-    .btn-outline-danger:hover, .btn-outline-danger:active { background-color: <?=$p['p']?> !important; color: #fff !important; }
-    .alert-danger                       { background-color: <?=$p['pl']?> !important; border-color: <?=$p['p']?> !important; color: <?=$p['pd']?> !important; }
-    .card.border-danger                 { border-color: <?=$p['p']?> !important; }
-    .dropdown-item:active               { background-color: <?=$p['p']?> !important; }
-    a:not(.btn):not(.nav-link):not(.navbar-brand):not(.dropdown-item) { color: <?=$p['link']?> !important; }
+    .navbar                             { border-color: <?=$__p['p']?> !important; }
+    .bg-danger, footer.bg-danger        { background-color: <?=$__p['p']?> !important; }
+    .border-danger                      { border-color: <?=$__p['p']?> !important; }
+    .text-danger                        { color: <?=$__p['p']?> !important; }
+    .text-primary                       { color: <?=$__p['link']?> !important; }
+    .btn-danger                         { background-color: <?=$__p['p']?> !important; border-color: <?=$__p['pd']?> !important; color: #fff !important; }
+    .btn-danger:hover, .btn-danger:active { background-color: <?=$__p['pd']?> !important; border-color: <?=$__p['pd']?> !important; }
+    .btn-outline-danger                 { border-color: <?=$__p['p']?> !important; color: <?=$__p['p']?> !important; }
+    .btn-outline-danger:hover, .btn-outline-danger:active { background-color: <?=$__p['p']?> !important; color: #fff !important; }
+    .alert-danger                       { background-color: <?=$__p['pl']?> !important; border-color: <?=$__p['p']?> !important; color: <?=$__p['pd']?> !important; }
+    .card.border-danger                 { border-color: <?=$__p['p']?> !important; }
+    .dropdown-item:active               { background-color: <?=$__p['p']?> !important; }
+    a:not(.btn):not(.nav-link):not(.navbar-brand):not(.dropdown-item) { color: <?=$__p['link']?> !important; }
     <?php endif; ?>
-    <?php if ($dyslexie): ?>
+    <?php if ($__dyslexie): ?>
     @font-face { font-family:'OpenDyslexic'; src:url('https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/OpenDyslexic-Regular.otf') format('opentype'); font-weight:normal; }
     @font-face { font-family:'OpenDyslexic'; src:url('https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/OpenDyslexic-Bold.otf') format('opentype'); font-weight:bold; }
     *, *::before, *::after              { font-family: 'OpenDyslexic', Arial, sans-serif !important; }
@@ -291,7 +290,6 @@ $articles = getArticles();
 
         <a class="nav-link" href="aides.php">Aides</a>
         <a class="nav-link" href="presentation.php">Handicaps</a>
-        <!-- si le role de la session est admin, affiche le lien pour acceder au panel admin -->
         <?php if(isset($_SESSION['role'])){
             if ($_SESSION['role'] == 'admin'){
         ?>
@@ -443,7 +441,61 @@ $articles = getArticles();
             </svg>
         </button>
         <div class="collapse" id="collapseExample">
-            <p>hello</p>
+            <div class="container">
+                <div class="shadow-lg">
+                    <section class="py-5">
+                        <h4 class="fw-bold mb-4 mx-3">L'actualité Condensée :</h4>
+
+                        <div id="actualitesCarousel2" class="carousel slide mx-3" data-bs-ride="carousel" data-bs-interval="10000">
+
+                            <!-- Slides -->
+                            <div class="carousel-inner">
+                                <?php if (empty($articles)) { ?>
+                                    <div class="carousel-item active">
+                                        <p class="text-muted text-center">Aucun article disponible pour le moment.</p>
+                                    </div>
+                                <?php } ?>
+                                <?php foreach ($articles as $index => $article) {
+                                    $titrePlaceholder1 = str_replace(' ', '+', htmlspecialchars($article['category']));
+                                    $titrePlaceholder = str_replace('-', '+', $titrePlaceholder1);
+                                    $titrePlaceholder = ucfirst($titrePlaceholder);
+                                    ?>
+                                    <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
+                                        <div class="row align-items-center g-4">
+                                            <div class="col-md-5">
+                                                <img src="https://placehold.co/600x350/dc3545/ffffff?text=<?= $titrePlaceholder ?>"
+                                                     class="d-block w-100 carousel-image"
+                                                     alt="<?= htmlspecialchars($article['title']) ?>">
+                                            </div>
+                                            <div class="col-md-7">
+                                                <div class="news-content mx-3">
+                                                    <h5 class="fw-bold"><?= htmlspecialchars($article['title']) ?></h5>
+                                                    <p><?= htmlspecialchars($article['description']) ?></p>
+                                                    <small class="text-muted"><?= htmlspecialchars($article['date']) ?></small>
+                                                    <br><br>
+                                                    <a href="<?= htmlspecialchars($article['link']) ?>" target="_blank" class="text-primary">
+                                                        Lire l'article complet
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php } ?>
+                            </div>
+
+                            <!-- Contrôles -->
+                            <button class="carousel-control-prev" type="button" data-bs-target="#actualitesCarousel2" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Précédent</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#actualitesCarousel2" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Suivant</span>
+                            </button>
+                        </div>
+                    </section>
+                </div>
+            </div>
         </div>
     </div>
 </section>

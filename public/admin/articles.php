@@ -334,9 +334,9 @@ $articles = getArticles();
                                         <h2><a href="<?php echo $article["link"]; ?>" target="_blank"><?php echo $article["title"]; ?></a></h2>
                                         <p><?php echo $article["description"]; ?></p>
                                         <small><?php echo $article["date"]; ?></small><br><br>
-                                        <form class="bg-danger border border-dark justify-content-md">
+                                        <form class="bg-danger border border-dark justify-content-md" method="post" action="articles2.php">
                                             <button class="btn btn-danger">Ajouter au site</button>
-                                            <button class="btn btn-danger">Supprimer de la liste</button>
+                                            <input type="hidden" value="<?php $article["description"] ?>">
                                         </form>
                                     </div>
                                 </div>
