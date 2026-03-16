@@ -235,6 +235,7 @@ if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])) {
         <a class="nav-link" href="inscrits.php">Inscrits</a>
         <a class="nav-link" href="signalements.php">Signalements</a>
         <a class="nav-link" href="articles.php">Articles</a>
+        <a class="nav-link" href="forum_admin.php">Forum</a>
 
 
         <?php if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])){?>

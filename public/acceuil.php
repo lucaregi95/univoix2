@@ -327,7 +327,7 @@ $articles = getArticles();
 
 
         <h1 class="fw-bold mb-3">Bienvenue chez Uni'Voix</h1>
-        <p class="text-muted">
+        <p class="text-muted ">
             Nous proposons une entraide pour les étudiants,
             afin de faire entendre sa voix et trouver sa voie.
         </p>
