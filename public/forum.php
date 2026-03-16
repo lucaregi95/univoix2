@@ -286,7 +286,7 @@ $categories = $connexion->query("SELECT DISTINCT categorie_sujet FROM sujet ORDE
                 <a class="nav-link dropdown-toggle" style="font-weight:bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img class="rounded-circle" alt="pdp" src="<?=$avatar?>" width="40px" height="40px"/>     <?=$_SESSION["prenom"]?> <?=$_SESSION["nom"]?></a>
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="profil.php">Profil</a></li>
-                    <li><a class="dropdown-item" href="deconnexion.php">Se deconnecter</a></li>
+                    <li><a class="dropdown-item" href="deconnexion.php">Se déconnecter</a></li>
                 </ul>
             </li>
 

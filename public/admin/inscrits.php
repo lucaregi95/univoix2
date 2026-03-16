@@ -245,6 +245,8 @@ $result = $query->fetchAll();
         <a href="acceuil_admin.php"><img alt="" class="navbar-brand fw-bold" src="../../img/univoix.png" style="max-width:50px;"></a>
         <a class="nav-link fw-bold text-danger" href="inscrits.php">Inscrits</a>
         <a class="nav-link" href="signalements.php">Signalements</a>
+        <a class="nav-link" href="articles.php">Articles</a>
+        <a class="nav-link" href="forum_admin.php">Forum</a>
 
 
         <?php if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])){?>
@@ -262,7 +264,7 @@ $result = $query->fetchAll();
             <li class="nav-item dropdown fs-5" >
                 <a class="nav-link dropdown-toggle" style="font-weight:bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img class="rounded-circle" alt="pdp" src="<?=$avatar?>" width="40px" height="40px"/>     <?=$_SESSION["prenom"]?> <?=$_SESSION["nom"]?> (admin)</a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="../deconnexion.php">Se deconnecter</a></li>
+                    <li><a class="dropdown-item" href="../deconnexion.php">Se déconnecter</a></li>
                 </ul>
             </li>
 

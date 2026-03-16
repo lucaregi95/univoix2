@@ -52,7 +52,7 @@ $articles = getArticles();
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Uni'Voix - Acceuil</title>
+    <title>Uni'Voix - Accueil</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap 5 -->
@@ -278,6 +278,7 @@ $articles = getArticles();
         <a class="nav-link" href="inscrits.php">Inscrits</a>
         <a class="nav-link" href="signalements.php">Signalements</a>
         <a class="nav-link" href="articles.php">Articles</a>
+        <a class="nav-link" href="forum_admin.php">Forum</a>
 
 
         <?php if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])){?>
@@ -295,7 +296,7 @@ $articles = getArticles();
             <li class="nav-item dropdown fs-5" >
                 <a class="nav-link dropdown-toggle" style="font-weight:bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img class="rounded-circle" alt="pdp" src="<?=$avatar?>" width="40px" height="40px"/>     <?=$_SESSION["prenom"]?> <?=$_SESSION["nom"]?> (admin)</a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="../deconnexion.php">Se deconnecter</a></li>
+                    <li><a class="dropdown-item" href="../deconnexion.php">Se déconnecter</a></li>
                 </ul>
             </li>
 
