@@ -35,7 +35,10 @@ if (!$result) {
             header("location:forum.php");
         } else if($_POST['page'] == 'p'){
             header("location:profil.php");
-        } else {
+        } else if($_POST['page'] == 'sp'){
+            header("location:specialistes.php");
+        }
+        else {
             header("location:acceuil.php");
         }
     } else {

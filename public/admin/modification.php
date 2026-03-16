@@ -2,10 +2,10 @@
 require_once "..\..\bdd\connexion.php";
 
 session_start();
-$id=$_POST['id'];
+$id_inscrit=$_POST['id'];
 $sql = "SELECT nom,prenom,pseudo,email,importance_signalement,role,id_inscrit FROM inscrit WHERE id_inscrit = :id";
 $query = $connexion->prepare($sql);
-$query->execute(array('id' => $id));
+$query->execute(array('id' => $id_inscrit));
 $result = $query->fetch();
 
 $sql2 = "SELECT DISTINCT role FROM inscrit";
@@ -298,7 +298,7 @@ var_dump($resultat);
                     <div class="col-md-4">
                         <div class="mb-3">
                             <p class="d-inline-flex gap-1">
-                                <button class="btn btn-danger" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                <button class="btn btn-danger text-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                                     Promouvoir
                                 </button>
                             </p>
@@ -323,8 +323,8 @@ var_dump($resultat);
                 </div>
 
                 <form action="modification2.php" method="POST">
-                    <button type="submit" class="btn btn-danger">Confirmer le bannissement</button>
-                    <input type="hidden" value="<?=$id?>" name="id">
+                    <button type="submit" class="btn btn-danger">Confirmer la Modification</button>
+                    <input type="hidden" value="<?=$id_inscrit?>" name="id">
                 </form>
             </div>
         </div>

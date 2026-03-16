@@ -382,8 +382,7 @@ $articles = getArticles();
 <section class="py-5">
     <h4 class="fw-bold mb-4 mx-3">LES ACTUALITÉS by Uni'Voix :</h4>
 
-    <div id="actualitesCarousel" class="carousel slide mx-3" data-bs-ride="carousel">
-        <!-- Indicateurs -->
+    <div id="actualitesCarousel" class="carousel slide mx-3" data-bs-ride="carousel" data-bs-interval="10000">
 
 
         <!-- Slides -->
@@ -401,7 +400,7 @@ $articles = getArticles();
                 <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
                     <div class="row align-items-center g-4">
                         <div class="col-md-5">
-                            <img src="https://placehold.co/600x350/cc0000/ffffff?text=<?= $titrePlaceholder ?>"
+                            <img src="https://placehold.co/600x350/dc3545/ffffff?text=<?= $titrePlaceholder ?>"
                                  class="d-block w-100 carousel-image"
                                  alt="<?= htmlspecialchars($article['title']) ?>">
                             
@@ -431,9 +430,22 @@ $articles = getArticles();
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Suivant</span>
         </button>
+    </div><br>
+    <div class="mx-auto text-center">
+        <button type="button" class="btn btn-danger position-relative"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapseExample">
+            Plus d'informations condensées
+            <svg width="1em" height="1em" viewBox="0 0 16 16" class="position-absolute top-100 start-50 translate-middle mt-1 bi bi-caret-down-fill" fill="#dc3545" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+            </svg>
+        </button>
+        <div class="collapse" id="collapseExample">
+            <p>hello</p>
+        </div>
     </div>
-
 </section>
+
     </div>
 </div>
 

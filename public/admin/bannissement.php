@@ -1,10 +1,11 @@
 <?php
 require_once "..\..\bdd\connexion.php";
 session_start();
-$id=$_POST['id'];
+$id_inscrit=$_POST['id'];
+
 $sql = "SELECT nom,prenom,pseudo,email,importance_signalement,id_inscrit FROM inscrit WHERE id_inscrit = :id";
 $query = $connexion->prepare($sql);
-$query->execute(array('id' => $id));
+$query->execute(array('id' => $id_inscrit));
 $result = $query->fetch();
 ?>
 <!DOCTYPE html>
@@ -283,11 +284,12 @@ $result = $query->fetch();
                 <br><br><br>
                 <form action="bannissement2.php" method="POST">
                     <button type="submit" class="btn btn-danger">Confirmer le bannissement</button>
-                    <input type="hidden" value="<?=$id?>" name="id">
+                    <input type="hidden" value="<?=$id_inscrit?>" name="id">
                 </form>
             </div>
         </div>
     </section>
+
 <footer class="py-3 text-center bg-danger text-white site-footer">
     © 2026 — Luca Regi, Nassim Kharfouche, Prosper Fajnzyn — Tous droits réservés
 </footer>
