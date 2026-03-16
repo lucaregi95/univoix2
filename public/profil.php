@@ -12,13 +12,43 @@ if(isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['age']) && is
     $sqlUpdate = "UPDATE inscrit SET nom = :nom, prenom = :prenom, age = :age, pseudo = :pseudo WHERE id_inscrit = :id";
     $queryUpdate = $connexion->prepare($sqlUpdate);
     $queryUpdate->execute(array(
-            'nom'    => $_POST['nom'],
-            'prenom' => $_POST['prenom'],
-            'age'    => $_POST['age'],
-            'pseudo' => $_POST['pseudo'],
-            'id'     => $_POST['id_inscrit']
+        'nom' => $_POST['nom'],
+        'prenom' => $_POST['prenom'],
+        'age' => $_POST['age'],
+        'pseudo' => $_POST['pseudo'],
+        'id' => $_POST['id_inscrit']
     ));
+}
 
+//$sqlUpdate_Handicaps = " UPDATE handicap as H INNER JOIN inscrithandicap as I ON H.id_handicap = I.id_handicap SET H.colonne = I.nouvelle_valeur WHERE H.ref_handicap = :id ";
+//    if(isset($_POST['nom']) && isset($_POST['id_handicap'])){
+//    $sqlUpdateHandicape = "UPDATE handicap SET nom = :nom  WHERE id_handicap = :id ";
+//    $queryUpdateHandicape = $connexion->prepare($sqlUpdateHandicape);
+//    $queryUpdateHandicape->execute(array(
+//        'id' => $_POST['id_handicap'],
+//        'nom' => $_POST['nom']
+//
+//    ));
+
+if(isset($_POST['handicaps']) && !empty($_POST['handicaps'])) {
+    $sqlDelete_handi = "DELETE ih FROM inscrithandicap ih INNER JOIN inscrit i ON i.id_inscrit = ih.ref_inscrit WHERE i.id_inscrit = :id";
+    $queryDelete_handi = $connexion->prepare($sqlDelete_handi);
+    $queryDelete_handi->execute(['id' => $_POST['id_inscrit']]);
+
+    $sqlUpdate_handi = "INSERT INTO inscrithandicap (ref_inscrit, ref_handicap) SELECT :id, h.id_handicap FROM handicap h WHERE h.nom = :nom";
+    $queryUpdate_handi = $connexion->prepare($sqlUpdate_handi);
+
+    $handicapsChoisis = explode(',', $_POST['handicaps']);
+    foreach($handicapsChoisis as $nomHandicap) {
+        $nomHandicap = trim($nomHandicap);
+        if($nomHandicap !== '') {
+            $queryUpdate_handi->execute([
+                'id'  => $_POST['id_inscrit'],
+                'nom' => $nomHandicap
+            ]);
+        }
+    }
+}
     $types_daltonisme = ['deuteranopie', 'tritanopie', 'protanopie'];
     $daltonisme_choisi = 'aucun';
     foreach ($types_daltonisme as $type) {
@@ -29,19 +59,23 @@ if(isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['age']) && is
     }
     $dyslexie_choisie = (isset($_POST['police_dyslexique']) && $_POST['police_dyslexique'] === 'on') ? 1 : 0;
 
-    $sqlAccess = "UPDATE inscrit SET daltonisme = :daltonisme, dyslexie = :dyslexie WHERE id_inscrit = :id";
-    $queryAccess = $connexion->prepare($sqlAccess);
-    $queryAccess->execute([
+    if(isset($_POST['id_inscrit'])) {
+
+        $sqlAccess = "UPDATE inscrit SET daltonisme = :daltonisme, dyslexie = :dyslexie WHERE id_inscrit = :id";
+        $queryAccess = $connexion->prepare($sqlAccess);
+        $queryAccess->execute([
             'daltonisme' => $daltonisme_choisi,
             'dyslexie'   => $dyslexie_choisie,
             'id'         => $_POST['id_inscrit']
-    ]);
+        ]);
+
+    }
+
 
     $_SESSION['daltonisme'] = $daltonisme_choisi;
     $_SESSION['dyslexie']   = (bool)$dyslexie_choisie;
-}
 
-$sqlUpdateHandicape = " ";
+
 
 $message = "";
 $avatar_path = "";
@@ -325,13 +359,13 @@ $p = isset($palettes[$daltonisme_session]) ? $palettes[$daltonisme_session] : $p
         "TDAH",
         "Autisme",
         "Trouble du Spectre Autistique",
-        "Maladie chronique (diabète, endométriose...)",
+        "Maladie chronique",
         "Dyslexie",
         "Dyscalculie",
         "Dyspraxie",
         "Troubles anxieux",
         "Dépression",
-        "Haut Potentiel Intellectuel (HPI)",
+        "Haut Potentiel Intellectuel",
         "Autre",
     ];
 
