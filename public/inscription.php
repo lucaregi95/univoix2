@@ -12,11 +12,15 @@ if(isset($_POST["submit_btn"])){
     $role = "user";
     $importance_signalement = 0;
     $ville = $_POST['ville'];
+
+    // 0 = aucun problème, 1 = email déjà pris, 2 = pseudo déjà pris
     $compteur=0;
     $sql3 = "SELECT email,pseudo FROM inscrit";
     $query3 = $connexion->prepare($sql3);
     $query3->execute();
     $resutl3 = $query3->fetchAll();
+
+    // Vérifie si l'email ou le pseudo sont déjà utilisés dans la BDD
     foreach ($resutl3 as $row3) {
         if ($row3['email'] == $email) {
             $compteur = 1;
@@ -25,6 +29,7 @@ if(isset($_POST["submit_btn"])){
             $compteur = 2;
         }
     }
+
     if ($_POST['mot_de_passe']!=$_POST['conf_mdp']) {
         $erreur_mdp = "Les mots de passe ne correspondent pas";
     }else if($compteur==1){
@@ -33,6 +38,7 @@ if(isset($_POST["submit_btn"])){
         $erreur_mdp = "Le pseudo est deja utilisé";
     }
     else{
+        // Insertion de l'inscrit en base de données
         $sql = "INSERT INTO inscrit (nom, prenom, age, pseudo, email, ville, mot_de_passe, role, importance_signalement) VALUES (:nom, :prenom, :age, :pseudo, :email, :ville, :mot_de_passe, :role, :importance_signalement)";
         $query = $connexion->prepare($sql);
         $query->execute(array(
@@ -47,9 +53,14 @@ if(isset($_POST["submit_btn"])){
                 "ville" => $ville
         ));
 
-        $id_inscrit = $connexion->lastInsertId(); // lastInsertId = récuperer l'id pour la mettre dans la bdd
+        // Récupère l'ID auto-incrémenté de l'inscrit que l'on vient d'insérer
+        $id_inscrit = $connexion->lastInsertId();
 
-        $handicaps = json_decode($_POST['handicaps'], true); //  json_decode = Récuperer une chaine encode et la convertir en valeur / le true c'est quand la valeur retourné comme le tableau asso
+        // Le champ caché "handicaps" contient un tableau JSON envoyé par le JS (ex: [1, 3, 5])
+        // json_decode avec true retourne un tableau PHP associatif au lieu d'un objet
+        $handicaps = json_decode($_POST['handicaps'], true);
+
+        // Insère chaque handicap sélectionné dans la table de liaison inscrithandicap
         if(!empty($handicaps)){
             $sql2 = "INSERT INTO inscrithandicap (ref_inscrit, ref_handicap) VALUES (:ref_inscrit, :ref_handicap)";
             $query2 = $connexion->prepare($sql2);
@@ -65,6 +76,7 @@ if(isset($_POST["submit_btn"])){
     }
 }
 
+// Récupère la liste des handicaps disponibles pour remplir le sélecteur JS
 $handicaps_list = $connexion->query("SELECT id_handicap, nom FROM handicap ORDER BY nom")->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
@@ -77,213 +89,140 @@ $handicaps_list = $connexion->query("SELECT id_handicap, nom FROM handicap ORDER
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="../style/style_public/inscription.css" rel="stylesheet">
     <?php
-
     $__daltonisme = isset($_SESSION['daltonisme']) ? $_SESSION['daltonisme'] : 'aucun';
     $__dyslexie   = isset($_SESSION['dyslexie'])   ? $_SESSION['dyslexie']   : false;
 
-
+    // Palettes de couleurs adaptées aux différents types de daltonisme
     $__palettes = [
-        'aucun' => [
-            'danger'               => '#dc3545',
-            'danger_rgb'           => '220,53,69',
-            'danger_text_emphasis' => '#58151c',
-            'danger_bg_subtle'     => '#f8d7da',
-            'danger_border_subtle' => '#f1aeb5',
-            'link'                 => '#0d6efd',
-            'link_rgb'             => '13,110,253',
-            'tag_bg'               => '#dc3545',
-            'switch_on'            => '#dc3545',
-        ],
-        'deuteranopie' => [
-            'danger'               => '#0055cc',
-            'danger_rgb'           => '0,85,204',
-            'danger_text_emphasis' => '#002a66',
-            'danger_bg_subtle'     => '#cce0ff',
-            'danger_border_subtle' => '#99c1ff',
-            'link'                 => '#e07b00',
-            'link_rgb'             => '224,123,0',
-            'tag_bg'               => '#0055cc',
-            'switch_on'            => '#0055cc',
-        ],
-        'tritanopie' => [
-            'danger'               => '#cc3300',
-            'danger_rgb'           => '204,51,0',
-            'danger_text_emphasis' => '#661a00',
-            'danger_bg_subtle'     => '#ffe5dd',
-            'danger_border_subtle' => '#ffbba8',
-            'link'                 => '#007a33',
-            'link_rgb'             => '0,122,51',
-            'tag_bg'               => '#cc3300',
-            'switch_on'            => '#cc3300',
-        ],
-        'protanopie' => [
-            'danger'               => '#6600cc',
-            'danger_rgb'           => '102,0,204',
-            'danger_text_emphasis' => '#330066',
-            'danger_bg_subtle'     => '#ead5ff',
-            'danger_border_subtle' => '#cc99ff',
-            'link'                 => '#007acc',
-            'link_rgb'             => '0,122,204',
-            'tag_bg'               => '#6600cc',
-            'switch_on'            => '#6600cc',
-        ],
+            'aucun' => [
+                    'danger'               => '#dc3545',
+                    'danger_rgb'           => '220,53,69',
+                    'danger_text_emphasis' => '#58151c',
+                    'danger_bg_subtle'     => '#f8d7da',
+                    'danger_border_subtle' => '#f1aeb5',
+                    'link'                 => '#0d6efd',
+                    'link_rgb'             => '13,110,253',
+                    'tag_bg'               => '#dc3545',
+                    'switch_on'            => '#dc3545',
+            ],
+            'deuteranopie' => [
+                    'danger'               => '#0055cc',
+                    'danger_rgb'           => '0,85,204',
+                    'danger_text_emphasis' => '#002a66',
+                    'danger_bg_subtle'     => '#cce0ff',
+                    'danger_border_subtle' => '#99c1ff',
+                    'link'                 => '#e07b00',
+                    'link_rgb'             => '224,123,0',
+                    'tag_bg'               => '#0055cc',
+                    'switch_on'            => '#0055cc',
+            ],
+            'tritanopie' => [
+                    'danger'               => '#cc3300',
+                    'danger_rgb'           => '204,51,0',
+                    'danger_text_emphasis' => '#661a00',
+                    'danger_bg_subtle'     => '#ffe5dd',
+                    'danger_border_subtle' => '#ffbba8',
+                    'link'                 => '#007a33',
+                    'link_rgb'             => '0,122,51',
+                    'tag_bg'               => '#cc3300',
+                    'switch_on'            => '#cc3300',
+            ],
+            'protanopie' => [
+                    'danger'               => '#6600cc',
+                    'danger_rgb'           => '102,0,204',
+                    'danger_text_emphasis' => '#330066',
+                    'danger_bg_subtle'     => '#ead5ff',
+                    'danger_border_subtle' => '#cc99ff',
+                    'link'                 => '#007acc',
+                    'link_rgb'             => '0,122,204',
+                    'tag_bg'               => '#6600cc',
+                    'switch_on'            => '#6600cc',
+            ],
     ];
     $__p = isset($__palettes[$__daltonisme]) ? $__palettes[$__daltonisme] : $__palettes['aucun'];
     if ($__daltonisme !== 'aucun' || $__dyslexie): ?>
-    <style id="accessibilite-overrides">
-    <?php if ($__daltonisme !== 'aucun'): ?>
-
-    :root {
-        --bs-danger:                <?= $__p['danger'] ?>;
-        --bs-danger-rgb:            <?= $__p['danger_rgb'] ?>;
-        --bs-danger-text-emphasis:  <?= $__p['danger_text_emphasis'] ?>;
-        --bs-danger-bg-subtle:      <?= $__p['danger_bg_subtle'] ?>;
-        --bs-danger-border-subtle:  <?= $__p['danger_border_subtle'] ?>;
-        --bs-link-color:            <?= $__p['link'] ?>;
-        --bs-link-color-rgb:        <?= $__p['link_rgb'] ?>;
-        --bs-link-hover-color:      <?= $__p['danger'] ?>;
-    }
-
-
-
-    .btn-danger:hover,
-    .btn-danger:active,
-    .btn-danger:focus-visible {
-        background-color: <?= $__p['danger_text_emphasis'] ?> !important;
-        border-color:     <?= $__p['danger_text_emphasis'] ?> !important;
-    }
-    .btn-danger:focus-visible {
-        box-shadow: 0 0 0 0.25rem rgba(<?= $__p['danger_rgb'] ?>, 0.5) !important;
-    }
-
-
-    .btn-outline-danger:hover,
-    .btn-outline-danger:active {
-        background-color: <?= $__p['danger'] ?> !important;
-        border-color:     <?= $__p['danger'] ?> !important;
-        color: #fff !important;
-    }
-    .btn-outline-danger:focus-visible {
-        box-shadow: 0 0 0 0.25rem rgba(<?= $__p['danger_rgb'] ?>, 0.5) !important;
-    }
-
-
-    .form-control:focus,
-    .form-select:focus {
-        border-color: <?= $__p['danger'] ?> !important;
-        box-shadow: 0 0 0 0.25rem rgba(<?= $__p['danger_rgb'] ?>, 0.25) !important;
-    }
-
-
-    .bg-danger.bg-opacity-10 {
-        background-color: rgba(<?= $__p['danger_rgb'] ?>, 0.1) !important;
-    }
-
-
-
-
-    .form-check-input.custom-switch:checked {
-        background-color: <?= $__p['switch_on'] ?> !important;
-        border-color:     <?= $__p['switch_on'] ?> !important;
-    }
-
-
-    .tag                          { background: <?= $__p['tag_bg'] ?> !important; }
-    .tag-option.selected          { color: <?= $__p['danger'] ?> !important; }
-    .tag-option:hover              { background: rgba(<?= $__p['danger_rgb'] ?>, 0.06) !important; }
-    .tag-option.selected .tag-check {
-        background:   <?= $__p['tag_bg'] ?> !important;
-        border-color: <?= $__p['tag_bg'] ?> !important;
-    }
-    .tag-input-box:focus-within {
-        border-color: <?= $__p['danger'] ?> !important;
-        box-shadow: 0 0 0 3px rgba(<?= $__p['danger_rgb'] ?>, 0.15) !important;
-    }
-    .btn-help:hover {
-        border-color: <?= $__p['danger'] ?> !important;
-        color:        <?= $__p['danger'] ?> !important;
-    }
-
-    <?php endif;  ?>
-
-    <?php if ($__dyslexie): ?>
-
-    @font-face {
-        font-family: 'OpenDyslexic';
-        src: url('https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/OpenDyslexic-Regular.otf') format('opentype');
-        font-weight: normal;
-    }
-    @font-face {
-        font-family: 'OpenDyslexic';
-        src: url('https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/OpenDyslexic-Bold.otf') format('opentype');
-        font-weight: bold;
-    }
-    *, *::before, *::after      { font-family: 'OpenDyslexic', Arial, sans-serif !important; }
-    body                         { line-height: 1.8 !important; letter-spacing: 0.05em !important; word-spacing: 0.15em !important; background-color: #fdfaf3 !important; }
-    p, li, td, th, label, span, div, a, input, textarea, select, button
-                                 { line-height: 1.8 !important; letter-spacing: 0.04em !important; word-spacing: 0.12em !important; }
-    body, p, li, td, label       { font-size: 1.05rem !important; }
-    .card, .form-control, .tag-input-box, .tag-dropdown { background-color: #fdfaf3 !important; }
-    p, li, td, div               { text-align: left !important; }
-    <?php endif;  ?>
-
-    </style>
+        <style id="accessibilite-overrides">
+            <?php if ($__daltonisme !== 'aucun'): ?>
+            :root {
+                --bs-danger:                <?= $__p['danger'] ?>;
+                --bs-danger-rgb:            <?= $__p['danger_rgb'] ?>;
+                --bs-danger-text-emphasis:  <?= $__p['danger_text_emphasis'] ?>;
+                --bs-danger-bg-subtle:      <?= $__p['danger_bg_subtle'] ?>;
+                --bs-danger-border-subtle:  <?= $__p['danger_border_subtle'] ?>;
+                --bs-link-color:            <?= $__p['link'] ?>;
+                --bs-link-color-rgb:        <?= $__p['link_rgb'] ?>;
+                --bs-link-hover-color:      <?= $__p['danger'] ?>;
+            }
+            .btn-danger:hover,
+            .btn-danger:active,
+            .btn-danger:focus-visible {
+                background-color: <?= $__p['danger_text_emphasis'] ?> !important;
+                border-color:     <?= $__p['danger_text_emphasis'] ?> !important;
+            }
+            .btn-danger:focus-visible {
+                box-shadow: 0 0 0 0.25rem rgba(<?= $__p['danger_rgb'] ?>, 0.5) !important;
+            }
+            .btn-outline-danger:hover,
+            .btn-outline-danger:active {
+                background-color: <?= $__p['danger'] ?> !important;
+                border-color:     <?= $__p['danger'] ?> !important;
+                color: #fff !important;
+            }
+            .btn-outline-danger:focus-visible {
+                box-shadow: 0 0 0 0.25rem rgba(<?= $__p['danger_rgb'] ?>, 0.5) !important;
+            }
+            .form-control:focus,
+            .form-select:focus {
+                border-color: <?= $__p['danger'] ?> !important;
+                box-shadow: 0 0 0 0.25rem rgba(<?= $__p['danger_rgb'] ?>, 0.25) !important;
+            }
+            .bg-danger.bg-opacity-10 {
+                background-color: rgba(<?= $__p['danger_rgb'] ?>, 0.1) !important;
+            }
+            .form-check-input.custom-switch:checked {
+                background-color: <?= $__p['switch_on'] ?> !important;
+                border-color:     <?= $__p['switch_on'] ?> !important;
+            }
+            .tag                          { background: <?= $__p['tag_bg'] ?> !important; }
+            .tag-option.selected          { color: <?= $__p['danger'] ?> !important; }
+            .tag-option:hover              { background: rgba(<?= $__p['danger_rgb'] ?>, 0.06) !important; }
+            .tag-option.selected .tag-check {
+                background:   <?= $__p['tag_bg'] ?> !important;
+                border-color: <?= $__p['tag_bg'] ?> !important;
+            }
+            .tag-input-box:focus-within {
+                border-color: <?= $__p['danger'] ?> !important;
+                box-shadow: 0 0 0 3px rgba(<?= $__p['danger_rgb'] ?>, 0.15) !important;
+            }
+            .btn-help:hover {
+                border-color: <?= $__p['danger'] ?> !important;
+                color:        <?= $__p['danger'] ?> !important;
+            }
+            <?php endif; ?>
+            <?php if ($__dyslexie): ?>
+            @font-face {
+                font-family: 'OpenDyslexic';
+                src: url('https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/OpenDyslexic-Regular.otf') format('opentype');
+                font-weight: normal;
+            }
+            @font-face {
+                font-family: 'OpenDyslexic';
+                src: url('https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/OpenDyslexic-Bold.otf') format('opentype');
+                font-weight: bold;
+            }
+            *, *::before, *::after      { font-family: 'OpenDyslexic', Arial, sans-serif !important; }
+            body                         { line-height: 1.8 !important; letter-spacing: 0.05em !important; word-spacing: 0.15em !important; background-color: #fdfaf3 !important; }
+            p, li, td, th, label, span, div, a, input, textarea, select, button
+            { line-height: 1.8 !important; letter-spacing: 0.04em !important; word-spacing: 0.12em !important; }
+            body, p, li, td, label       { font-size: 1.05rem !important; }
+            .card, .form-control, .tag-input-box, .tag-dropdown { background-color: #fdfaf3 !important; }
+            p, li, td, div               { text-align: left !important; }
+            <?php endif; ?>
+        </style>
     <?php endif; ?>
-    <?php
-
-    if(session_status() === PHP_SESSION_NONE) session_start();
-    $__daltonisme = isset($_SESSION['daltonisme']) ? $_SESSION['daltonisme'] : 'aucun';
-    $__dyslexie   = isset($_SESSION['dyslexie'])   ? $_SESSION['dyslexie']   : false;
-    $__palettes = [
-        'aucun'        => ['p'=>'#dc3545','pd'=>'#b02a37','pl'=>'#f8d7da','rgb'=>'220,53,69', 'link'=>'#0d6efd','footer'=>'#dc3545'],
-        'deuteranopie' => ['p'=>'#0055cc','pd'=>'#003d99','pl'=>'#cce0ff','rgb'=>'0,85,204',  'link'=>'#e07b00','footer'=>'#0055cc'],
-        'tritanopie'   => ['p'=>'#cc3300','pd'=>'#992200','pl'=>'#ffe5dd','rgb'=>'204,51,0',  'link'=>'#007a33','footer'=>'#cc3300'],
-        'protanopie'   => ['p'=>'#6600cc','pd'=>'#4d0099','pl'=>'#ead5ff','rgb'=>'102,0,204', 'link'=>'#007acc','footer'=>'#6600cc'],
-    ];
-    $__p = isset($__palettes[$__daltonisme]) ? $__palettes[$__daltonisme] : $__palettes['aucun'];
-    if ($__daltonisme !== 'aucun' || $__dyslexie): ?>
-    <style id="accessibilite-overrides">
-    <?php if ($__daltonisme !== 'aucun'): ?>
-
-    :root {
-        --color-primary:           <?=$__p['p']?>;
-        --color-primary-dark:      <?=$__p['pd']?>;
-        --color-primary-light:     <?=$__p['pl']?>;
-        --color-primary-shadow-15: rgba(<?=$__p['rgb']?>,.15);
-        --color-primary-shadow-25: rgba(<?=$__p['rgb']?>,.25);
-        --color-primary-shadow-35: rgba(<?=$__p['rgb']?>,.35);
-    }
-
-    .navbar                             { border-color: <?=$__p['p']?> !important; }
-    .bg-danger, footer.bg-danger        { background-color: <?=$__p['p']?> !important; }
-    .border-danger                      { border-color: <?=$__p['p']?> !important; }
-    .text-danger                        { color: <?=$__p['p']?> !important; }
-    .text-primary                       { color: <?=$__p['link']?> !important; }
-    .btn-danger                         { background-color: <?=$__p['p']?> !important; border-color: <?=$__p['pd']?> !important; color: #fff !important; }
-    .btn-danger:hover, .btn-danger:active { background-color: <?=$__p['pd']?> !important; border-color: <?=$__p['pd']?> !important; }
-    .btn-outline-danger                 { border-color: <?=$__p['p']?> !important; color: <?=$__p['p']?> !important; }
-    .btn-outline-danger:hover, .btn-outline-danger:active { background-color: <?=$__p['p']?> !important; color: #fff !important; }
-    .alert-danger                       { background-color: <?=$__p['pl']?> !important; border-color: <?=$__p['p']?> !important; color: <?=$__p['pd']?> !important; }
-    .card.border-danger                 { border-color: <?=$__p['p']?> !important; }
-    .dropdown-item:active               { background-color: <?=$__p['p']?> !important; }
-    a:not(.btn):not(.nav-link):not(.navbar-brand):not(.dropdown-item) { color: <?=$__p['link']?> !important; }
-    <?php endif; ?>
-    <?php if ($__dyslexie): ?>
-    @font-face { font-family:'OpenDyslexic'; src:url('https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/OpenDyslexic-Regular.otf') format('opentype'); font-weight:normal; }
-    @font-face { font-family:'OpenDyslexic'; src:url('https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/OpenDyslexic-Bold.otf') format('opentype'); font-weight:bold; }
-    *, *::before, *::after              { font-family: 'OpenDyslexic', Arial, sans-serif !important; }
-    body                                { line-height:1.8 !important; letter-spacing:0.05em !important; word-spacing:0.15em !important; background-color:#fdfaf3 !important; }
-    p,li,td,th,label,span,div,a,input,textarea,select,button { line-height:1.8 !important; letter-spacing:0.04em !important; }
-    body,p,li,td,label                  { font-size:1.05rem !important; }
-    .card,.form-control,.tag-input-box,.tag-dropdown { background-color:#fdfaf3 !important; }
-    p,li,td,div                         { text-align:left !important; }
-    <?php endif; ?>
-    </style>
-    <?php endif; ?>
-
 </head>
-<body class="bg-light" style="font-family:'Candara'">
 
+<body>
 <nav class="navbar navbar-expand-sm navbar-light bg-light border border-danger border-3">
     <div class="container d-flex justify-content-evenly align-items-center">
         <a href="acceuil.php"><img alt="" class="navbar-brand fw-bold" src="../img/univoix.png" style="max-width:50px;"></a>
@@ -310,9 +249,9 @@ $handicaps_list = $connexion->query("SELECT id_handicap, nom FROM handicap ORDER
             <?php } ?>
 
             <form action="inscription.php" method="post">
+                <!-- Champ caché qui recevra la liste JSON des handicaps sélectionnés via le JS -->
                 <input type="hidden" name="handicaps" id="handicapsInput">
                 <div class="row">
-                    <!-- Colonne gauche -->
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label class="form-label">Votre nom :</label>
@@ -348,10 +287,8 @@ $handicaps_list = $connexion->query("SELECT id_handicap, nom FROM handicap ORDER
                         </div>
                     </div>
 
-                    <!-- Colonne droite -->
                     <div class="col-md-6">
                         <label class="form-label">Handicaps</label>
-
                         <div class="d-flex gap-2 align-items-start mb-1">
                             <div class="tag-input-box flex-grow-1" id="tagBox" onclick="document.getElementById('tagSearch').focus()">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="#aaa" class="bi bi-search flex-shrink-0" viewBox="0 0 16 16">
@@ -366,22 +303,17 @@ $handicaps_list = $connexion->query("SELECT id_handicap, nom FROM handicap ORDER
                                 </svg>
                             </button>
                         </div>
-
-                        <!-- DROPDOWN LIST -->
                         <div class="tag-dropdown" id="tagDropdown">
                             <div class="tag-empty" id="tagEmpty">Aucun résultat</div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Bouton -->
                 <div class="text-center mt-4">
                     <button type="submit" name="submit_btn" value="S'inscrire" class="btn btn-danger">Valider l'inscription !</button>
                 </div>
             </form>
         </div>
-
-
     </div>
 </div>
 <footer class="py-3 text-center bg-danger text-white">
@@ -389,7 +321,10 @@ $handicaps_list = $connexion->query("SELECT id_handicap, nom FROM handicap ORDER
 </footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+    // Injecte la liste des handicaps depuis PHP en JSON, directement dans la variable JS
     const troubles = <?= json_encode($handicaps_list) ?>;
+
+    // Set : structure sans doublons, stocke les IDs des handicaps sélectionnés
     const selected = new Set();
     const tagSearch      = document.getElementById('tagSearch');
     const tagBox         = document.getElementById('tagBox');
@@ -397,6 +332,7 @@ $handicaps_list = $connexion->query("SELECT id_handicap, nom FROM handicap ORDER
     const tagEmpty       = document.getElementById('tagEmpty');
     const handicapsInput = document.getElementById('handicapsInput');
 
+    // Crée dynamiquement un élément de liste pour chaque handicap disponible
     troubles.forEach(t => {
         const div = document.createElement('div');
         div.className = 'tag-option';
@@ -404,29 +340,35 @@ $handicaps_list = $connexion->query("SELECT id_handicap, nom FROM handicap ORDER
         div.dataset.label = t.nom;
         div.innerHTML = `<span>${t.nom}</span><div class="tag-check"></div>`;
         div.addEventListener('click', () => toggle(t.id_handicap, t.nom, div));
+        // Insère avant l'élément "Aucun résultat" pour maintenir l'ordre
         tagDropdown.insertBefore(div, tagEmpty);
     });
 
+    // Ajoute ou retire un handicap du Set selon s'il était déjà sélectionné
     function toggle(id, label, el) {
         if (selected.has(id)) {
             selected.delete(id);
             el.classList.remove('selected');
+            // ?. = optional chaining : supprime le tag seulement s'il existe, sans erreur sinon
             tagBox.querySelector(`.tag[data-value="${id}"]`)?.remove();
         } else {
             selected.add(id);
             el.classList.add('selected');
             addTag(id, label);
         }
+        // Convertit le Set en tableau puis en JSON pour l'envoyer via le champ caché
         handicapsInput.value = JSON.stringify([...selected]);
         tagSearch.focus();
     }
 
+    // Crée et insère un tag visuel cliquable dans la zone de saisie
     function addTag(id, label) {
         const tag = document.createElement('span');
         tag.className = 'tag';
         tag.dataset.value = id;
         tag.innerHTML = `${label}<button class="tag-remove" title="Retirer">×</button>`;
         tag.querySelector('.tag-remove').addEventListener('click', e => {
+            // stopPropagation empêche le clic de remonter au parent et de re-déclencher toggle()
             e.stopPropagation();
             selected.delete(id);
             tag.remove();
@@ -436,19 +378,23 @@ $handicaps_list = $connexion->query("SELECT id_handicap, nom FROM handicap ORDER
         tagBox.insertBefore(tag, tagSearch);
     }
 
+    // Filtre la liste des options selon la saisie de l'utilisateur
     tagSearch.addEventListener('input', () => {
         const q = tagSearch.value.toLowerCase().trim();
         let visible = 0;
         tagDropdown.querySelectorAll('.tag-option').forEach(item => {
             const match = item.dataset.label.toLowerCase().includes(q);
+            // toggle('hidden', !match) : ajoute la classe si pas de correspondance, la retire sinon
             item.classList.toggle('hidden', !match);
             if (match) visible++;
         });
         tagEmpty.style.display = visible === 0 ? 'block' : 'none';
     });
 
+    // Supprime le dernier tag sélectionné si l'utilisateur appuie sur Backspace avec le champ vide
     tagSearch.addEventListener('keydown', e => {
         if (e.key === 'Backspace' && tagSearch.value === '' && selected.size > 0) {
+            // [...selected].pop() : convertit le Set en tableau et récupère le dernier élément
             const last = [...selected].pop();
             selected.delete(last);
             tagBox.querySelector(`.tag[data-value="${last}"]`)?.remove();
@@ -457,7 +403,10 @@ $handicaps_list = $connexion->query("SELECT id_handicap, nom FROM handicap ORDER
         }
     });
 
+    // Affiche le dropdown quand le champ de recherche reçoit le focus
     tagSearch.addEventListener('focus', () => { tagDropdown.style.display = 'block'; });
+
+    // Ferme le dropdown si l'utilisateur clique en dehors de la zone de saisie
     document.addEventListener('click', e => {
         if (!tagBox.contains(e.target) && !tagDropdown.contains(e.target)) {
             tagDropdown.style.display = 'none';

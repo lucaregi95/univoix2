@@ -11,11 +11,11 @@ session_start();
     <link href="../style/style_public/presentation2.css" rel="stylesheet">
     <?php
 
-    $__daltonisme = isset($_SESSION['daltonisme']) ? $_SESSION['daltonisme'] : 'aucun';
-    $__dyslexie   = isset($_SESSION['dyslexie'])   ? $_SESSION['dyslexie']   : false;
+    $daltonisme = isset($_SESSION['daltonisme']) ? $_SESSION['daltonisme'] : 'aucun';
+    $dyslexie   = isset($_SESSION['dyslexie'])   ? $_SESSION['dyslexie']   : false;
 
 
-    $__palettes = [
+    $palettes = [
         'aucun' => [
             'danger'               => '#dc3545',
             'danger_rgb'           => '220,53,69',
@@ -61,10 +61,10 @@ session_start();
             'switch_on'            => '#6600cc',
         ],
     ];
-    $__p = isset($__palettes[$__daltonisme]) ? $__palettes[$__daltonisme] : $__palettes['aucun'];
-    if ($__daltonisme !== 'aucun' || $__dyslexie): ?>
+    $__p = isset($palettes[$daltonisme]) ? $palettes[$daltonisme] : $palettes['aucun'];
+    if ($daltonisme !== 'aucun' || $dyslexie): ?>
     <style id="accessibilite-overrides">
-    <?php if ($__daltonisme !== 'aucun'): ?>
+    <?php if ($daltonisme !== 'aucun'): ?>
 
     :root {
         --bs-danger:                <?= $__p['danger'] ?>;
@@ -139,7 +139,7 @@ session_start();
 
     <?php endif;  ?>
 
-    <?php if ($__dyslexie): ?>
+    <?php if ($dyslexie): ?>
 
     @font-face {
         font-family: 'OpenDyslexic';
@@ -165,18 +165,18 @@ session_start();
     <?php
 
     if(session_status() === PHP_SESSION_NONE) session_start();
-    $__daltonisme = isset($_SESSION['daltonisme']) ? $_SESSION['daltonisme'] : 'aucun';
-    $__dyslexie   = isset($_SESSION['dyslexie'])   ? $_SESSION['dyslexie']   : false;
-    $__palettes = [
+    $daltonisme = isset($_SESSION['daltonisme']) ? $_SESSION['daltonisme'] : 'aucun';
+    $dyslexie   = isset($_SESSION['dyslexie'])   ? $_SESSION['dyslexie']   : false;
+    $palettes = [
         'aucun'        => ['p'=>'#dc3545','pd'=>'#b02a37','pl'=>'#f8d7da','rgb'=>'220,53,69', 'link'=>'#0d6efd','footer'=>'#dc3545'],
         'deuteranopie' => ['p'=>'#0055cc','pd'=>'#003d99','pl'=>'#cce0ff','rgb'=>'0,85,204',  'link'=>'#e07b00','footer'=>'#0055cc'],
         'tritanopie'   => ['p'=>'#cc3300','pd'=>'#992200','pl'=>'#ffe5dd','rgb'=>'204,51,0',  'link'=>'#007a33','footer'=>'#cc3300'],
         'protanopie'   => ['p'=>'#6600cc','pd'=>'#4d0099','pl'=>'#ead5ff','rgb'=>'102,0,204', 'link'=>'#007acc','footer'=>'#6600cc'],
     ];
-    $__p = isset($__palettes[$__daltonisme]) ? $__palettes[$__daltonisme] : $__palettes['aucun'];
-    if ($__daltonisme !== 'aucun' || $__dyslexie): ?>
+    $__p = isset($palettes[$daltonisme]) ? $palettes[$daltonisme] : $palettes['aucun'];
+    if ($daltonisme !== 'aucun' || $dyslexie): ?>
     <style id="accessibilite-overrides">
-    <?php if ($__daltonisme !== 'aucun'): ?>
+    <?php if ($daltonisme !== 'aucun'): ?>
 
     :root {
         --color-primary:           <?=$__p['p']?>;
@@ -201,7 +201,7 @@ session_start();
     .dropdown-item:active               { background-color: <?=$__p['p']?> !important; }
     a:not(.btn):not(.nav-link):not(.navbar-brand):not(.dropdown-item) { color: <?=$__p['link']?> !important; }
     <?php endif; ?>
-    <?php if ($__dyslexie): ?>
+    <?php if ($dyslexie): ?>
     @font-face { font-family:'OpenDyslexic'; src:url('https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/OpenDyslexic-Regular.otf') format('opentype'); font-weight:normal; }
     @font-face { font-family:'OpenDyslexic'; src:url('https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/OpenDyslexic-Bold.otf') format('opentype'); font-weight:bold; }
     *, *::before, *::after              { font-family: 'OpenDyslexic', Arial, sans-serif !important; }
