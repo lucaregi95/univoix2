@@ -101,7 +101,7 @@ $p = isset($palettes[$daltonisme_session]) ? $palettes[$daltonisme_session] : $p
                 <img class="rounded-circle" alt="pdp" src="<?= $avatar ?>" width="40px" height="40px"/> &nbsp;<?= $_SESSION["prenom"] ?> <?= $_SESSION["nom"] ?> (admin)
             </a>
             <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="../deconnexion.php">Se deconnecter</a></li>
+                <li><a class="dropdown-item" href="../deconnexion.php">Se déconnecter</a></li>
             </ul>
         </li>
     </div>

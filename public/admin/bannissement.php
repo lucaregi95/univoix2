@@ -264,7 +264,7 @@ $result = $query->fetch();
             <li class="nav-item dropdown fs-5" >
                 <a class="nav-link dropdown-toggle" style="font-weight:bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img class="rounded-circle" alt="pdp" src="<?=$avatar?>" width="40px" height="40px"/>     <?=$_SESSION["prenom"]?> <?=$_SESSION["nom"]?> (admin)</a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="../deconnexion.php">Se deconnecter</a></li>
+                    <li><a class="dropdown-item" href="../deconnexion.php">Se déconnecter</a></li>
                 </ul>
             </li>
 

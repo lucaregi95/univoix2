@@ -11,7 +11,7 @@ if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])) {
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Uni'Voix - Acceuil</title>
+    <title>Uni'Voix - Accueil</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap 5 -->
@@ -252,7 +252,7 @@ if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])) {
             <li class="nav-item dropdown fs-5" >
                 <a class="nav-link dropdown-toggle" style="font-weight:bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img class="rounded-circle" alt="pdp" src="<?=$avatar?>" width="40px" height="40px"/>     <?=$_SESSION["prenom"]?> <?=$_SESSION["nom"]?> (admin)</a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="../deconnexion.php">Se deconnecter</a></li>
+                    <li><a class="dropdown-item" href="../deconnexion.php">Se déconnecter</a></li>
                 </ul>
             </li>
 
@@ -268,7 +268,7 @@ if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])) {
 
             <h1 class="fw-bold mb-3">Bienvenue dans votre espace d'administration Uni'Voix</h1>
             <p class="text-muted">
-                Accedez à tout l'espace administrateur pour gerer les inscrits, les articles etc...
+                Accédez à tout l'espace administrateur pour gérer les inscrits, les articles etc...
             </p>
 
 
@@ -285,7 +285,7 @@ if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])) {
                 <div class="col-md-4 border border-1 border-right-0 border-light p-2">
                     <h5 class="section-title">LES INSCRITS</h5>
                     <p>
-                        Accedez à la liste des inscrits afin de les gerer, les moderer...
+                        Accédez à la liste des inscrits afin de les gérer, les modérer...
                     </p>
                     <a href="inscrits.php" class="btn btn-outline-light btn-univoix">Accéder à la liste des inscrits</a>
                 </div>
@@ -304,7 +304,7 @@ if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])) {
                 <div class="col-md-4 border border-1 border-light p-2">
                     <h5 class="section-title">LES SIGNALEMENTS</h5>
                     <p>
-                        Regardez les differents signalements faits par la communauté Uni'Voix et moderez le site
+                        Regardez les différents signalements faits par la communauté Uni'Voix et modérez le site
                     </p>
                     <a href="specialistes.php" class="btn btn-outline-light btn-univoix">Consulter les signalements</a>
                 </div>
@@ -313,7 +313,7 @@ if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])) {
                 <div class="col-md-4 offset-md-4 border border-1 border-light p-2">
                     <h5 class="section-title">LE FORUM</h5>
                     <p>
-                        Gerez les sujets a supprimer du forum
+                        Gérez les sujets a supprimer du forum
                     </p>
                     <a href="forum_admin.php" class="btn btn-outline-light btn-univoix">Consulter le forum</a>
                 </div>

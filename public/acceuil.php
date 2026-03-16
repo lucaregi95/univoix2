@@ -58,7 +58,7 @@ $articles = getArticles();
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Uni'Voix - Acceuil</title>
+    <title>Uni'Voix - Accueil</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap 5 -->
@@ -68,9 +68,9 @@ $articles = getArticles();
     <?php
 
     $daltonisme = isset($_SESSION['daltonisme']) ? $_SESSION['daltonisme'] : 'aucun';
-    $dyslexie   = isset($_SESSION['dyslexie'])   ? $_SESSION['dyslexie']   : false;
+    $dyslexie   = isset($_SESSION['dyslexie']) ? $_SESSION['dyslexie']   : false;
 
-    //palletes de reference couleurs pour les types de  daltonisme
+    //palettes de reference couleurs pour les types de daltonisme
     $palettes = [
         'aucun' => [
             'danger'               => '#dc3545',
@@ -201,7 +201,7 @@ $articles = getArticles();
     <?php endif;  ?>
 
     <?php if ($dyslexie): ?>
-    /*@font-face permet de definir et d'importer une police*/
+    /*@font-face permet de définir et d'importer une police*/
     @font-face {
         font-family: 'OpenDyslexic';
         src: url('https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/OpenDyslexic-Regular.otf') format('opentype');
@@ -314,7 +314,7 @@ $articles = getArticles();
                 <a class="nav-link dropdown-toggle" style="font-weight:bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img class="rounded-circle" alt="pdp" src="<?=$avatar?>" width="40px" height="40px"/>     <?=$_SESSION["prenom"]?> <?=$_SESSION["nom"]?></a>
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="profil.php">Profil</a></li>
-                    <li><a class="dropdown-item" href="deconnexion.php">Se deconnecter</a></li>
+                    <li><a class="dropdown-item" href="deconnexion.php">Se déconnecter</a></li>
                 </ul>
             </li>
 
@@ -353,7 +353,7 @@ $articles = getArticles();
                 <a href="forum.php" class="btn btn-outline-light btn-univoix">Accéder au forum</a>
             </div>
 
-            <!-- SPECIALISTES -->
+            <!-- SPÉCIALISTES -->
             <div class="col-md-4 border border-1 border-light p-2">
                 <h5 class="section-title">LES SPÉCIALISTES</h5>
                 <p>

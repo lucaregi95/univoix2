@@ -175,7 +175,7 @@ $p = isset($palettes[$daltonisme_session]) ? $palettes[$daltonisme_session] : $p
             </a>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="profil.php">Profil</a></li>
-                <li><a class="dropdown-item" href="deconnexion.php">Se deconnecter</a></li>
+                <li><a class="dropdown-item" href="deconnexion.php">Se déconnecter</a></li>
             </ul>
         </li>
     </div>
