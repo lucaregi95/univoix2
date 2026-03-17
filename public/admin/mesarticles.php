@@ -6,68 +6,12 @@ if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])) {
     exit();
 }
 
-// Charge un flux RSS depuis une URL via cURL et le retourne en objet SimpleXML
-function loadRss($url) {
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url);
-    // Retourne le contenu au lieu de l'afficher directement
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0");
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-    $data = curl_exec($ch);
-    curl_close($ch);
-    // Convertit la chaîne XML en objet PHP navigable
-    return simplexml_load_string($data);
-}
-
-// Récupère et fusionne les articles de plusieurs flux RSS du Monde
-function getArticles() {
-    $feeds = [
-            "https://www.lemonde.fr/handicap/rss_full.xml",
-            "https://www.lemonde.fr/universites/rss_full.xml",
-            "https://www.lemonde.fr/orientation-scolaire/rss_full.xml",
-    ];
-
-    $articles = [];
-
-    foreach ($feeds as $feed) {
-        // Extrait le nom de la rubrique depuis l'URL (ex: "handicap", "universites")
-        preg_match('/lemonde\.fr\/([^\/]+)\/rss/', $feed, $matches);
-        $tag = isset($matches[1]) ? $matches[1] : '';
-
-        $rss = loadRss($feed);
-        if ($rss) {
-            // Parcourt chaque article du flux et le stocke dans $articles
-            foreach ($rss->channel->item as $item) {
-                $articles[] = [
-                        "title"       => (string)$item->title,
-                        "link"        => (string)$item->link,
-                        "description" => (string)$item->description,
-                        "date"        => (string)$item->pubDate,
-                        "category"    => $tag
-                ];
-            }
-        }
-    }
-
-    // strtotime convertit les dates textuelles en timestamp pour pouvoir les comparer
-    // La soustraction donne un résultat négatif/positif utilisé par usort pour trier du plus récent au plus ancien
-    usort($articles, function($a, $b) {
-        return strtotime($b['date']) - strtotime($a['date']);
-    });
-
-    return $articles;
-}
-
-$articles = getArticles();
-
 $sql = "SELECT * FROM article";
 $query = $connexion->prepare($sql);
 $query->execute();
 $results = $query->fetchAll();
-
+$nbArticles = $query->rowCount();
 ?>
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -81,10 +25,10 @@ $results = $query->fetchAll();
     $__dyslexie   = isset($_SESSION['dyslexie'])   ? $_SESSION['dyslexie']   : false;
 
     $__palettes = [
-            'aucun'        => ['p'=>'#dc3545','pd'=>'#b02a37','pl'=>'#f8d7da','rgb'=>'220,53,69', 'link'=>'#0d6efd','footer'=>'#dc3545'],
-            'deuteranopie' => ['p'=>'#0055cc','pd'=>'#003d99','pl'=>'#cce0ff','rgb'=>'0,85,204',  'link'=>'#e07b00','footer'=>'#0055cc'],
-            'tritanopie'   => ['p'=>'#cc3300','pd'=>'#992200','pl'=>'#ffe5dd','rgb'=>'204,51,0',  'link'=>'#007a33','footer'=>'#cc3300'],
-            'protanopie'   => ['p'=>'#6600cc','pd'=>'#4d0099','pl'=>'#ead5ff','rgb'=>'102,0,204', 'link'=>'#007acc','footer'=>'#6600cc'],
+        'aucun'        => ['p'=>'#dc3545','pd'=>'#b02a37','pl'=>'#f8d7da','rgb'=>'220,53,69', 'link'=>'#0d6efd','footer'=>'#dc3545'],
+        'deuteranopie' => ['p'=>'#0055cc','pd'=>'#003d99','pl'=>'#cce0ff','rgb'=>'0,85,204',  'link'=>'#e07b00','footer'=>'#0055cc'],
+        'tritanopie'   => ['p'=>'#cc3300','pd'=>'#992200','pl'=>'#ffe5dd','rgb'=>'204,51,0',  'link'=>'#007a33','footer'=>'#cc3300'],
+        'protanopie'   => ['p'=>'#6600cc','pd'=>'#4d0099','pl'=>'#ead5ff','rgb'=>'102,0,204', 'link'=>'#007acc','footer'=>'#6600cc'],
     ];
     $__p = isset($__palettes[$__daltonisme]) ? $__palettes[$__daltonisme] : $__palettes['aucun'];
     if ($__daltonisme !== 'aucun' || $__dyslexie): ?>
@@ -139,17 +83,22 @@ $results = $query->fetchAll();
     <div class="border border-top-0 border-bottom-0 border-3 border-dark shadow-lg">
         <section class="bg-white py-5 text-center">
             <h1 class="fw-bold mb-3">Bienvenue dans votre espace d'administration des articles</h1>
-            <p class="text-muted">Consultez les articles et ajoutez ceux que vous souhaitez à votre site.</p>
+            <p class="text-muted">Consultez les articles de votre site et supprimez ceux que vous souhaitez enlever de votre site.</p>
         </section>
+
         <div class="container bg-danger border border-dark d-flex align-items-center justify-content-between">
             <h1 class="text-white mb-0">Articles récents</h1>
-            <form action="mesarticles.php">
-            <button type="submit" class="btn btn-danger">Mes articles</button>
-                </form>
 
+            <div class="d-flex align-items-center gap-2">
+                <form action="articles.php">
+                    <button type="submit" class="btn btn-danger"><span style="font-size: larger">Retour</span></button>
+                </form>
+                <h5 class="text-white mb-0">Nombres d'articles : <?php echo $nbArticles ?></h5>
+
+            </div>
         </div>
 
-        <?php foreach ($articles as $article) { ?>
+        <?php foreach ($results as $result) { ?>
             <div class="container pb-3 shadow border" style="max-width: 820px;">
                 <br>
                 <div class="col-12">
@@ -157,34 +106,12 @@ $results = $query->fetchAll();
                         <div class="card border border-danger border-3 shadow-sm rounded-4 h-100">
                             <div class="card-body p-4 p-lg-5">
                                 <div class="aide-card">
-                                    <h2><a href="<?php echo $article["link"]; ?>" target="_blank"><?php echo $article["title"]; ?></a></h2>
-                                    <p><?php echo $article["description"]; ?></p>
-                                    <small><?php echo $article["date"]; ?></small><br><br>
-                                    <!-- Formulaire pour ajouter l'article au site via articles2.php -->
-                                    <form class="bg-danger border border-dark justify-content-md" method="post" action="articles2.php">
-
-                                        <?php $compteur=0;
-                                        $articleid="";
-                                        foreach($results as $result) {
-                                            if ($result["lien"]==$article["link"]) {
-                                                $compteur++;
-                                                $articleid = $result["id_article"];
-                                            }
-                                        }
-
-                                        if ($compteur>0){?>
-                                            <button type="submit" formaction="supprimerarticle.php" class="btn btn-danger">Supprimer du site</button>
-                                        <input type="hidden" value="<?=$articleid?>" name="id_article">
-
-                                        <?php }else{
-                                            ?><button type="submit" class="btn btn-danger">Ajouter au site</button>
-                                        <?php }?>
-                                        <input type="hidden" value="<?php echo $article["description"]?>" name="description">
-                                        <input type="hidden" value="<?php echo $article["link"]?>" name="lien">
-                                        <input type="hidden" value="<?php echo $article["title"]?>" name="titre">
-                                        <input type="hidden" value="<?php echo $article["date"]?>" name="date">
-                                        <input type="hidden" value="<?php echo $article["category"]?>" name="category">
-
+                                    <h2><a href="<?php echo $result["lien"]; ?>" target="_blank"><?php echo $result["titre"]; ?></a></h2>
+                                    <p><?php echo $result["description"]; ?></p>
+                                    <small><?php echo $result["date"]; ?></small><br><br>
+                                    <form class="bg-danger border border-dark justify-content-md" method="post" action="supprimerarticle.php">
+                                        <button type="submit" class="btn btn-danger">Supprimer du site</button>
+                                        <input type="hidden" value="<?php echo $result["id_article"];?>" name="id_article">
                                     </form>
                                 </div>
                             </div>

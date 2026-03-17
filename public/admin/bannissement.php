@@ -1,7 +1,10 @@
 <?php
 require_once "..\..\bdd\connexion.php";
 session_start();
-
+if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])) {
+    header("location:../connexion.php");
+    exit();
+}
 // Récupère l'ID de l'inscrit à bannir depuis le formulaire de la page inscrits.php
 $id_inscrit = $_POST['id'];
 
@@ -61,7 +64,23 @@ $result = $query->fetch();
         </div>
     </div>
 </section>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Affiche/masque le menu déroulant personnalisé
+    function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+    }
 
+    // Ferme le dropdown si l'utilisateur clique en dehors du bouton
+    window.onclick = function(e) {
+        if (!e.target.matches('.dropbtn')) {
+            var myDropdown = document.getElementById("myDropdown");
+            if (myDropdown.classList.contains('show')) {
+                myDropdown.classList.remove('show');
+            }
+        }
+    }
+</script>
 <footer class="py-3 text-center bg-danger text-white site-footer">
     © 2026 — Luca Regi, Nassim Kharfouche, Prosper Fajnzyn — Tous droits réservés
 </footer>

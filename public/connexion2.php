@@ -6,7 +6,8 @@ require_once('../bdd/connexion.php');
 // Récupération des données du formulaire de connexion
 $email = $_POST["email"];
 $mdp   = $_POST["mdp"];
-$page  = $_POST["page"];
+if(isset($_POST["page"])){
+$page  = $_POST["page"];}
 
 // Requête préparée : sélectionne l'utilisateur correspondant à l'email et au mot de passe
 $sql2  = "SELECT id_inscrit,nom,prenom,mot_de_passe,email,role,daltonisme,dyslexie FROM inscrit WHERE email=:email AND mot_de_passe=:mdp";

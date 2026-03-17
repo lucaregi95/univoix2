@@ -1,6 +1,11 @@
 <?php
 $bdd = null;
 require_once('../../bdd/connexion.php');
+session_start();
+if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])) {
+    header("location:../connexion.php");
+    exit();
+}
 
 $nom    = null;
 $prenom = null;
@@ -21,7 +26,7 @@ if(isset($_GET['erreur'])){
     }
 }
 
-$inscription = "Pas de compte ? Inscrivez-vous";
+
 ?>
 <!DOCTYPE html>
 <html lang=fr>

@@ -56,6 +56,12 @@ function getArticles() {
 }
 
 $articles = getArticles();
+
+
+$sql = "SELECT * FROM article";
+$query = $connexion->prepare($sql);
+$query->execute();
+$resultats = $query->fetchAll();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -406,7 +412,7 @@ $articles = getArticles();
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Suivant</span>
                 </button>
-            </div><br>
+            </div><br><br><br>
             <div class="mx-auto text-center">
                 <button type="button" class="btn btn-danger position-relative"
                         data-bs-toggle="collapse"
@@ -415,7 +421,7 @@ $articles = getArticles();
                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="position-absolute top-100 start-50 translate-middle mt-1 bi bi-caret-down-fill" fill="#dc3545" xmlns="http://www.w3.org/2000/svg">
                         <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
                     </svg>
-                </button>
+                </button><br><br>
                 <div class="collapse" id="collapseExample">
                     <div class="container">
                         <div class="shadow-lg">
@@ -423,13 +429,13 @@ $articles = getArticles();
                                 <h4 class="fw-bold mb-4 mx-3">L'actualité Condensée :</h4>
                                 <div id="actualitesCarousel2" class="carousel slide mx-3" data-bs-ride="carousel" data-bs-interval="10000">
                                     <div class="carousel-inner">
-                                        <?php if (empty($articles)) { ?>
+                                        <?php if (empty($resultats)) { ?>
                                             <div class="carousel-item active">
                                                 <p class="text-muted text-center">Aucun article disponible pour le moment.</p>
                                             </div>
                                         <?php } ?>
-                                        <?php foreach ($articles as $index => $article) {
-                                            $titrePlaceholder1 = str_replace(' ', '+', htmlspecialchars($article['category']));
+                                        <?php foreach ($resultats as $index => $resultat) {
+                                            $titrePlaceholder1 = str_replace(' ', '+', htmlspecialchars($resultat['category']));
                                             $titrePlaceholder = str_replace('-', '+', $titrePlaceholder1);
                                             $titrePlaceholder = ucfirst($titrePlaceholder);
                                             ?>
@@ -438,15 +444,15 @@ $articles = getArticles();
                                                     <div class="col-md-5">
                                                         <img src="https://placehold.co/600x350/dc3545/ffffff?text=<?= $titrePlaceholder ?>"
                                                              class="d-block w-100 carousel-image"
-                                                             alt="<?= htmlspecialchars($article['title']) ?>">
+                                                             alt="<?= htmlspecialchars($resultat['titre']) ?>">
                                                     </div>
                                                     <div class="col-md-7">
                                                         <div class="news-content mx-3">
-                                                            <h5 class="fw-bold"><?= htmlspecialchars($article['title']) ?></h5>
-                                                            <p><?= htmlspecialchars($article['description']) ?></p>
-                                                            <small class="text-muted"><?= htmlspecialchars($article['date']) ?></small>
+                                                            <h5 class="fw-bold"><?= htmlspecialchars($resultat['titre']) ?></h5>
+                                                            <p><?= htmlspecialchars($resultat['description']) ?></p>
+                                                            <small class="text-muted"><?= htmlspecialchars($resultat['date']) ?></small>
                                                             <br><br>
-                                                            <a href="<?= htmlspecialchars($article['link']) ?>" target="_blank" class="text-primary">
+                                                            <a href="<?= htmlspecialchars($resultat['lien']) ?>" target="_blank" class="text-primary">
                                                                 Lire l'article complet
                                                             </a>
                                                         </div>

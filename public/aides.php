@@ -243,7 +243,7 @@ session_start();
 
 <div class="page-hero text-center">
     <h1 class="display-4 fw-bold mb-3">Les Aides</h1>
-    <p class="lead text-muted col-lg-8 mx-auto">Sur cette page, vous trouverez la liste des aides (financières, aides Handicap, Logement…) disponibles pour les étudiants.</p>
+    <p class=" text-muted col-lg-8 mx-auto">Sur cette page, vous trouverez la liste des aides (financières, aides Handicap, Logement…) disponibles pour les étudiants.</p>
 </div>
 
 <!-- Contenu statique : liste des aides disponibles pour les étudiants -->

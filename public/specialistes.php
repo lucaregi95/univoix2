@@ -152,7 +152,7 @@ $p = isset($palettes[$daltonisme_session]) ? $palettes[$daltonisme_session] : $p
 
 <footer class="bg-danger text-white py-4 mt-5">
     <div class="container text-center">
-        <small class="opacity-75">© 2026 – Luca Regi, Nassim Kharfouche, Prosper Fajnzyn – Tous droits réservés</small>
+        <p>© 2026 – Luca Regi, Nassim Kharfouche, Prosper Fajnzyn – Tous droits réservés</p>
     </div>
 </footer>
 

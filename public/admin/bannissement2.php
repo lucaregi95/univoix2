@@ -2,8 +2,12 @@
 
 require_once "..\..\bdd\connexion.php";
 session_start();
+if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])) {
+    header("location:../connexion.php");
+    exit();
+}
 $id = $_POST['id'];
-var_dump($id);
+
 $nombre= rand(1000000000000, 9000000000000);
 $mdp="banni".$nombre;
 $sql = "UPDATE inscrit SET mot_de_passe = :mdp WHERE id_inscrit = :id";

@@ -101,22 +101,22 @@ if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])) {
     <section class="bg-univoix py-5 bg-danger shadow rounded-2">
         <div class="container">
             <div class="row text-center text-white">
-                <div class="col-md-4 border border-1 border-right-0 border-light p-2">
+                <div class="col-md-3 border border-1 border-right-0 border-light p-2">
                     <h5 class="section-title">LES INSCRITS</h5>
                     <p>Accédez à la liste des inscrits afin de les gérer, les modérer...</p>
                     <a href="inscrits.php" class="btn btn-outline-light btn-univoix">Accéder à la liste des inscrits</a>
                 </div>
-                <div class="col-md-4 border border-1 border-light border-left-0 p-2">
+                <div class="col-md-3 border border-1 border-light border-left-0 p-2">
                     <h5 class="section-title">LES ARTICLES</h5>
                     <p>Retrouvez les articles à ajouter ou à supprimer du site</p>
                     <a href="articles.php" class="btn btn-outline-light btn-univoix">Consulter les articles</a>
                 </div>
-                <div class="col-md-4 border border-1 border-light p-2">
+                <div class="col-md-3 border border-1 border-light p-2">
                     <h5 class="section-title">LES SIGNALEMENTS</h5>
                     <p>Regardez les différents signalements faits par la communauté Uni'Voix et modérez le site</p>
                     <a href="specialistes.php" class="btn btn-outline-light btn-univoix">Consulter les signalements</a>
                 </div>
-                <div class="col-md-4 offset-md-4 border border-1 border-light p-2">
+                <div class="col-md-3 border border-1 border-light p-2">
                     <h5 class="section-title">LE FORUM</h5>
                     <p>Gérez les sujets a supprimer du forum</p>
                     <a href="forum_admin.php" class="btn btn-outline-light btn-univoix">Consulter le forum</a>
