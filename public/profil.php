@@ -48,8 +48,8 @@ if(isset($_POST['handicaps']) && !empty($_POST['handicaps'])) {
 
 // Récupère le type de daltonisme choisi parmi les trois switches (un seul actif à la fois)
 $types_daltonisme  = ['deuteranopie', 'tritanopie', 'protanopie'];
-$daltonisme_choisi = 'aucun';
 foreach ($types_daltonisme as $type) {
+    $daltonisme_choisi = 'aucun';
     if (isset($_POST[$type]) && $_POST[$type] === 'on') {
         $daltonisme_choisi = $type;
         break;
@@ -79,7 +79,7 @@ $avatar_path = "";
 $id          = $_SESSION['id'];
 
 // Récupère les informations de l'utilisateur connecté
-$sql = "SELECT id_inscrit, nom, prenom, age, email, pseudo FROM inscrit WHERE id_inscrit = :id";
+$sql = "SELECT id_inscrit, nom, prenom, age, email, pseudo, daltonisme, dyslexie FROM inscrit WHERE id_inscrit = :id";
 $query = $connexion->prepare($sql);
 $query->execute(["id" => $id]);
 $resultat = $query->fetch();
@@ -132,8 +132,25 @@ if(isset($_FILES['file']) && $_FILES['file']['error'] != 4){
     }
 }
 
-$daltonisme_session = isset($_SESSION['daltonisme']) ? $_SESSION['daltonisme'] : 'aucun';
-$dyslexie_session   = isset($_SESSION['dyslexie'])   ? $_SESSION['dyslexie']   : false;
+// Daltonisme
+if (isset($resultat['daltonisme']) && $resultat['daltonisme'] !== '') {
+    $daltonisme_session = $resultat['daltonisme'];
+} elseif (isset($_SESSION['daltonisme'])) {
+    $daltonisme_session = $_SESSION['daltonisme'];
+} else {
+    $daltonisme_session = 'aucun';
+}
+
+// Dyslexie
+if (isset($resultat['dyslexie'])) {
+    $dyslexie_session = (bool)$resultat['dyslexie'];
+} elseif (isset($_SESSION['dyslexie'])) {
+    $dyslexie_session = $_SESSION['dyslexie'];
+} else {
+    $dyslexie_session = false;
+}
+$_SESSION['daltonisme'] = $daltonisme_session;
+$_SESSION['dyslexie']= $dyslexie_session;
 
 // Palettes de couleurs selon le type de daltonisme
 $palettes = [
