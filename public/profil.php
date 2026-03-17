@@ -57,7 +57,11 @@ foreach ($types_daltonisme as $type) {
 }
 
 // Convertit la valeur du switch dyslexie en 0 ou 1 pour la BDD
-$dyslexie_choisie = (isset($_POST['police_dyslexique']) && $_POST['police_dyslexique'] === 'on') ? 1 : 0;
+if ((isset($_POST['police_dyslexique']) && $_POST['police_dyslexique'] === 'on')) {
+    $dyslexie_choisie = 1;
+} else {
+    $dyslexie_choisie = 0;
+}
 
 // Met à jour les préférences d'accessibilité en BDD
 if(isset($_POST['id_inscrit'])) {
