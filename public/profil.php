@@ -325,9 +325,29 @@ $p = isset($palettes[$daltonisme_session]) ? $palettes[$daltonisme_session] : $p
     </form>
 </div>
 
-<footer class="bg-danger text-white py-4 mt-5">
-    <div class="container text-center">
-        <small class="opacity-75">© 2026 – Luca Regi, Nassim Kharfouche, Prosper Fajnzyn – Tous droits réservés</small>
+<footer class="footer-wrap">
+    <div class="footer-top">
+        <div class="footer-col">
+            <h4>Nous contacter</h4>
+
+            <a href="https://mail.google.com/mail/?view=cm&to=univoix@gmail.com&su=Prise de contact"
+               target="_blank">univoix@gmail.com</a>
+        </div>
+        <div class="footer-col">
+            <h4>Soutien & écoute</h4>
+            <div class="urgence-item"><span class="urgence-num">3114</span><span class="urgence-label">Prévention suicide (24h/24)</span></div>
+            <div class="urgence-item"><span class="urgence-num">3977</span><span class="urgence-label">Maltraitance personnes âgées / handicap</span></div>
+            <div class="urgence-item"><span class="urgence-num">0800 235 236</span><span class="urgence-label">Fil santé jeunes (gratuit)</span></div>
+        </div>
+        <div class="footer-col">
+            <h4>Aide aux personnes vulnérables</h4>
+            <div class="urgence-item"><span class="urgence-num">119</span><span class="urgence-label">Enfance en danger</span></div>
+            <div class="urgence-item"><span class="urgence-num">114</span><span class="urgence-label">Urgence sourdes / malentendantes</span></div>
+            <div class="urgence-item"><span class="urgence-num">0800 360 360</span><span class="urgence-label">Info handicap — aidants familiaux</span></div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2026 — Luca Regi, Nassim Kharfouche, Prosper Fajnzyn — Tous droits réservés</p>
     </div>
 </footer>
 

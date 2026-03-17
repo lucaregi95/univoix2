@@ -8,7 +8,13 @@ if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])) {
 <!DOCTYPE html>
 <html lang="fr">
     <head>
-        <link href="../../style/style_admin/modification.css" rel="stylesheet">
+        <meta charset="UTF-8">
+        <title>Uni'Voix - Signalements</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        <link href="../../style/style_admin/acceuil_admin.css" rel="stylesheet">
     <?php
 
     $__daltonisme = isset($_SESSION['daltonisme']) ? $_SESSION['daltonisme'] : 'aucun';
@@ -214,9 +220,35 @@ if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])) {
     <?php endif; ?>
     </style>
     <?php endif; ?>
-
-
     </head>
+    <body style="font-family: 'Candara'">
+
+    <nav class="navbar navbar-expand-sm navbar-light bg-light border border-danger border-3">
+        <div class="container d-flex justify-content-evenly align-items-center">
+            <a href="acceuil_admin.php"><img alt="" class="navbar-brand fw-bold" src="../../img/univoix.png" style="max-width:50px;"></a>
+            <a class="nav-link" href="inscrits.php">Inscrits</a>
+            <a class="nav-link" href="signalements.php">Signalements</a>
+            <a class="nav-link" href="articles.php">Articles</a>
+            <a class="nav-link" href="forum_admin.php">Forum</a>
+            <?php if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])){ ?>
+                <a class="navbar-brand fw-bold" href="profil.php">Connexion</a>
+            <?php } else {
+                // Préfixe "../" car avatar.php est dans le dossier public, un niveau au-dessus de admin/
+                $avatar = "../";
+                require_once "../avatar.php"; ?>
+                <li class="nav-item dropdown fs-5">
+                    <a class="nav-link dropdown-toggle" style="font-weight:bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img class="rounded-circle" alt="pdp" src="<?=$avatar?>" width="40px" height="40px"/>
+                        <?=$_SESSION["prenom"]?> <?=$_SESSION["nom"]?> (admin)
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="../deconnexion.php">Se déconnecter</a></li>
+                    </ul>
+                </li>
+            <?php } ?>
+        </div>
+    </nav>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // Affiche/masque le menu déroulant personnalisé
@@ -234,4 +266,5 @@ if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])) {
             }
         }
     </script>
+    </body>
 </html>
