@@ -4,7 +4,7 @@ session_start();
 
 if (isset($_GET['categorie'])) { $categorie = $_GET['categorie']; } else { $categorie = ''; }
 
-$sql3 = "SELECT id_inscrit, nom, prenom, specialite FROM inscrit WHERE role='specialiste'";
+$sql3 = "SELECT id_inscrit, nom, prenom, email, specialite FROM inscrit WHERE role='specialiste'";
 $params = [];
 if ($categorie !== '') { $sql3 .= " AND specialite = :categorie"; $params['categorie'] = $categorie; }
 $query3 = $connexion->prepare($sql3);
@@ -75,7 +75,7 @@ $p = isset($palettes[$daltonisme_session]) ? $palettes[$daltonisme_session] : $p
             <a class="nav-link" href="admin/connexion_admin.php">Admin</a>
         <?php endif; ?>
         <?php if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])): ?>
-            <a class="navbar-brand fw-bold" href="profil.php"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 20 20"><path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/><path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/></svg> Connexion</a>
+            <a class="navbar-brand fw-bold" href="connexion.php?page=sp"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 20 20"><path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/><path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/></svg> Connexion</a>
         <?php else:
             $avatar = null;
             require_once "avatar.php"; ?>
@@ -83,7 +83,7 @@ $p = isset($palettes[$daltonisme_session]) ? $palettes[$daltonisme_session] : $p
                 <a class="nav-link dropdown-toggle" style="font-weight:bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img class="rounded-circle" alt="pdp" src="<?=$avatar?>" width="40px" height="40px"/> &nbsp;<?=$_SESSION["prenom"]?> <?=$_SESSION["nom"]?></a>
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="profil.php">Profil</a></li>
-                    <li><a class="dropdown-item" href="deconnexion.php">Se deconnecter</a></li>
+                    <li><a class="dropdown-item" href="deconnexion.php">Se déconnecter</a></li>
                 </ul>
             </li>
         <?php endif; ?>
@@ -126,9 +126,15 @@ $p = isset($palettes[$daltonisme_session]) ? $palettes[$daltonisme_session] : $p
             </div>
         </div>
     </div>
-    <section class="bg-univoix py-5 bg-light">
+
+    <section class="bg-univoix py-4 bg-light">
+        <?php if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])) {?>
+            <p class="text-center fw-bold"><a href="connexion.php?page=sp" class="text-danger">Connectez-vous</a> pour entrer en contact.</p>
+        <?php } ?>
         <div class="container">
+
             <div class="row g-4 text-center">
+
                 <?php $compteur = 1;
                 foreach ($result as $resultat): ?>
                     <div class="col-md-4">
@@ -143,7 +149,12 @@ $p = isset($palettes[$daltonisme_session]) ? $palettes[$daltonisme_session] : $p
                             ?>
                             <img alt="Photo - Specialiste ID <?= $resultat["id_inscrit"] ?>" src="<?= $avatar_spec ?>" style="width:150px;height:150px;" class="border border-danger rounded">
                             <p><?= $resultat["nom"] ?> <?= $resultat["prenom"] ?> - <?= $resultat["specialite"] ?></p>
-                            <a href="#" class="btn btn-danger">Prendre contact</a>
+                            <?php if(isset($_SESSION['nom']) && isset($_SESSION['prenom'])) {?>
+                                <a href="https://mail.google.com/mail/?view=cm&to=<?= htmlspecialchars($resultat["email"]) ?>&su=Prise de contact&body=Bonjour <?= htmlspecialchars($resultat["prenom"]) ?>,"
+                                   target="_blank" class="btn btn-danger">
+                                    Prendre contact
+                                </a>
+                            <?php }?>
                         </div>
                     </div>
                     <?php $compteur++; endforeach; ?>
@@ -157,4 +168,3 @@ $p = isset($palettes[$daltonisme_session]) ? $palettes[$daltonisme_session] : $p
 </footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-</html>

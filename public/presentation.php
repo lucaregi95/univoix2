@@ -1,4 +1,5 @@
 <?php
+// Démarre la session pour accéder aux préférences d'accessibilité et aux données utilisateur
 session_start();
 ?>
 <!DOCTYPE html>
@@ -6,226 +7,205 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Les handicaps invisibles</title>
+    <title>UniVoix - Handicaps</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="../style/style_public/presentation.css" rel="stylesheet">
     <?php
-
+    // Récupère les préférences d'accessibilité de la session
     $__daltonisme = isset($_SESSION['daltonisme']) ? $_SESSION['daltonisme'] : 'aucun';
     $__dyslexie   = isset($_SESSION['dyslexie'])   ? $_SESSION['dyslexie']   : false;
 
+    // Palettes de couleurs adaptées aux différents types de daltonisme
     $__palettes = [
-        'aucun' => [
-            'danger'               => '#dc3545',
-            'danger_rgb'           => '220,53,69',
-            'danger_text_emphasis' => '#58151c',
-            'danger_bg_subtle'     => '#f8d7da',
-            'danger_border_subtle' => '#f1aeb5',
-            'link'                 => '#0d6efd',
-            'link_rgb'             => '13,110,253',
-            'tag_bg'               => '#dc3545',
-            'switch_on'            => '#dc3545',
-        ],
-        'deuteranopie' => [
-            'danger'               => '#0055cc',
-            'danger_rgb'           => '0,85,204',
-            'danger_text_emphasis' => '#002a66',
-            'danger_bg_subtle'     => '#cce0ff',
-            'danger_border_subtle' => '#99c1ff',
-            'link'                 => '#e07b00',
-            'link_rgb'             => '224,123,0',
-            'tag_bg'               => '#0055cc',
-            'switch_on'            => '#0055cc',
-        ],
-        'tritanopie' => [
-            'danger'               => '#cc3300',
-            'danger_rgb'           => '204,51,0',
-            'danger_text_emphasis' => '#661a00',
-            'danger_bg_subtle'     => '#ffe5dd',
-            'danger_border_subtle' => '#ffbba8',
-            'link'                 => '#007a33',
-            'link_rgb'             => '0,122,51',
-            'tag_bg'               => '#cc3300',
-            'switch_on'            => '#cc3300',
-        ],
-        'protanopie' => [
-            'danger'               => '#6600cc',
-            'danger_rgb'           => '102,0,204',
-            'danger_text_emphasis' => '#330066',
-            'danger_bg_subtle'     => '#ead5ff',
-            'danger_border_subtle' => '#cc99ff',
-            'link'                 => '#007acc',
-            'link_rgb'             => '0,122,204',
-            'tag_bg'               => '#6600cc',
-            'switch_on'            => '#6600cc',
-        ],
+            'aucun' => [
+                    'danger'               => '#dc3545',
+                    'danger_rgb'           => '220,53,69',
+                    'danger_text_emphasis' => '#58151c',
+                    'danger_bg_subtle'     => '#f8d7da',
+                    'danger_border_subtle' => '#f1aeb5',
+                    'link'                 => '#0d6efd',
+                    'link_rgb'             => '13,110,253',
+                    'tag_bg'               => '#dc3545',
+                    'switch_on'            => '#dc3545',
+            ],
+            'deuteranopie' => [
+                    'danger'               => '#0055cc',
+                    'danger_rgb'           => '0,85,204',
+                    'danger_text_emphasis' => '#002a66',
+                    'danger_bg_subtle'     => '#cce0ff',
+                    'danger_border_subtle' => '#99c1ff',
+                    'link'                 => '#e07b00',
+                    'link_rgb'             => '224,123,0',
+                    'tag_bg'               => '#0055cc',
+                    'switch_on'            => '#0055cc',
+            ],
+            'tritanopie' => [
+                    'danger'               => '#cc3300',
+                    'danger_rgb'           => '204,51,0',
+                    'danger_text_emphasis' => '#661a00',
+                    'danger_bg_subtle'     => '#ffe5dd',
+                    'danger_border_subtle' => '#ffbba8',
+                    'link'                 => '#007a33',
+                    'link_rgb'             => '0,122,51',
+                    'tag_bg'               => '#cc3300',
+                    'switch_on'            => '#cc3300',
+            ],
+            'protanopie' => [
+                    'danger'               => '#6600cc',
+                    'danger_rgb'           => '102,0,204',
+                    'danger_text_emphasis' => '#330066',
+                    'danger_bg_subtle'     => '#ead5ff',
+                    'danger_border_subtle' => '#cc99ff',
+                    'link'                 => '#007acc',
+                    'link_rgb'             => '0,122,204',
+                    'tag_bg'               => '#6600cc',
+                    'switch_on'            => '#6600cc',
+            ],
     ];
     $__p = isset($__palettes[$__daltonisme]) ? $__palettes[$__daltonisme] : $__palettes['aucun'];
+
+    // Injecte le CSS d'accessibilité uniquement si une option est activée
     if ($__daltonisme !== 'aucun' || $__dyslexie): ?>
-    <style id="accessibilite-overrides">
-    <?php if ($__daltonisme !== 'aucun'): ?>
-
-    :root {
-        --bs-danger:                <?= $__p['danger'] ?>;
-        --bs-danger-rgb:            <?= $__p['danger_rgb'] ?>;
-        --bs-danger-text-emphasis:  <?= $__p['danger_text_emphasis'] ?>;
-        --bs-danger-bg-subtle:      <?= $__p['danger_bg_subtle'] ?>;
-        --bs-danger-border-subtle:  <?= $__p['danger_border_subtle'] ?>;
-        --bs-link-color:            <?= $__p['link'] ?>;
-        --bs-link-color-rgb:        <?= $__p['link_rgb'] ?>;
-        --bs-link-hover-color:      <?= $__p['danger'] ?>;
-    }
-
-
-
-    .btn-danger:hover,
-    .btn-danger:active,
-    .btn-danger:focus-visible {
-        background-color: <?= $__p['danger_text_emphasis'] ?> !important;
-        border-color:     <?= $__p['danger_text_emphasis'] ?> !important;
-    }
-    .btn-danger:focus-visible {
-        box-shadow: 0 0 0 0.25rem rgba(<?= $__p['danger_rgb'] ?>, 0.5) !important;
-    }
-
-
-    .btn-outline-danger:hover,
-    .btn-outline-danger:active {
-        background-color: <?= $__p['danger'] ?> !important;
-        border-color:     <?= $__p['danger'] ?> !important;
-        color: #fff !important;
-    }
-    .btn-outline-danger:focus-visible {
-        box-shadow: 0 0 0 0.25rem rgba(<?= $__p['danger_rgb'] ?>, 0.5) !important;
-    }
-
-
-    .form-control:focus,
-    .form-select:focus {
-        border-color: <?= $__p['danger'] ?> !important;
-        box-shadow: 0 0 0 0.25rem rgba(<?= $__p['danger_rgb'] ?>, 0.25) !important;
-    }
-
-
-    .bg-danger.bg-opacity-10 {
-        background-color: rgba(<?= $__p['danger_rgb'] ?>, 0.1) !important;
-    }
-
-
-
-
-    .form-check-input.custom-switch:checked {
-        background-color: <?= $__p['switch_on'] ?> !important;
-        border-color:     <?= $__p['switch_on'] ?> !important;
-    }
-
-
-    .tag                          { background: <?= $__p['tag_bg'] ?> !important; }
-    .tag-option.selected          { color: <?= $__p['danger'] ?> !important; }
-    .tag-option:hover              { background: rgba(<?= $__p['danger_rgb'] ?>, 0.06) !important; }
-    .tag-option.selected .tag-check {
-        background:   <?= $__p['tag_bg'] ?> !important;
-        border-color: <?= $__p['tag_bg'] ?> !important;
-    }
-    .tag-input-box:focus-within {
-        border-color: <?= $__p['danger'] ?> !important;
-        box-shadow: 0 0 0 3px rgba(<?= $__p['danger_rgb'] ?>, 0.15) !important;
-    }
-    .btn-help:hover {
-        border-color: <?= $__p['danger'] ?> !important;
-        color:        <?= $__p['danger'] ?> !important;
-    }
-
-    <?php endif;  ?>
-
-    <?php if ($__dyslexie): ?>
-
-    @font-face {
-        font-family: 'OpenDyslexic';
-        src: url('https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/OpenDyslexic-Regular.otf') format('opentype');
-        font-weight: normal;
-    }
-    @font-face {
-        font-family: 'OpenDyslexic';
-        src: url('https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/OpenDyslexic-Bold.otf') format('opentype');
-        font-weight: bold;
-    }
-    *, *::before, *::after      { font-family: 'OpenDyslexic', Arial, sans-serif !important; }
-    body                         { line-height: 1.8 !important; letter-spacing: 0.05em !important; word-spacing: 0.15em !important; background-color: #fdfaf3 !important; }
-    p, li, td, th, label, span, div, a, input, textarea, select, button
-                                 { line-height: 1.8 !important; letter-spacing: 0.04em !important; word-spacing: 0.12em !important; }
-    body, p, li, td, label       { font-size: 1.05rem !important; }
-    .card, .form-control, .tag-input-box, .tag-dropdown { background-color: #fdfaf3 !important; }
-    p, li, td, div               { text-align: left !important; }
-    <?php endif;  ?>
-
-    </style>
+        <style id="accessibilite-overrides">
+            <?php if ($__daltonisme !== 'aucun'): ?>
+            /* Surcharge les variables Bootstrap avec la palette du daltonisme actif */
+            :root {
+                --bs-danger:                <?= $__p['danger'] ?>;
+                --bs-danger-rgb:            <?= $__p['danger_rgb'] ?>;
+                --bs-danger-text-emphasis:  <?= $__p['danger_text_emphasis'] ?>;
+                --bs-danger-bg-subtle:      <?= $__p['danger_bg_subtle'] ?>;
+                --bs-danger-border-subtle:  <?= $__p['danger_border_subtle'] ?>;
+                --bs-link-color:            <?= $__p['link'] ?>;
+                --bs-link-color-rgb:        <?= $__p['link_rgb'] ?>;
+                --bs-link-hover-color:      <?= $__p['danger'] ?>;
+            }
+            .btn-danger:hover,
+            .btn-danger:active,
+            .btn-danger:focus-visible {
+                background-color: <?= $__p['danger_text_emphasis'] ?> !important;
+                border-color:     <?= $__p['danger_text_emphasis'] ?> !important;
+            }
+            .btn-danger:focus-visible {
+                box-shadow: 0 0 0 0.25rem rgba(<?= $__p['danger_rgb'] ?>, 0.5) !important;
+            }
+            .btn-outline-danger:hover,
+            .btn-outline-danger:active {
+                background-color: <?= $__p['danger'] ?> !important;
+                border-color:     <?= $__p['danger'] ?> !important;
+                color: #fff !important;
+            }
+            .btn-outline-danger:focus-visible {
+                box-shadow: 0 0 0 0.25rem rgba(<?= $__p['danger_rgb'] ?>, 0.5) !important;
+            }
+            .form-control:focus,
+            .form-select:focus {
+                border-color: <?= $__p['danger'] ?> !important;
+                box-shadow: 0 0 0 0.25rem rgba(<?= $__p['danger_rgb'] ?>, 0.25) !important;
+            }
+            .bg-danger.bg-opacity-10 {
+                background-color: rgba(<?= $__p['danger_rgb'] ?>, 0.1) !important;
+            }
+            .form-check-input.custom-switch:checked {
+                background-color: <?= $__p['switch_on'] ?> !important;
+                border-color:     <?= $__p['switch_on'] ?> !important;
+            }
+            .tag                          { background: <?= $__p['tag_bg'] ?> !important; }
+            .tag-option.selected          { color: <?= $__p['danger'] ?> !important; }
+            .tag-option:hover              { background: rgba(<?= $__p['danger_rgb'] ?>, 0.06) !important; }
+            .tag-option.selected .tag-check {
+                background:   <?= $__p['tag_bg'] ?> !important;
+                border-color: <?= $__p['tag_bg'] ?> !important;
+            }
+            .tag-input-box:focus-within {
+                border-color: <?= $__p['danger'] ?> !important;
+                box-shadow: 0 0 0 3px rgba(<?= $__p['danger_rgb'] ?>, 0.15) !important;
+            }
+            .btn-help:hover {
+                border-color: <?= $__p['danger'] ?> !important;
+                color:        <?= $__p['danger'] ?> !important;
+            }
+            <?php endif; ?>
+            <?php if ($__dyslexie): ?>
+            /* Charge la police OpenDyslexic et améliore l'espacement sur toute la page */
+            @font-face {
+                font-family: 'OpenDyslexic';
+                src: url('https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/OpenDyslexic-Regular.otf') format('opentype');
+                font-weight: normal;
+            }
+            @font-face {
+                font-family: 'OpenDyslexic';
+                src: url('https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/OpenDyslexic-Bold.otf') format('opentype');
+                font-weight: bold;
+            }
+            *, *::before, *::after      { font-family: 'OpenDyslexic', Arial, sans-serif !important; }
+            body                         { line-height: 1.8 !important; letter-spacing: 0.05em !important; word-spacing: 0.15em !important; background-color: #fdfaf3 !important; }
+            p, li, td, th, label, span, div, a, input, textarea, select, button
+            { line-height: 1.8 !important; letter-spacing: 0.04em !important; word-spacing: 0.12em !important; }
+            body, p, li, td, label       { font-size: 1.05rem !important; }
+            .card, .form-control, .tag-input-box, .tag-dropdown { background-color: #fdfaf3 !important; }
+            p, li, td, div               { text-align: left !important; }
+            <?php endif; ?>
+        </style>
     <?php endif; ?>
     <?php
-
+    // Deuxième bloc : variables CSS personnalisées (--color-primary-*) pour les composants du site
     if(session_status() === PHP_SESSION_NONE) session_start();
     $__daltonisme = isset($_SESSION['daltonisme']) ? $_SESSION['daltonisme'] : 'aucun';
     $__dyslexie   = isset($_SESSION['dyslexie'])   ? $_SESSION['dyslexie']   : false;
     $__palettes = [
-        'aucun'        => ['p'=>'#dc3545','pd'=>'#b02a37','pl'=>'#f8d7da','rgb'=>'220,53,69', 'link'=>'#0d6efd','footer'=>'#dc3545'],
-        'deuteranopie' => ['p'=>'#0055cc','pd'=>'#003d99','pl'=>'#cce0ff','rgb'=>'0,85,204',  'link'=>'#e07b00','footer'=>'#0055cc'],
-        'tritanopie'   => ['p'=>'#cc3300','pd'=>'#992200','pl'=>'#ffe5dd','rgb'=>'204,51,0',  'link'=>'#007a33','footer'=>'#cc3300'],
-        'protanopie'   => ['p'=>'#6600cc','pd'=>'#4d0099','pl'=>'#ead5ff','rgb'=>'102,0,204', 'link'=>'#007acc','footer'=>'#6600cc'],
+            'aucun'        => ['p'=>'#dc3545','pd'=>'#b02a37','pl'=>'#f8d7da','rgb'=>'220,53,69', 'link'=>'#0d6efd','footer'=>'#dc3545'],
+            'deuteranopie' => ['p'=>'#0055cc','pd'=>'#003d99','pl'=>'#cce0ff','rgb'=>'0,85,204',  'link'=>'#e07b00','footer'=>'#0055cc'],
+            'tritanopie'   => ['p'=>'#cc3300','pd'=>'#992200','pl'=>'#ffe5dd','rgb'=>'204,51,0',  'link'=>'#007a33','footer'=>'#cc3300'],
+            'protanopie'   => ['p'=>'#6600cc','pd'=>'#4d0099','pl'=>'#ead5ff','rgb'=>'102,0,204', 'link'=>'#007acc','footer'=>'#6600cc'],
     ];
     $__p = isset($__palettes[$__daltonisme]) ? $__palettes[$__daltonisme] : $__palettes['aucun'];
     if ($__daltonisme !== 'aucun' || $__dyslexie): ?>
-    <style id="accessibilite-overrides">
-    <?php if ($__daltonisme !== 'aucun'): ?>
-
-    :root {
-        --color-primary:           <?=$__p['p']?>;
-        --color-primary-dark:      <?=$__p['pd']?>;
-        --color-primary-light:     <?=$__p['pl']?>;
-        --color-primary-shadow-15: rgba(<?=$__p['rgb']?>,.15);
-        --color-primary-shadow-25: rgba(<?=$__p['rgb']?>,.25);
-        --color-primary-shadow-35: rgba(<?=$__p['rgb']?>,.35);
-    }
-
-    .navbar                             { border-color: <?=$__p['p']?> !important; }
-    .bg-danger, footer.bg-danger        { background-color: <?=$__p['p']?> !important; }
-    .border-danger                      { border-color: <?=$__p['p']?> !important; }
-    .text-danger                        { color: <?=$__p['p']?> !important; }
-    .text-primary                       { color: <?=$__p['link']?> !important; }
-    .btn-danger                         { background-color: <?=$__p['p']?> !important; border-color: <?=$__p['pd']?> !important; color: #fff !important; }
-    .btn-danger:hover, .btn-danger:active { background-color: <?=$__p['pd']?> !important; border-color: <?=$__p['pd']?> !important; }
-    .btn-outline-danger                 { border-color: <?=$__p['p']?> !important; color: <?=$__p['p']?> !important; }
-    .btn-outline-danger:hover, .btn-outline-danger:active { background-color: <?=$__p['p']?> !important; color: #fff !important; }
-    .alert-danger                       { background-color: <?=$__p['pl']?> !important; border-color: <?=$__p['p']?> !important; color: <?=$__p['pd']?> !important; }
-    .card.border-danger                 { border-color: <?=$__p['p']?> !important; }
-    .dropdown-item:active               { background-color: <?=$__p['p']?> !important; }
-    a:not(.btn):not(.nav-link):not(.navbar-brand):not(.dropdown-item) { color: <?=$__p['link']?> !important; }
+        <style id="accessibilite-overrides">
+            <?php if ($__daltonisme !== 'aucun'): ?>
+            :root {
+                --color-primary:           <?=$__p['p']?>;
+                --color-primary-dark:      <?=$__p['pd']?>;
+                --color-primary-light:     <?=$__p['pl']?>;
+                --color-primary-shadow-15: rgba(<?=$__p['rgb']?>,.15);
+                --color-primary-shadow-25: rgba(<?=$__p['rgb']?>,.25);
+                --color-primary-shadow-35: rgba(<?=$__p['rgb']?>,.35);
+            }
+            .navbar                             { border-color: <?=$__p['p']?> !important; }
+            .bg-danger, footer.bg-danger        { background-color: <?=$__p['p']?> !important; }
+            .border-danger                      { border-color: <?=$__p['p']?> !important; }
+            .text-danger                        { color: <?=$__p['p']?> !important; }
+            .text-primary                       { color: <?=$__p['link']?> !important; }
+            .btn-danger                         { background-color: <?=$__p['p']?> !important; border-color: <?=$__p['pd']?> !important; color: #fff !important; }
+            .btn-danger:hover, .btn-danger:active { background-color: <?=$__p['pd']?> !important; border-color: <?=$__p['pd']?> !important; }
+            .btn-outline-danger                 { border-color: <?=$__p['p']?> !important; color: <?=$__p['p']?> !important; }
+            .btn-outline-danger:hover, .btn-outline-danger:active { background-color: <?=$__p['p']?> !important; color: #fff !important; }
+            .alert-danger                       { background-color: <?=$__p['pl']?> !important; border-color: <?=$__p['p']?> !important; color: <?=$__p['pd']?> !important; }
+            .card.border-danger                 { border-color: <?=$__p['p']?> !important; }
+            .dropdown-item:active               { background-color: <?=$__p['p']?> !important; }
+            /* Cible tous les liens sauf boutons et éléments de navigation */
+            a:not(.btn):not(.nav-link):not(.navbar-brand):not(.dropdown-item) { color: <?=$__p['link']?> !important; }
+            <?php endif; ?>
+            <?php if ($__dyslexie): ?>
+            @font-face { font-family:'OpenDyslexic'; src:url('https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/OpenDyslexic-Regular.otf') format('opentype'); font-weight:normal; }
+            @font-face { font-family:'OpenDyslexic'; src:url('https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/OpenDyslexic-Bold.otf') format('opentype'); font-weight:bold; }
+            *, *::before, *::after              { font-family: 'OpenDyslexic', Arial, sans-serif !important; }
+            body                                { line-height:1.8 !important; letter-spacing:0.05em !important; word-spacing:0.15em !important; background-color:#fdfaf3 !important; }
+            p,li,td,th,label,span,div,a,input,textarea,select,button { line-height:1.8 !important; letter-spacing:0.04em !important; }
+            body,p,li,td,label                  { font-size:1.05rem !important; }
+            .card,.form-control,.tag-input-box,.tag-dropdown { background-color:#fdfaf3 !important; }
+            p,li,td,div                         { text-align:left !important; }
+            <?php endif; ?>
+        </style>
     <?php endif; ?>
-    <?php if ($__dyslexie): ?>
-    @font-face { font-family:'OpenDyslexic'; src:url('https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/OpenDyslexic-Regular.otf') format('opentype'); font-weight:normal; }
-    @font-face { font-family:'OpenDyslexic'; src:url('https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/OpenDyslexic-Bold.otf') format('opentype'); font-weight:bold; }
-    *, *::before, *::after              { font-family: 'OpenDyslexic', Arial, sans-serif !important; }
-    body                                { line-height:1.8 !important; letter-spacing:0.05em !important; word-spacing:0.15em !important; background-color:#fdfaf3 !important; }
-    p,li,td,th,label,span,div,a,input,textarea,select,button { line-height:1.8 !important; letter-spacing:0.04em !important; }
-    body,p,li,td,label                  { font-size:1.05rem !important; }
-    .card,.form-control,.tag-input-box,.tag-dropdown { background-color:#fdfaf3 !important; }
-    p,li,td,div                         { text-align:left !important; }
-    <?php endif; ?>
-    </style>
-    <?php endif; ?>
-
-
 </head>
 
 <body style="font-family:'Candara'" class="bg-light">
 
-<!-- NAVBAR -->
 <nav class="navbar navbar-expand-sm navbar-light bg-light border border-danger border-3">
     <div class="container d-flex justify-content-evenly align-items-center">
-
         <a href="acceuil.php"><img alt="" class="navbar-brand fw-bold" src="../img/univoix.png" style="max-width:50px;"></a>
         <a class="nav-link" href="specialistes.php">Spécialistes</a>
         <a class="nav-link" href="forum.php">Forum</a>
-
         <a class="nav-link" href="aides.php">Aides</a>
         <a class="nav-link fw-bold text-danger" href="presentation.php">Handicaps</a>
         <?php if(isset($_SESSION['role'])){
@@ -234,32 +214,27 @@ session_start();
                 <a class="nav-link" href="admin/connexion_admin.php">Admin</a>
             <?php }} ?>
 
-        <?php if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])){?>
-            <a class="navbar-brand fw-bold" href="profil.php"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 20 20" >
-
-                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-                    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-                </svg>     Connexion</a>
-
-
+        <?php if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])){ ?>
+            <a class="navbar-brand fw-bold" href="profil.php">Connexion</a>
         <?php }
         else{
-            $avatar=null;
-            require_once "avatar.php";?>
-            <li class="nav-item dropdown fs-5" >
-                <a class="nav-link dropdown-toggle" style="font-weight:bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><img class="rounded-circle" alt="pdp" src="<?=$avatar?>" width="40px" height="40px"/>     <?=$_SESSION["prenom"]?> <?=$_SESSION["nom"]?></a>
+            // Charge l'avatar de l'utilisateur connecté
+            $avatar = null;
+            require_once "avatar.php"; ?>
+            <li class="nav-item dropdown fs-5">
+                <a class="nav-link dropdown-toggle" style="font-weight:bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img class="rounded-circle" alt="pdp" src="<?=$avatar?>" width="40px" height="40px"/>
+                    <?=$_SESSION["prenom"]?> <?=$_SESSION["nom"]?>
+                </a>
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="profil.php">Profil</a></li>
-                    <li><a class="dropdown-item" href="deconnexion.php">Se deconnecter</a></li>
+                    <li><a class="dropdown-item" href="deconnexion.php">Se déconnecter</a></li>
                 </ul>
             </li>
-
-
         <?php } ?>
     </div>
 </nav>
 
-<!-- HEADER -->
 <header class="bg-white py-5 border-bottom border-danger border-3">
     <div class="container text-center">
         <h1 class="display-4 fw-bold mb-3">Les handicaps invisibles</h1>
@@ -269,20 +244,14 @@ session_start();
     </div>
 </header>
 
-<!-- CONTENT -->
+<!-- Contenu statique : présentation de 4 types de handicaps invisibles (page 1 sur 2) -->
 <div class="container my-5">
     <div class="row g-4">
 
-        <!-- TDAH -->
         <div class="col-12">
             <div class="card border border-danger border-3 shadow-sm rounded-4 h-100 transition hover-shadow">
                 <div class="card-body p-4 p-lg-5">
-                    <h3 class="fw-bold text-danger mb-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-lightning-charge me-2" viewBox="0 0 16 16">
-                            <path d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09z"/>
-                        </svg>
-                        TDAH
-                    </h3>
+                    <h3 class="fw-bold text-danger mb-3">TDAH</h3>
                     <p class="text-muted fs-6">
                         TDAH (Trouble du Déficit de l'Attention avec ou sans Hyperactivité) est un trouble du neurodéveloppement qui se manifeste par des difficultés persistantes à maintenir l'attention, une hyperactivité motrice et/ou une impulsivité inappropriée à l'âge de la personne.
                     </p>
@@ -290,59 +259,34 @@ session_start();
             </div>
         </div>
 
-        <!-- AUTISME -->
         <div class="col-12">
             <div class="card border border-danger border-3 shadow-sm rounded-4 h-100">
                 <div class="card-body p-4 p-lg-5">
-                    <h3 class="fw-bold text-danger mb-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-puzzle me-2" viewBox="0 0 16 16">
-                            <path d="M3.112 3.645A1.5 1.5 0 0 1 4.605 2H7a.5.5 0 0 1 .5.5v.382c0 .696-.497 1.182-.872 1.469a.5.5 0 0 0-.115.118l-.012.025L6.5 4.5v.003l.003.01q.005.015.036.053a.9.9 0 0 0 .27.194C7.09 4.9 7.51 5 8 5c.492 0 .912-.1 1.19-.24a.9.9 0 0 0 .271-.194.2.2 0 0 0 .036-.054l.003-.01v-.002l-.001-.006-.002-.003a.5.5 0 0 0-.115-.118c-.375-.287-.872-.773-.872-1.469V2.5A.5.5 0 0 1 9 2h2.395a1.5 1.5 0 0 1 1.493 1.645L12.645 6.5h.237c.195 0 .42-.147.675-.48.21-.274.528-.52.943-.52.568 0 .947.447 1.154.862C15.877 6.807 16 7.387 16 8s-.123 1.193-.346 1.638c-.207.415-.586.862-1.154.862-.415 0-.733-.246-.943-.52-.255-.333-.48-.48-.675-.48h-.237l.243 2.855A1.5 1.5 0 0 1 11.395 14H9a.5.5 0 0 1-.5-.5v-.382c0-.696.497-1.182.872-1.469a.5.5 0 0 0 .115-.118l.012-.025.001-.006v-.003a.2.2 0 0 0-.039-.064.9.9 0 0 0-.27-.193C8.91 11.1 8.49 11 8 11s-.912.1-1.19.24a.9.9 0 0 0-.271.194.2.2 0 0 0-.036.053l-.003.01v.002l.001.006.002.003a.5.5 0 0 0 .115.118c.375.287.872.773.872 1.469v.382a.5.5 0 0 1-.5.5H4.605a1.5 1.5 0 0 1-1.493-1.645L3.356 9.5h-.238c-.195 0-.42.147-.675.48-.21.274-.528.52-.943.52-.568 0-.947-.447-1.154-.862C.123 9.193 0 8.613 0 8s.123-1.193.346-1.638C.553 5.947.932 5.5 1.5 5.5c.415 0 .733.246.943.52.255.333.48.48.675.48h.238z"/>
-                        </svg>
-                        Autisme
-                    </h3>
+                    <h3 class="fw-bold text-danger mb-3">Autisme</h3>
                     <p class="text-muted fs-6">
-                        Les troubles du spectre de l'autisme regroupent des profils variés,
-                        souvent invisibles, impactant la communication et les interactions sociales. Chaque personne autiste a des besoins
-                        et des forces uniques qui méritent d'être reconnues et respectées.
+                        Les troubles du spectre de l'autisme regroupent des profils variés, souvent invisibles, impactant la communication et les interactions sociales. Chaque personne autiste a des besoins et des forces uniques qui méritent d'être reconnues et respectées.
                     </p>
                 </div>
             </div>
         </div>
 
-        <!-- TROUBLES CHRONIQUES -->
         <div class="col-12">
             <div class="card border border-danger border-3 shadow-sm rounded-4 h-100">
                 <div class="card-body p-4 p-lg-5">
-                    <h3 class="fw-bold text-danger mb-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-heart-pulse me-2" viewBox="0 0 16 16">
-                            <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053.918 3.995.78 5.323 1.508 7H.43c-2.128-5.697 4.165-8.83 7.394-5.857q.09.083.176.171a3 3 0 0 1 .176-.17c3.230-2.974 9.522.159 7.394 5.856h-1.078c.728-1.677.59-3.005.108-3.947C13.486.878 10.4.28 8.717 2.01zM2.212 10h1.315C4.593 11.183 6.05 12.458 8 13.795c1.949-1.337 3.407-2.612 4.473-3.795h1.315c-1.265 1.566-3.14 3.25-5.788 5-2.648-1.75-4.523-3.434-5.788-5"/>
-                            <path d="M10.464 3.314a.5.5 0 0 0-.945.049L7.921 8.956 6.464 5.314a.5.5 0 0 0-.88-.091L3.732 8H.5a.5.5 0 0 0 0 1H4a.5.5 0 0 0 .416-.223l1.473-2.209 1.647 4.118a.5.5 0 0 0 .945-.049l1.598-5.593 1.457 3.642A.5.5 0 0 0 12 9h3.5a.5.5 0 0 0 0-1h-3.162z"/>
-                        </svg>
-                        Troubles chroniques
-                    </h3>
+                    <h3 class="fw-bold text-danger mb-3">Troubles chroniques</h3>
                     <p class="text-muted fs-6">
-                        Douleurs, fatigue ou maladies de longue durée peuvent être invisibles,
-                        mais elles nécessitent compréhension et aménagements adaptés. Les personnes concernées font face quotidiennement
-                        à des défis que leur entourage ne peut pas toujours percevoir.
+                        Douleurs, fatigue ou maladies de longue durée peuvent être invisibles, mais elles nécessitent compréhension et aménagements adaptés. Les personnes concernées font face quotidiennement à des défis que leur entourage ne peut pas toujours percevoir.
                     </p>
                 </div>
             </div>
         </div>
 
-        <!-- TROUBLES DYS -->
         <div class="col-12">
             <div class="card border border-danger border-3 shadow-sm rounded-4 h-100">
                 <div class="card-body p-4 p-lg-5">
-                    <h3 class="fw-bold text-danger mb-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-book me-2" viewBox="0 0 16 16">
-                            <path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783"/>
-                        </svg>
-                        Troubles Dys
-                    </h3>
+                    <h3 class="fw-bold text-danger mb-3">Troubles Dys</h3>
                     <p class="text-muted fs-6">
-                        Les troubles "dys" (dyslexie, dyspraxie, dyscalculie, dysorthographie) affectent l'apprentissage et le traitement
-                        de l'information. Ces troubles ne reflètent en aucun cas l'intelligence, mais nécessitent des adaptations pédagogiques
-                        et une approche bienveillante pour permettre à chacun de développer son plein potentiel.
+                        Les troubles "dys" (dyslexie, dyspraxie, dyscalculie, dysorthographie) affectent l'apprentissage et le traitement de l'information. Ces troubles ne reflètent en aucun cas l'intelligence, mais nécessitent des adaptations pédagogiques et une approche bienveillante.
                     </p>
                 </div>
             </div>
@@ -350,26 +294,18 @@ session_start();
 
     </div>
 
-    <!-- BOUTON SUIVANT -->
+    <!-- Lien vers la deuxième page de présentation -->
     <div class="d-flex justify-content-end mt-4">
-        <a href="presentation2.php" class="btn btn-danger btn-lg">
-            Suivant
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-right ms-2" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
-            </svg>
-        </a>
+        <a href="presentation2.php" class="btn btn-danger btn-lg">Suivant</a>
     </div>
 </div>
 
-<!-- FOOTER -->
 <footer class="bg-danger text-white py-4 mt-5">
     <div class="container">
         <div class="row">
             <div class="col-12 text-center">
                 <p class="mb-2 fw-semibold">Univoix - Ensemble pour l'inclusion</p>
-                <small class="opacity-75">
-                    © 2026 – Luca Regi, Nassim Kharfouche, Prosper Fajnzyn – Tous droits réservés
-                </small>
+                <small class="opacity-75">© 2026 – Luca Regi, Nassim Kharfouche, Prosper Fajnzyn – Tous droits réservés</small>
             </div>
         </div>
     </div>

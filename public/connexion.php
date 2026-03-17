@@ -32,12 +32,12 @@ $inscription="Pas de compte ? Inscrivez-vous";
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link href="../style/style_public/connexion.css" rel="stylesheet">
     <?php
+    //si 
+    $daltonisme = isset($_SESSION['daltonisme']) ? $_SESSION['daltonisme'] : 'aucun';
+    $dyslexie   = isset($_SESSION['dyslexie'])   ? $_SESSION['dyslexie']   : false;
 
-    $__daltonisme = isset($_SESSION['daltonisme']) ? $_SESSION['daltonisme'] : 'aucun';
-    $__dyslexie   = isset($_SESSION['dyslexie'])   ? $_SESSION['dyslexie']   : false;
 
-
-    $__palettes = [
+    $palettes = [
         'aucun' => [
             'danger'               => '#dc3545',
             'danger_rgb'           => '220,53,69',
@@ -83,20 +83,20 @@ $inscription="Pas de compte ? Inscrivez-vous";
             'switch_on'            => '#6600cc',
         ],
     ];
-    $__p = isset($__palettes[$__daltonisme]) ? $__palettes[$__daltonisme] : $__palettes['aucun'];
-    if ($__daltonisme !== 'aucun' || $__dyslexie): ?>
+    $p = isset($palettes[$daltonisme]) ? $palettes[$daltonisme] : $palettes['aucun'];
+    if ($daltonisme !== 'aucun' || $dyslexie): ?>
     <style id="accessibilite-overrides">
-    <?php if ($__daltonisme !== 'aucun'): ?>
+    <?php if ($daltonisme !== 'aucun'): ?>
 
     :root {
-        --bs-danger:                <?= $__p['danger'] ?>;
-        --bs-danger-rgb:            <?= $__p['danger_rgb'] ?>;
-        --bs-danger-text-emphasis:  <?= $__p['danger_text_emphasis'] ?>;
-        --bs-danger-bg-subtle:      <?= $__p['danger_bg_subtle'] ?>;
-        --bs-danger-border-subtle:  <?= $__p['danger_border_subtle'] ?>;
-        --bs-link-color:            <?= $__p['link'] ?>;
-        --bs-link-color-rgb:        <?= $__p['link_rgb'] ?>;
-        --bs-link-hover-color:      <?= $__p['danger'] ?>;
+        --bs-danger:                <?= $p['danger'] ?>;
+        --bs-danger-rgb:            <?= $p['danger_rgb'] ?>;
+        --bs-danger-text-emphasis:  <?= $p['danger_text_emphasis'] ?>;
+        --bs-danger-bg-subtle:      <?= $p['danger_bg_subtle'] ?>;
+        --bs-danger-border-subtle:  <?= $p['danger_border_subtle'] ?>;
+        --bs-link-color:            <?= $p['link'] ?>;
+        --bs-link-color-rgb:        <?= $p['link_rgb'] ?>;
+        --bs-link-hover-color:      <?= $p['danger'] ?>;
     }
 
 
@@ -104,63 +104,63 @@ $inscription="Pas de compte ? Inscrivez-vous";
     .btn-danger:hover,
     .btn-danger:active,
     .btn-danger:focus-visible {
-        background-color: <?= $__p['danger_text_emphasis'] ?> !important;
-        border-color:     <?= $__p['danger_text_emphasis'] ?> !important;
+        background-color: <?= $p['danger_text_emphasis'] ?> !important;
+        border-color:     <?= $p['danger_text_emphasis'] ?> !important;
     }
     .btn-danger:focus-visible {
-        box-shadow: 0 0 0 0.25rem rgba(<?= $__p['danger_rgb'] ?>, 0.5) !important;
+        box-shadow: 0 0 0 0.25rem rgba(<?= $p['danger_rgb'] ?>, 0.5) !important;
     }
 
 
     .btn-outline-danger:hover,
     .btn-outline-danger:active {
-        background-color: <?= $__p['danger'] ?> !important;
-        border-color:     <?= $__p['danger'] ?> !important;
+        background-color: <?= $p['danger'] ?> !important;
+        border-color:     <?= $p['danger'] ?> !important;
         color: #fff !important;
     }
     .btn-outline-danger:focus-visible {
-        box-shadow: 0 0 0 0.25rem rgba(<?= $__p['danger_rgb'] ?>, 0.5) !important;
+        box-shadow: 0 0 0 0.25rem rgba(<?= $p['danger_rgb'] ?>, 0.5) !important;
     }
 
 
     .form-control:focus,
     .form-select:focus {
-        border-color: <?= $__p['danger'] ?> !important;
-        box-shadow: 0 0 0 0.25rem rgba(<?= $__p['danger_rgb'] ?>, 0.25) !important;
+        border-color: <?= $p['danger'] ?> !important;
+        box-shadow: 0 0 0 0.25rem rgba(<?= $p['danger_rgb'] ?>, 0.25) !important;
     }
 
 
     .bg-danger.bg-opacity-10 {
-        background-color: rgba(<?= $__p['danger_rgb'] ?>, 0.1) !important;
+        background-color: rgba(<?= $p['danger_rgb'] ?>, 0.1) !important;
     }
 
 
 
     form-check-input.custom-switch:checked {
-        background-color: <?= $__p['switch_on'] ?> !important;
-        border-color:     <?= $__p['switch_on'] ?> !important;
+        background-color: <?= $p['switch_on'] ?> !important;
+        border-color:     <?= $p['switch_on'] ?> !important;
     }
 
 
-    .tag                          { background: <?= $__p['tag_bg'] ?> !important; }
-    .tag-option.selected          { color: <?= $__p['danger'] ?> !important; }
-    .tag-option:hover              { background: rgba(<?= $__p['danger_rgb'] ?>, 0.06) !important; }
+    .tag                          { background: <?= $p['tag_bg'] ?> !important; }
+    .tag-option.selected          { color: <?= $p['danger'] ?> !important; }
+    .tag-option:hover              { background: rgba(<?= $p['danger_rgb'] ?>, 0.06) !important; }
     .tag-option.selected .tag-check {
-        background:   <?= $__p['tag_bg'] ?> !important;
-        border-color: <?= $__p['tag_bg'] ?> !important;
+        background:   <?= $p['tag_bg'] ?> !important;
+        border-color: <?= $p['tag_bg'] ?> !important;
     }
     .tag-input-box:focus-within {
-        border-color: <?= $__p['danger'] ?> !important;
-        box-shadow: 0 0 0 3px rgba(<?= $__p['danger_rgb'] ?>, 0.15) !important;
+        border-color: <?= $p['danger'] ?> !important;
+        box-shadow: 0 0 0 3px rgba(<?= $p['danger_rgb'] ?>, 0.15) !important;
     }
     .btn-help:hover {
-        border-color: <?= $__p['danger'] ?> !important;
-        color:        <?= $__p['danger'] ?> !important;
+        border-color: <?= $p['danger'] ?> !important;
+        color:        <?= $p['danger'] ?> !important;
     }
 
     <?php endif;  ?>
 
-    <?php if ($__dyslexie): ?>
+    <?php if ($dyslexie): ?>
 
     @font-face {
         font-family: 'OpenDyslexic';
@@ -186,43 +186,43 @@ $inscription="Pas de compte ? Inscrivez-vous";
     <?php
 
     if(session_status() === PHP_SESSION_NONE) session_start();
-    $__daltonisme = isset($_SESSION['daltonisme']) ? $_SESSION['daltonisme'] : 'aucun';
-    $__dyslexie   = isset($_SESSION['dyslexie'])   ? $_SESSION['dyslexie']   : false;
-    $__palettes = [
+    $daltonisme = isset($_SESSION['daltonisme']) ? $_SESSION['daltonisme'] : 'aucun';
+    $dyslexie   = isset($_SESSION['dyslexie'])   ? $_SESSION['dyslexie']   : false;
+    $palettes = [
         'aucun'        => ['p'=>'#dc3545','pd'=>'#b02a37','pl'=>'#f8d7da','rgb'=>'220,53,69', 'link'=>'#0d6efd','footer'=>'#dc3545'],
         'deuteranopie' => ['p'=>'#0055cc','pd'=>'#003d99','pl'=>'#cce0ff','rgb'=>'0,85,204',  'link'=>'#e07b00','footer'=>'#0055cc'],
         'tritanopie'   => ['p'=>'#cc3300','pd'=>'#992200','pl'=>'#ffe5dd','rgb'=>'204,51,0',  'link'=>'#007a33','footer'=>'#cc3300'],
         'protanopie'   => ['p'=>'#6600cc','pd'=>'#4d0099','pl'=>'#ead5ff','rgb'=>'102,0,204', 'link'=>'#007acc','footer'=>'#6600cc'],
     ];
-    $__p = isset($__palettes[$__daltonisme]) ? $__palettes[$__daltonisme] : $__palettes['aucun'];
-    if ($__daltonisme !== 'aucun' || $__dyslexie): ?>
+    $p = isset($palettes[$daltonisme]) ? $palettes[$daltonisme] : $palettes['aucun'];
+    if ($daltonisme !== 'aucun' || $dyslexie): ?>
     <style id="accessibilite-overrides">
-    <?php if ($__daltonisme !== 'aucun'): ?>
+    <?php if ($daltonisme !== 'aucun'): ?>
 
     :root {
-        --color-primary:           <?=$__p['p']?>;
-        --color-primary-dark:      <?=$__p['pd']?>;
-        --color-primary-light:     <?=$__p['pl']?>;
-        --color-primary-shadow-15: rgba(<?=$__p['rgb']?>,.15);
-        --color-primary-shadow-25: rgba(<?=$__p['rgb']?>,.25);
-        --color-primary-shadow-35: rgba(<?=$__p['rgb']?>,.35);
+        --color-primary:           <?=$p['p']?>;
+        --color-primary-dark:      <?=$p['pd']?>;
+        --color-primary-light:     <?=$p['pl']?>;
+        --color-primary-shadow-15: rgba(<?=$p['rgb']?>,.15);
+        --color-primary-shadow-25: rgba(<?=$p['rgb']?>,.25);
+        --color-primary-shadow-35: rgba(<?=$p['rgb']?>,.35);
     }
 
-    .navbar                             { border-color: <?=$__p['p']?> !important; }
-    .bg-danger, footer.bg-danger        { background-color: <?=$__p['p']?> !important; }
-    .border-danger                      { border-color: <?=$__p['p']?> !important; }
-    .text-danger                        { color: <?=$__p['p']?> !important; }
-    .text-primary                       { color: <?=$__p['link']?> !important; }
-    .btn-danger                         { background-color: <?=$__p['p']?> !important; border-color: <?=$__p['pd']?> !important; color: #fff !important; }
-    .btn-danger:hover, .btn-danger:active { background-color: <?=$__p['pd']?> !important; border-color: <?=$__p['pd']?> !important; }
-    .btn-outline-danger                 { border-color: <?=$__p['p']?> !important; color: <?=$__p['p']?> !important; }
-    .btn-outline-danger:hover, .btn-outline-danger:active { background-color: <?=$__p['p']?> !important; color: #fff !important; }
-    .alert-danger                       { background-color: <?=$__p['pl']?> !important; border-color: <?=$__p['p']?> !important; color: <?=$__p['pd']?> !important; }
-    .card.border-danger                 { border-color: <?=$__p['p']?> !important; }
-    .dropdown-item:active               { background-color: <?=$__p['p']?> !important; }
-    a:not(.btn):not(.nav-link):not(.navbar-brand):not(.dropdown-item) { color: <?=$__p['link']?> !important; }
+    .navbar                             { border-color: <?=$p['p']?> !important; }
+    .bg-danger, footer.bg-danger        { background-color: <?=$p['p']?> !important; }
+    .border-danger                      { border-color: <?=$p['p']?> !important; }
+    .text-danger                        { color: <?=$p['p']?> !important; }
+    .text-primary                       { color: <?=$p['link']?> !important; }
+    .btn-danger                         { background-color: <?=$p['p']?> !important; border-color: <?=$p['pd']?> !important; color: #fff !important; }
+    .btn-danger:hover, .btn-danger:active { background-color: <?=$p['pd']?> !important; border-color: <?=$p['pd']?> !important; }
+    .btn-outline-danger                 { border-color: <?=$p['p']?> !important; color: <?=$p['p']?> !important; }
+    .btn-outline-danger:hover, .btn-outline-danger:active { background-color: <?=$p['p']?> !important; color: #fff !important; }
+    .alert-danger                       { background-color: <?=$p['pl']?> !important; border-color: <?=$p['p']?> !important; color: <?=$p['pd']?> !important; }
+    .card.border-danger                 { border-color: <?=$p['p']?> !important; }
+    .dropdown-item:active               { background-color: <?=$p['p']?> !important; }
+    a:not(.btn):not(.nav-link):not(.navbar-brand):not(.dropdown-item) { color: <?=$p['link']?> !important; }
     <?php endif; ?>
-    <?php if ($__dyslexie): ?>
+    <?php if ($dyslexie): ?>
     @font-face { font-family:'OpenDyslexic'; src:url('https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/OpenDyslexic-Regular.otf') format('opentype'); font-weight:normal; }
     @font-face { font-family:'OpenDyslexic'; src:url('https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/OpenDyslexic-Bold.otf') format('opentype'); font-weight:bold; }
     *, *::before, *::after              { font-family: 'OpenDyslexic', Arial, sans-serif !important; }

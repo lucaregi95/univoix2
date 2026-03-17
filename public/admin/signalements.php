@@ -1,6 +1,12 @@
 <?php
+session_start();
+if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])) {
+    header("location:../connexion.php");
+    exit();
+}
 ?>
-<html>
+<!DOCTYPE html>
+<html lang="fr">
     <head>
         <link href="../../style/style_admin/modification.css" rel="stylesheet">
     <?php
@@ -211,4 +217,21 @@
 
 
     </head>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Affiche/masque le menu déroulant personnalisé
+        function myFunction() {
+            document.getElementById("myDropdown").classList.toggle("show");
+        }
+
+        // Ferme le dropdown si l'utilisateur clique en dehors du bouton
+        window.onclick = function(e) {
+            if (!e.target.matches('.dropbtn')) {
+                var myDropdown = document.getElementById("myDropdown");
+                if (myDropdown.classList.contains('show')) {
+                    myDropdown.classList.remove('show');
+                }
+            }
+        }
+    </script>
 </html>
