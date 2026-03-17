@@ -7,8 +7,14 @@ if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])) {
 ?>
 <!DOCTYPE html>
 <html lang="fr">
-    <head>
-        <link href="../../style/style_admin/modification.css" rel="stylesheet">
+<head>
+    <meta charset="UTF-8">
+    <title>Uni'Voix - Signalements</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link href="../../style/style_admin/acceuil_admin.css" rel="stylesheet">
     <?php
 
     $__daltonisme = isset($_SESSION['daltonisme']) ? $_SESSION['daltonisme'] : 'aucun';
@@ -63,105 +69,105 @@ if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])) {
     ];
     $__p = isset($__palettes[$__daltonisme]) ? $__palettes[$__daltonisme] : $__palettes['aucun'];
     if ($__daltonisme !== 'aucun' || $__dyslexie): ?>
-    <style id="accessibilite-overrides">
-    <?php if ($__daltonisme !== 'aucun'): ?>
+        <style id="accessibilite-overrides">
+            <?php if ($__daltonisme !== 'aucun'): ?>
 
 
-    :root {
-        --bs-danger:                <?= $__p['danger'] ?>;
-        --bs-danger-rgb:            <?= $__p['danger_rgb'] ?>;
-        --bs-danger-text-emphasis:  <?= $__p['danger_text_emphasis'] ?>;
-        --bs-danger-bg-subtle:      <?= $__p['danger_bg_subtle'] ?>;
-        --bs-danger-border-subtle:  <?= $__p['danger_border_subtle'] ?>;
-        --bs-link-color:            <?= $__p['link'] ?>;
-        --bs-link-color-rgb:        <?= $__p['link_rgb'] ?>;
-        --bs-link-hover-color:      <?= $__p['danger'] ?>;
-    }
-
-
-
-    .btn-danger:hover,
-    .btn-danger:active,
-    .btn-danger:focus-visible {
-        background-color: <?= $__p['danger_text_emphasis'] ?> !important;
-        border-color:     <?= $__p['danger_text_emphasis'] ?> !important;
-    }
-    .btn-danger:focus-visible {
-        box-shadow: 0 0 0 0.25rem rgba(<?= $__p['danger_rgb'] ?>, 0.5) !important;
-    }
-
-
-    .btn-outline-danger:hover,
-    .btn-outline-danger:active {
-        background-color: <?= $__p['danger'] ?> !important;
-        border-color:     <?= $__p['danger'] ?> !important;
-        color: #fff !important;
-    }
-    .btn-outline-danger:focus-visible {
-        box-shadow: 0 0 0 0.25rem rgba(<?= $__p['danger_rgb'] ?>, 0.5) !important;
-    }
-
-
-    .form-control:focus,
-    .form-select:focus {
-        border-color: <?= $__p['danger'] ?> !important;
-        box-shadow: 0 0 0 0.25rem rgba(<?= $__p['danger_rgb'] ?>, 0.25) !important;
-    }
-
-
-    .bg-danger.bg-opacity-10 {
-        background-color: rgba(<?= $__p['danger_rgb'] ?>, 0.1) !important;
-    }
+            :root {
+                --bs-danger:                <?= $__p['danger'] ?>;
+                --bs-danger-rgb:            <?= $__p['danger_rgb'] ?>;
+                --bs-danger-text-emphasis:  <?= $__p['danger_text_emphasis'] ?>;
+                --bs-danger-bg-subtle:      <?= $__p['danger_bg_subtle'] ?>;
+                --bs-danger-border-subtle:  <?= $__p['danger_border_subtle'] ?>;
+                --bs-link-color:            <?= $__p['link'] ?>;
+                --bs-link-color-rgb:        <?= $__p['link_rgb'] ?>;
+                --bs-link-hover-color:      <?= $__p['danger'] ?>;
+            }
 
 
 
+            .btn-danger:hover,
+            .btn-danger:active,
+            .btn-danger:focus-visible {
+                background-color: <?= $__p['danger_text_emphasis'] ?> !important;
+                border-color:     <?= $__p['danger_text_emphasis'] ?> !important;
+            }
+            .btn-danger:focus-visible {
+                box-shadow: 0 0 0 0.25rem rgba(<?= $__p['danger_rgb'] ?>, 0.5) !important;
+            }
 
-    .form-check-input.custom-switch:checked {
-        background-color: <?= $__p['switch_on'] ?> !important;
-        border-color:     <?= $__p['switch_on'] ?> !important;
-    }
+
+            .btn-outline-danger:hover,
+            .btn-outline-danger:active {
+                background-color: <?= $__p['danger'] ?> !important;
+                border-color:     <?= $__p['danger'] ?> !important;
+                color: #fff !important;
+            }
+            .btn-outline-danger:focus-visible {
+                box-shadow: 0 0 0 0.25rem rgba(<?= $__p['danger_rgb'] ?>, 0.5) !important;
+            }
 
 
-    .tag                          { background: <?= $__p['tag_bg'] ?> !important; }
-    .tag-option.selected          { color: <?= $__p['danger'] ?> !important; }
-    .tag-option:hover              { background: rgba(<?= $__p['danger_rgb'] ?>, 0.06) !important; }
-    .tag-option.selected .tag-check {
-        background:   <?= $__p['tag_bg'] ?> !important;
-        border-color: <?= $__p['tag_bg'] ?> !important;
-    }
-    .tag-input-box:focus-within {
-        border-color: <?= $__p['danger'] ?> !important;
-        box-shadow: 0 0 0 3px rgba(<?= $__p['danger_rgb'] ?>, 0.15) !important;
-    }
-    .btn-help:hover {
-        border-color: <?= $__p['danger'] ?> !important;
-        color:        <?= $__p['danger'] ?> !important;
-    }
+            .form-control:focus,
+            .form-select:focus {
+                border-color: <?= $__p['danger'] ?> !important;
+                box-shadow: 0 0 0 0.25rem rgba(<?= $__p['danger_rgb'] ?>, 0.25) !important;
+            }
 
-    <?php endif;  ?>
 
-    <?php if ($__dyslexie): ?>
+            .bg-danger.bg-opacity-10 {
+                background-color: rgba(<?= $__p['danger_rgb'] ?>, 0.1) !important;
+            }
 
-    @font-face {
-        font-family: 'OpenDyslexic';
-        src: url('https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/OpenDyslexic-Regular.otf') format('opentype');
-        font-weight: normal;
-    }
-    @font-face {
-        font-family: 'OpenDyslexic';
-        src: url('https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/OpenDyslexic-Bold.otf') format('opentype');
-        font-weight: bold;
-    }
-    *, *::before, *::after      { font-family: 'OpenDyslexic', Arial, sans-serif !important; }
-    body                         { line-height: 1.8 !important; letter-spacing: 0.05em !important; word-spacing: 0.15em !important; background-color: #fdfaf3 !important; }
-    p, li, td, th, label, span, div, a, input, textarea, select, button
-                                 { line-height: 1.8 !important; letter-spacing: 0.04em !important; word-spacing: 0.12em !important; }
-    body, p, li, td, label       { font-size: 1.05rem !important; }
-    .card, .form-control, .tag-input-box, .tag-dropdown { background-color: #fdfaf3 !important; }
-    p, li, td, div               { text-align: left !important; }
-    <?php endif;  ?>
 
-    </style>
+
+
+            .form-check-input.custom-switch:checked {
+                background-color: <?= $__p['switch_on'] ?> !important;
+                border-color:     <?= $__p['switch_on'] ?> !important;
+            }
+
+
+            .tag                          { background: <?= $__p['tag_bg'] ?> !important; }
+            .tag-option.selected          { color: <?= $__p['danger'] ?> !important; }
+            .tag-option:hover              { background: rgba(<?= $__p['danger_rgb'] ?>, 0.06) !important; }
+            .tag-option.selected .tag-check {
+                background:   <?= $__p['tag_bg'] ?> !important;
+                border-color: <?= $__p['tag_bg'] ?> !important;
+            }
+            .tag-input-box:focus-within {
+                border-color: <?= $__p['danger'] ?> !important;
+                box-shadow: 0 0 0 3px rgba(<?= $__p['danger_rgb'] ?>, 0.15) !important;
+            }
+            .btn-help:hover {
+                border-color: <?= $__p['danger'] ?> !important;
+                color:        <?= $__p['danger'] ?> !important;
+            }
+
+            <?php endif;  ?>
+
+            <?php if ($__dyslexie): ?>
+
+            @font-face {
+                font-family: 'OpenDyslexic';
+                src: url('https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/OpenDyslexic-Regular.otf') format('opentype');
+                font-weight: normal;
+            }
+            @font-face {
+                font-family: 'OpenDyslexic';
+                src: url('https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/OpenDyslexic-Bold.otf') format('opentype');
+                font-weight: bold;
+            }
+            *, *::before, *::after      { font-family: 'OpenDyslexic', Arial, sans-serif !important; }
+            body                         { line-height: 1.8 !important; letter-spacing: 0.05em !important; word-spacing: 0.15em !important; background-color: #fdfaf3 !important; }
+            p, li, td, th, label, span, div, a, input, textarea, select, button
+            { line-height: 1.8 !important; letter-spacing: 0.04em !important; word-spacing: 0.12em !important; }
+            body, p, li, td, label       { font-size: 1.05rem !important; }
+            .card, .form-control, .tag-input-box, .tag-dropdown { background-color: #fdfaf3 !important; }
+            p, li, td, div               { text-align: left !important; }
+            <?php endif;  ?>
+
+        </style>
     <?php endif; ?>
     <?php
 
@@ -176,62 +182,89 @@ if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])) {
     ];
     $__p = isset($__palettes[$__daltonisme]) ? $__palettes[$__daltonisme] : $__palettes['aucun'];
     if ($__daltonisme !== 'aucun' || $__dyslexie): ?>
-    <style id="accessibilite-overrides">
-    <?php if ($__daltonisme !== 'aucun'): ?>
+        <style id="accessibilite-overrides">
+            <?php if ($__daltonisme !== 'aucun'): ?>
 
-    :root {
-        --color-primary:           <?=$__p['p']?>;
-        --color-primary-dark:      <?=$__p['pd']?>;
-        --color-primary-light:     <?=$__p['pl']?>;
-        --color-primary-shadow-15: rgba(<?=$__p['rgb']?>,.15);
-        --color-primary-shadow-25: rgba(<?=$__p['rgb']?>,.25);
-        --color-primary-shadow-35: rgba(<?=$__p['rgb']?>,.35);
+            :root {
+                --color-primary:           <?=$__p['p']?>;
+                --color-primary-dark:      <?=$__p['pd']?>;
+                --color-primary-light:     <?=$__p['pl']?>;
+                --color-primary-shadow-15: rgba(<?=$__p['rgb']?>,.15);
+                --color-primary-shadow-25: rgba(<?=$__p['rgb']?>,.25);
+                --color-primary-shadow-35: rgba(<?=$__p['rgb']?>,.35);
+            }
+
+            .navbar                             { border-color: <?=$__p['p']?> !important; }
+            .bg-danger, footer.bg-danger        { background-color: <?=$__p['p']?> !important; }
+            .border-danger                      { border-color: <?=$__p['p']?> !important; }
+            .text-danger                        { color: <?=$__p['p']?> !important; }
+            .text-primary                       { color: <?=$__p['link']?> !important; }
+            .btn-danger                         { background-color: <?=$__p['p']?> !important; border-color: <?=$__p['pd']?> !important; color: #fff !important; }
+            .btn-danger:hover, .btn-danger:active { background-color: <?=$__p['pd']?> !important; border-color: <?=$__p['pd']?> !important; }
+            .btn-outline-danger                 { border-color: <?=$__p['p']?> !important; color: <?=$__p['p']?> !important; }
+            .btn-outline-danger:hover, .btn-outline-danger:active { background-color: <?=$__p['p']?> !important; color: #fff !important; }
+            .alert-danger                       { background-color: <?=$__p['pl']?> !important; border-color: <?=$__p['p']?> !important; color: <?=$__p['pd']?> !important; }
+            .card.border-danger                 { border-color: <?=$__p['p']?> !important; }
+            .dropdown-item:active               { background-color: <?=$__p['p']?> !important; }
+            a:not(.btn):not(.nav-link):not(.navbar-brand):not(.dropdown-item) { color: <?=$__p['link']?> !important; }
+            <?php endif; ?>
+            <?php if ($__dyslexie): ?>
+            @font-face { font-family:'OpenDyslexic'; src:url('https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/OpenDyslexic-Regular.otf') format('opentype'); font-weight:normal; }
+            @font-face { font-family:'OpenDyslexic'; src:url('https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/OpenDyslexic-Bold.otf') format('opentype'); font-weight:bold; }
+            *, *::before, *::after              { font-family: 'OpenDyslexic', Arial, sans-serif !important; }
+            body                                { line-height:1.8 !important; letter-spacing:0.05em !important; word-spacing:0.15em !important; background-color:#fdfaf3 !important; }
+            p,li,td,th,label,span,div,a,input,textarea,select,button { line-height:1.8 !important; letter-spacing:0.04em !important; }
+            body,p,li,td,label                  { font-size:1.05rem !important; }
+            .card,.form-control,.tag-input-box,.tag-dropdown { background-color:#fdfaf3 !important; }
+            p,li,td,div                         { text-align:left !important; }
+            <?php endif; ?>
+        </style>
+    <?php endif; ?>
+</head>
+<body style="font-family: 'Candara'">
+
+<nav class="navbar navbar-expand-sm navbar-light bg-light border border-danger border-3">
+    <div class="container d-flex justify-content-evenly align-items-center">
+        <a href="acceuil_admin.php"><img alt="" class="navbar-brand fw-bold" src="../../img/univoix.png" style="max-width:50px;"></a>
+        <a class="nav-link" href="inscrits.php">Inscrits</a>
+        <a class="nav-link" href="signalements.php">Signalements</a>
+        <a class="nav-link" href="articles.php">Articles</a>
+        <a class="nav-link" href="forum_admin.php">Forum</a>
+        <?php if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])){ ?>
+            <a class="navbar-brand fw-bold" href="profil.php">Connexion</a>
+        <?php } else {
+            // Préfixe "../" car avatar.php est dans le dossier public, un niveau au-dessus de admin/
+            $avatar = "../";
+            require_once "../avatar.php"; ?>
+            <li class="nav-item dropdown fs-5">
+                <a class="nav-link dropdown-toggle" style="font-weight:bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img class="rounded-circle" alt="pdp" src="<?=$avatar?>" width="40px" height="40px"/>
+                    <?=$_SESSION["prenom"]?> <?=$_SESSION["nom"]?> (admin)
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="../deconnexion.php">Se déconnecter</a></li>
+                </ul>
+            </li>
+        <?php } ?>
+    </div>
+</nav>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Affiche/masque le menu déroulant personnalisé
+    function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
     }
 
-    .navbar                             { border-color: <?=$__p['p']?> !important; }
-    .bg-danger, footer.bg-danger        { background-color: <?=$__p['p']?> !important; }
-    .border-danger                      { border-color: <?=$__p['p']?> !important; }
-    .text-danger                        { color: <?=$__p['p']?> !important; }
-    .text-primary                       { color: <?=$__p['link']?> !important; }
-    .btn-danger                         { background-color: <?=$__p['p']?> !important; border-color: <?=$__p['pd']?> !important; color: #fff !important; }
-    .btn-danger:hover, .btn-danger:active { background-color: <?=$__p['pd']?> !important; border-color: <?=$__p['pd']?> !important; }
-    .btn-outline-danger                 { border-color: <?=$__p['p']?> !important; color: <?=$__p['p']?> !important; }
-    .btn-outline-danger:hover, .btn-outline-danger:active { background-color: <?=$__p['p']?> !important; color: #fff !important; }
-    .alert-danger                       { background-color: <?=$__p['pl']?> !important; border-color: <?=$__p['p']?> !important; color: <?=$__p['pd']?> !important; }
-    .card.border-danger                 { border-color: <?=$__p['p']?> !important; }
-    .dropdown-item:active               { background-color: <?=$__p['p']?> !important; }
-    a:not(.btn):not(.nav-link):not(.navbar-brand):not(.dropdown-item) { color: <?=$__p['link']?> !important; }
-    <?php endif; ?>
-    <?php if ($__dyslexie): ?>
-    @font-face { font-family:'OpenDyslexic'; src:url('https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/OpenDyslexic-Regular.otf') format('opentype'); font-weight:normal; }
-    @font-face { font-family:'OpenDyslexic'; src:url('https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/OpenDyslexic-Bold.otf') format('opentype'); font-weight:bold; }
-    *, *::before, *::after              { font-family: 'OpenDyslexic', Arial, sans-serif !important; }
-    body                                { line-height:1.8 !important; letter-spacing:0.05em !important; word-spacing:0.15em !important; background-color:#fdfaf3 !important; }
-    p,li,td,th,label,span,div,a,input,textarea,select,button { line-height:1.8 !important; letter-spacing:0.04em !important; }
-    body,p,li,td,label                  { font-size:1.05rem !important; }
-    .card,.form-control,.tag-input-box,.tag-dropdown { background-color:#fdfaf3 !important; }
-    p,li,td,div                         { text-align:left !important; }
-    <?php endif; ?>
-    </style>
-    <?php endif; ?>
-
-
-    </head>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // Affiche/masque le menu déroulant personnalisé
-        function myFunction() {
-            document.getElementById("myDropdown").classList.toggle("show");
-        }
-
-        // Ferme le dropdown si l'utilisateur clique en dehors du bouton
-        window.onclick = function(e) {
-            if (!e.target.matches('.dropbtn')) {
-                var myDropdown = document.getElementById("myDropdown");
-                if (myDropdown.classList.contains('show')) {
-                    myDropdown.classList.remove('show');
-                }
+    // Ferme le dropdown si l'utilisateur clique en dehors du bouton
+    window.onclick = function(e) {
+        if (!e.target.matches('.dropbtn')) {
+            var myDropdown = document.getElementById("myDropdown");
+            if (myDropdown.classList.contains('show')) {
+                myDropdown.classList.remove('show');
             }
         }
-    </script>
+    }
+</script>
+</body>
 </html>

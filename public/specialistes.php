@@ -2,7 +2,9 @@
 require_once "..\bdd\connexion.php";
 session_start();
 
-if (isset($_GET['categorie'])) { $categorie = $_GET['categorie']; } else { $categorie = ''; }
+if (isset($_GET['categorie'])) {
+    $categorie = $_GET['categorie']; }
+else { $categorie = ''; }
 
 $sql3 = "SELECT id_inscrit, nom, prenom, email, specialite FROM inscrit WHERE role='specialiste'";
 $params = [];
