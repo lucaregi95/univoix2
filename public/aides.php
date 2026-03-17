@@ -221,7 +221,10 @@ session_start();
             <?php }} ?>
 
         <?php if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])){ ?>
-            <a class="navbar-brand fw-bold" href="profil.php">Connexion</a>
+            <a class="navbar-brand fw-bold" href="connexion.php"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 20 20" >
+                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+                </svg>     Connexion</a>
         <?php }
         else{
             // Charge l'avatar de l'utilisateur connecté et affiche son menu déroulant
@@ -291,9 +294,29 @@ session_start();
 
 </div>
 
-<footer class="py-4 mt-3">
-    <div class="container text-center">
-        <small class="opacity-75">© 2026 – Luca Regi, Nassim Kharfouche, Prosper Fajnzyn – Tous droits réservés</small>
+<footer class="footer-wrap">
+    <div class="footer-top">
+        <div class="footer-col">
+            <h4>Nous contacter</h4>
+
+            <a href="https://mail.google.com/mail/?view=cm&to=univoix@gmail.com&su=Prise de contact"
+               target="_blank">univoix@gmail.com</a>
+        </div>
+        <div class="footer-col">
+            <h4>Soutien & écoute</h4>
+            <div class="urgence-item"><span class="urgence-num">3114</span><span class="urgence-label">Prévention suicide (24h/24)</span></div>
+            <div class="urgence-item"><span class="urgence-num">3977</span><span class="urgence-label">Maltraitance personnes âgées / handicap</span></div>
+            <div class="urgence-item"><span class="urgence-num">0800 235 236</span><span class="urgence-label">Fil santé jeunes (gratuit)</span></div>
+        </div>
+        <div class="footer-col">
+            <h4>Aide aux personnes vulnérables</h4>
+            <div class="urgence-item"><span class="urgence-num">119</span><span class="urgence-label">Enfance en danger</span></div>
+            <div class="urgence-item"><span class="urgence-num">114</span><span class="urgence-label">Urgence sourdes / malentendantes</span></div>
+            <div class="urgence-item"><span class="urgence-num">0800 360 360</span><span class="urgence-label">Info handicap — aidants familiaux</span></div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2026 — Luca Regi, Nassim Kharfouche, Prosper Fajnzyn — Tous droits réservés</p>
     </div>
 </footer>
 

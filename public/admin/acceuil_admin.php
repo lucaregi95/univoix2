@@ -143,7 +143,7 @@ if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])) {
         }
     }
 </script>
-
+<br>
 <footer class="py-3 text-center bg-danger text-white site-footer">
     © 2026 — Luca Regi, Nassim Kharfouche, Prosper Fajnzyn — Tous droits réservés
 </footer>

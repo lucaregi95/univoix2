@@ -143,7 +143,7 @@ $p = isset($palettes[$daltonisme_session]) ? $palettes[$daltonisme_session] : $p
         </div>
         <div class="card-body p-4">
             <form method="GET" action="forum_admin.php" class="row g-3">
-                <div class="col-md-6">
+                <div class="col-md-5">
                     <label class="form-label fw-semibold">Rechercher</label>
                     <input type="text" name="recherche" class="form-control" placeholder="Titre, pseudo..." value="<?= htmlspecialchars($recherche) ?>">
                 </div>

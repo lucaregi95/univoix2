@@ -108,11 +108,11 @@ if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])) {
             }
 
 
-            .form-control:focus,
-            .form-select:focus {
-                border-color: <?= $__p['danger'] ?> !important;
-                box-shadow: 0 0 0 0.25rem rgba(<?= $__p['danger_rgb'] ?>, 0.25) !important;
-            }
+    .form-control:focus,
+    .form-select:focus {
+        border-color: <?= $__p['danger'] ?> !important;
+        box-shadow: 0 0 0 0.25rem rgba(<?= $__p['danger_rgb'] ?>, 0.25) !important;
+    }
 
 
             .bg-danger.bg-opacity-10 {

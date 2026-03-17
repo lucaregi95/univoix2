@@ -72,6 +72,54 @@ $resultats = $query->fetchAll();
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .footer-wrap {
+            background: #dc3545;
+            color: #fff;
+            font-family: inherit;
+            font-size: 13px;
+            width: 100%;
+        }
+        .footer-top {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            padding: 28px 32px 20px;
+            border-bottom: 0.5px solid rgba(255,255,255,0.2);
+        }
+        .footer-col h4 {
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.55);
+            margin: 0 0 10px;
+        }
+        .footer-col p, .footer-col a {
+            color: rgba(255,255,255,0.9);
+            margin: 4px 0;
+            line-height: 1.6;
+            text-decoration: none;
+            display: block;
+        }
+        .footer-col a:hover { color: #fff; text-decoration: underline; }
+        .urgence-item { display: flex; align-items: baseline; gap: 8px; margin: 5px 0; }
+        .urgence-num { font-weight: 500; font-size: 15px; color: #fff; min-width: 44px; }
+        .urgence-label { font-size: 12px; color: rgba(255,255,255,0.75); line-height: 1.4; }
+        .footer-bottom {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 12px 32px;
+            text-align: center;
+        }
+        .footer-bottom p { margin: 0; color: rgba(255,255,255,0.6); font-size: 12px; }
+        .footer-bottom a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 12px; }
+        .footer-bottom a:hover { color: #fff; }
+        .divider { color: rgba(255,255,255,0.25); margin: 0 6px; }
+    </style>
     <link href="../style/style_public/acceuil.css" rel="stylesheet">
     <?php
     // Récupère les préférences d'accessibilité depuis la session (défaut si absent)
@@ -498,8 +546,30 @@ $resultats = $query->fetchAll();
     }
 </script>
 
-<footer class="py-3 text-center bg-danger text-white">
-    © 2026 — Luca Regi, Nassim Kharfouche, Prosper Fajnzyn — Tous droits réservés
+<footer class="footer-wrap">
+    <div class="footer-top">
+        <div class="footer-col">
+            <h4>Nous contacter</h4>
+
+            <a href="https://mail.google.com/mail/?view=cm&to=univoix@gmail.com&su=Prise de contact"
+               target="_blank">univoix@gmail.com</a>
+        </div>
+        <div class="footer-col">
+            <h4>Soutien & écoute</h4>
+            <div class="urgence-item"><span class="urgence-num">3114</span><span class="urgence-label">Prévention suicide (24h/24)</span></div>
+            <div class="urgence-item"><span class="urgence-num">3977</span><span class="urgence-label">Maltraitance personnes âgées / handicap</span></div>
+            <div class="urgence-item"><span class="urgence-num">0800 235 236</span><span class="urgence-label">Fil santé jeunes (gratuit)</span></div>
+        </div>
+        <div class="footer-col">
+            <h4>Aide aux personnes vulnérables</h4>
+            <div class="urgence-item"><span class="urgence-num">119</span><span class="urgence-label">Enfance en danger</span></div>
+            <div class="urgence-item"><span class="urgence-num">114</span><span class="urgence-label">Urgence sourdes / malentendantes</span></div>
+            <div class="urgence-item"><span class="urgence-num">0800 360 360</span><span class="urgence-label">Info handicap — aidants familiaux</span></div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2026 — Luca Regi, Nassim Kharfouche, Prosper Fajnzyn — Tous droits réservés</p>
+    </div>
 </footer>
 
 </body>
