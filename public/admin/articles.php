@@ -171,7 +171,6 @@ $results = $query->fetchAll();
                                                 $articleid = $result["id_article"];
                                             }
                                         }
-
                                         if ($compteur>0){?>
                                             <button type="submit" formaction="supprimerarticle.php" class="btn btn-danger">Supprimer du site</button>
                                         <input type="hidden" value="<?=$articleid?>" name="id_article">

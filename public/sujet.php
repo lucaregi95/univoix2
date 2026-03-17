@@ -1,4 +1,5 @@
 <?php
+global $date, $description;
 session_start();
 require_once "../bdd/connexion.php";
 
@@ -37,6 +38,22 @@ if(isset($_POST['submit_btn'])){
 $stmt2 = $connexion->prepare(" SELECT reponse.*, inscrit.pseudo FROM reponse INNER JOIN inscrit ON reponse.ref_inscrit = inscrit.id_inscrit WHERE reponse.ref_sujet = :id ORDER BY reponse.date_reponse ASC");
 $stmt2->execute(["id" => $id_sujet]);
 $reponses = $stmt2->fetchAll(PDO::FETCH_ASSOC);
+
+
+if(isset($_POST['ref_signale']) && isset($_POST['contenu'])) {
+    $sqlSignalement = "INSERT INTO signalement (ref_signalant, ref_signale, contenu, date, titre) VALUES (:ref_signalant, :ref_signale, :contenu, CURDATE(), :titre)";
+    $querySignalement = $connexion->prepare($sqlSignalement);
+    $querySignalement->execute([
+        'ref_signalant' => $_SESSION['id'],
+        'ref_signale' => $_POST['ref_signale'],
+        'contenu' => $_POST['contenu'],
+        'titre' => $_POST['titre']
+    ]);
+}
+
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -168,6 +185,23 @@ $reponses = $stmt2->fetchAll(PDO::FETCH_ASSOC);
                 <!-- white-space: pre-wrap préserve les sauts de ligne du contenu saisi -->
                 <p class="mb-0 fs-6" style="white-space: pre-wrap;"><?= htmlspecialchars($sujet['contenu']) ?></p>
             </div>
+            <!-- button signaler -->
+            <div class="d-flex justify-content-end mt-3">
+                <!-- Trouver la meme page avec l'id sujet -->
+                <form method= "post" action="sujet.php?id=<?=$id_sujet?>" >
+                    <input type="hidden" name="ref_signale" value = "<?=$sujet["ref_inscrit"]?>">
+                    <input type="hidden" name="contenu" value = "<?=$sujet["contenu"]?>">
+                    <input type="hidden" name="titre" value = "<?=$sujet["titre"]?>">
+                    <button type="submit" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalSignalement" data-type="sujet" data-id=" ">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="me-1" viewBox="0 0 16 16">
+                            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+                        </svg>
+                        Signaler
+                    </button>
+
+                </form>
+
+            </div>
         </div>
     </div>
 
@@ -230,6 +264,21 @@ $reponses = $stmt2->fetchAll(PDO::FETCH_ASSOC);
                     <div class="ms-5 ps-3">
                         <p class="mb-0" style="white-space: pre-wrap;"><?= htmlspecialchars($reponse['contenu']) ?></p>
                     </div>
+                    <!-- button signaler pour les messages -->
+                    <div class="d-flex justify-content-end mt-3">
+                        <form method= "post" action="sujet.php?id=<?=$id_sujet?>" >
+                            <input type="hidden" name="ref_signale" value = "<?=$reponse["ref_inscrit"]?>">
+                            <input type="hidden" name="contenu" value = "<?=$reponse["contenu"]?>">
+                            <input type="hidden" name="titre" value ="<?=$sujet["titre"]?>">
+                            <button type="submit" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalSignalement" data-type="sujet" data-id=" ">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="me-1" viewBox="0 0 16 16">
+                                    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+                                </svg>
+                                Signaler
+                            </button>
+
+                        </form>
+                    </div>
                 </div>
             </div>
         <?php } ?>
@@ -285,3 +334,4 @@ $reponses = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
