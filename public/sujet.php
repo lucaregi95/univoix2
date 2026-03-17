@@ -23,10 +23,10 @@ if(isset($_POST['submit_btn'])){
     $sql = "INSERT INTO reponse (contenu, date_reponse, ref_inscrit, ref_sujet)  VALUES (:contenu, :date_reponse, :ref_inscrit, :ref_sujet)";
     $query = $connexion->prepare($sql);
     $query->execute([
-            "contenu"      => $contenu,
-            "date_reponse" => $date,
-            "ref_inscrit"  => $ref_inscrit,
-            "ref_sujet"    => $id_sujet
+        "contenu"      => $contenu,
+        "date_reponse" => $date,
+        "ref_inscrit"  => $ref_inscrit,
+        "ref_sujet"    => $id_sujet
     ]);
     // Redirige vers la même page pour éviter la re-soumission du formulaire (pattern PRG)
     header("Location: sujet.php?id=$id_sujet");
@@ -52,10 +52,10 @@ $reponses = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 
     // Palettes de couleurs adaptées selon le type de daltonisme
     $__palettes = [
-            'aucun'        => ['p'=>'#dc3545','pd'=>'#b02a37','pl'=>'#f8d7da','rgb'=>'220,53,69', 'link'=>'#0d6efd','footer'=>'#dc3545'],
-            'deuteranopie' => ['p'=>'#0055cc','pd'=>'#003d99','pl'=>'#cce0ff','rgb'=>'0,85,204',  'link'=>'#e07b00','footer'=>'#0055cc'],
-            'tritanopie'   => ['p'=>'#cc3300','pd'=>'#992200','pl'=>'#ffe5dd','rgb'=>'204,51,0',  'link'=>'#007a33','footer'=>'#cc3300'],
-            'protanopie'   => ['p'=>'#6600cc','pd'=>'#4d0099','pl'=>'#ead5ff','rgb'=>'102,0,204', 'link'=>'#007acc','footer'=>'#6600cc'],
+        'aucun'        => ['p'=>'#dc3545','pd'=>'#b02a37','pl'=>'#f8d7da','rgb'=>'220,53,69', 'link'=>'#0d6efd','footer'=>'#dc3545'],
+        'deuteranopie' => ['p'=>'#0055cc','pd'=>'#003d99','pl'=>'#cce0ff','rgb'=>'0,85,204',  'link'=>'#e07b00','footer'=>'#0055cc'],
+        'tritanopie'   => ['p'=>'#cc3300','pd'=>'#992200','pl'=>'#ffe5dd','rgb'=>'204,51,0',  'link'=>'#007a33','footer'=>'#cc3300'],
+        'protanopie'   => ['p'=>'#6600cc','pd'=>'#4d0099','pl'=>'#ead5ff','rgb'=>'102,0,204', 'link'=>'#007acc','footer'=>'#6600cc'],
     ];
     $__p = isset($__palettes[$__daltonisme]) ? $__palettes[$__daltonisme] : $__palettes['aucun'];
     if ($__daltonisme !== 'aucun' || $__dyslexie): ?>
