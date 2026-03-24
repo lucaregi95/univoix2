@@ -49,6 +49,8 @@ if(isset($_POST['ref_signale']) && isset($_POST['contenu'])) {
         'contenu' => $_POST['contenu'],
         'titre' => $_POST['titre']
     ]);
+    header("Location: sujet.php?id=$id_sujet");
+    exit;
 }
 
 
