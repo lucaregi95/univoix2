@@ -1,9 +1,20 @@
 <?php
+$connexion = null;
 session_start();
+require_once "../../bdd/connexion.php";
 if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])) {
     header("location:../connexion.php");
     exit();
 }
+
+$sql = "SELECT s.*, i.* FROM signalement AS s INNER JOIN inscrit AS i ON s.ref_signale = i.id_inscrit ORDER BY s.id_signalement DESC";
+$query = $connexion->prepare($sql);
+$query->execute();
+$result = $query->fetchAll();
+
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -248,6 +259,58 @@ if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])) {
         <?php } ?>
     </div>
 </nav>
+
+
+<?php
+if (count($result)==0){
+?>  <div class="d-flex flex-column justify-content-center align-items-center text-muted" style="height: calc(100vh - 85px);">
+        <h3>Aucun signalement pour le moment...</h3>
+        <form action="acceuil_admin.php" method="post">
+            <button type="submit" class="btn btn-danger">Retour à l'accueil</button>
+        </form>
+    </div>
+<?php }
+?>
+
+
+
+
+<?php foreach ($result as $results) { ?>
+    <div class="container pb-3 shadow border" style="max-width: 820px;">
+        <br>
+        <div class="col-12">
+            <div class="pt-2">
+                <div class="card border border-danger border-3 shadow-sm rounded-4 h-100">
+                    <div class="card-body p-4 p-lg-5">
+                        <div class="aide-card">
+                            <h2>Titre du sujet : <?php echo $results['titre']?> </h2>
+                            <h5>Contenu du sujet : <?php echo $results['contenu']?> </h5><br><br>
+                            <p>Inscrit signalé : <?php echo $results['pseudo']?></p>
+                            <?php
+                            $sql = "SELECT * FROM inscrit WHERE id_inscrit = :id_inscrit";
+                            $query = $connexion->prepare($sql);
+                            $query->execute(array('id_inscrit' => $results['ref_signalant']));
+                            $signalant = $query->fetch();
+                            ?>
+                            <p>Signalé par : <?php echo $signalant['pseudo']?></p>
+                            <small><?php echo $results["date"]; ?></small><br><br>
+                            <form class="bg-danger border border-dark justify-content-md" method="post" action="validersignalement.php">
+                            <button type="submit" class="btn btn-danger">Valider le signalement</button>
+                                <button type="submit" formaction="annulersignalement.php" class="btn btn-danger">Annuler le signalement</button>
+                                <input type="hidden" name="signale" value="<?php echo $results['ref_signale']?>"/>
+                                <input type="hidden" name="signalement" value="<?php echo $results['id_signalement']?>"/>
+                                <input type="hidden" name="contenu" value="<?php echo $results["contenu"]?>"/>
+                                <input type="hidden" name="titre" value="<?php echo $results["titre"]?>"/>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php } ?>
+</div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>

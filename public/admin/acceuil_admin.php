@@ -113,12 +113,12 @@ if(!isset($_SESSION['nom']) || !isset($_SESSION['prenom'])) {
                 </div>
                 <div class="col-md-3 border border-1 border-light p-2">
                     <h5 class="section-title">LES SIGNALEMENTS</h5>
-                    <p>Regardez les différents signalements faits par la communauté Uni'Voix et modérez le site</p>
-                    <a href="specialistes.php" class="btn btn-outline-light btn-univoix">Consulter les signalements</a>
+                    <p>Regardez les différents signalements faits par la communauté et modérez le site</p>
+                    <a href="signalements.php" class="btn btn-outline-light btn-univoix">Consulter les signalements</a>
                 </div>
                 <div class="col-md-3 border border-1 border-light p-2">
                     <h5 class="section-title">LE FORUM</h5>
-                    <p>Gérez les sujets a supprimer du forum</p>
+                    <p>Consultez et gérez les sujets à supprimer sur le forum</p>
                     <a href="forum_admin.php" class="btn btn-outline-light btn-univoix">Consulter le forum</a>
                 </div>
             </div>
